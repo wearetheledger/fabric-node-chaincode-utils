@@ -3,8 +3,18 @@ language : node_js
 node_js :
   - "8.9.0"
 
+before_install:
+  - npm config set @theledger:registry https://registry.npmjs.org/
+
 install:
   - yarn install
 
 script:
   - yarn run test
+
+deploy:
+  provider: npm
+  email: jonas.snellinckx@theledger.be
+  api_key: $NPM_TOKEN
+  on:
+    tags: true

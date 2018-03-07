@@ -1,6 +1,6 @@
 {
   "name": "@theledger/fabric-chaincode-utils",
-  "version": "1.0.0",
+  "version": "0.9.0",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,5 +44,8 @@
     "google-protobuf": "^3.5.0",
     "lodash": "^4.17.5",
     "winston": "^2.4.0"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
   }
 }
