@@ -4,7 +4,7 @@ import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
 import { ERRORS } from './constants/errors';
 import { ChaincodeError } from './ChaincodeError';
-import { TransactionHelper } from './ChaincodeStub';
+import { TransactionHelper } from './TransactionHelper';
 import { Transform } from './utils/datatransform';
 
 export class Chaincode implements ChaincodeInterface {

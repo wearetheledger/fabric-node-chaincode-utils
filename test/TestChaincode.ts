@@ -2,7 +2,7 @@
 import { Helpers } from '../src/utils/helpers';
 import { ChaincodeReponse, Stub } from 'fabric-shim';
 import { Chaincode } from '../src/Chaincode';
-import { TransactionHelper } from '../src/ChaincodeStub';
+import { TransactionHelper } from '../src/TransactionHelper';
 import { Transform } from '../src/utils/datatransform';
 import { ChaincodeError } from '../src/ChaincodeError';
 import shim = require('fabric-shim');

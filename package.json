@@ -8,8 +8,7 @@
     "build": "npm run clean && tsc",
     "test": "npm run lint && mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
-    "clean": "rimraf dist",
-    "prepublish": "tsc"
+    "clean": "rimraf dist"
   },
   "repository": {
     "type": "git",
@@ -46,6 +45,7 @@
     "winston": "^2.4.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   }
 }
