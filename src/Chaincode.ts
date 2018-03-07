@@ -1,5 +1,5 @@
 import shim = require('fabric-shim');
-import { ChaincodeInterface, Stub, ChaincodeReponse } from 'fabric-shim';
+import { ChaincodeInterface, ChaincodeReponse, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
 import { ERRORS } from './constants/errors';
@@ -17,19 +17,19 @@ export class Chaincode implements ChaincodeInterface {
 
     /**
      * the name of the current chaincode.
-     * 
+     *
      * @readonly
      * @type {string}
      * @memberof Chaincode
      */
-    get name() :string{
+    get name(): string {
         return this.constructor.name;
     }
 
     /**
      * the Default TransactionHelper with extra functionality and return your own instance.
-     * 
-     * @param {Stub} stub 
+     *
+     * @param {Stub} stub
      * @returns the transaction helper for the given stub. This can be used to extend
      * @memberof Chaincode
      */
@@ -41,9 +41,9 @@ export class Chaincode implements ChaincodeInterface {
     /**
      * The Init method is called when the Smart Contract is instantiated by the blockchain network
      * Best practice is to have any Ledger initialization in separate function -- see initLedger()
-     * 
-     * @param {Stub} stub 
-     * @returns {Promise<ChaincodeReponse>} 
+     *
+     * @param {Stub} stub
+     * @returns {Promise<ChaincodeReponse>}
      * @memberof Chaincode
      */
     async Init(stub: Stub): Promise<ChaincodeReponse> {
@@ -56,9 +56,9 @@ export class Chaincode implements ChaincodeInterface {
      * The Invoke method is called as a result of an application request to run the Smart Contract.
      * The calling application program has also specified the particular smart contract
      * function to be called, with arguments
-     * 
-     * @param {Stub} stub 
-     * @returns {Promise<ChaincodeReponse>} 
+     *
+     * @param {Stub} stub
+     * @returns {Promise<ChaincodeReponse>}
      * @memberof Chaincode
      */
     async Invoke(stub: Stub): Promise<ChaincodeReponse> {
@@ -118,9 +118,9 @@ export class Chaincode implements ChaincodeInterface {
 
     /**
      * Try and parse params to json
-     * 
+     *
      * @private
-     * @param {string[]} params 
+     * @param {string[]} params
      * @returns {any[]} the parsed parameters
      * @memberof Chaincode
      */
