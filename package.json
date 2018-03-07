@@ -6,8 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
-    "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js -- -R spec",
+    "test": "npm run lint && mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'"
   },
   "repository": {
