@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Iterators, KV } from 'fabric-shim';
 
 /**
- * Transform
+ * The Transform class is a helper to provide data transformation to and from the formats required by hyperledger fabric.
  */
 export class Transform {
 

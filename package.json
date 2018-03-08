@@ -1,6 +1,6 @@
 {
   "name": "@theledger/fabric-chaincode-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
     "clean": "rimraf dist",
     "prepare": "npm run build",
-    "generate:docs": "rimraf docs && typedoc src --out docs && touch docs/.nojekyll && touch docs/modules/.nojekyll"
+    "generate:docs": "rimraf docs && typedoc src --out docs --target ES6 && touch docs/.nojekyll && touch docs/modules/.nojekyll"
   },
   "repository": {
     "type": "git",

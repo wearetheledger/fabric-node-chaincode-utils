@@ -53,7 +53,7 @@ export class ChaincodeMockStub implements MockStub {
      * @param {string} [usercert] - User creds certificate with/without attributes
      */
     constructor(private name: string, private cc: Chaincode, private usercert: string = defaultUserCert) {
-        this.logger = Helpers.log(this.name);
+        this.logger = Helpers.getLoggerInstance(this.name);
     }
 
     /**

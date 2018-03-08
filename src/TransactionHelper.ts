@@ -2,21 +2,30 @@ import { KV, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
+import { LoggerInstance } from 'winston';
 
 /**
- *  TransactionHelper
+ *  The TransactionHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
+ *  deserialize data being saved/retreived.
  */
 export class TransactionHelper {
 
+    private logger: LoggerInstance;
+
+    /**
+     * @param {"fabric-shim".Stub} stub
+     * @param logLevel
+     */
     constructor(private stub: Stub) {
         this.stub = stub;
+        this.logger = Helpers.getLoggerInstance('TransactionHelper');
     }
 
     /**
      * Query the state and return a list of results.
      *
-     * @param {string | Object} query
-     * @param keyValue - Should return a key value
+     * @param {string | Object} query - CouchDB query
+     * @param keyValue - If the function should return an array with {KV} or just values
      * @returns {Promise<any>}
      */
     async getQueryResultAsList(query: string | object, keyValue?: boolean): Promise<object[] | KV[]> {
@@ -28,7 +37,7 @@ export class TransactionHelper {
             queryString = <string>query;
         }
 
-        Helpers.log(`Query: ${queryString}`);
+        this.logger.debug(`Query: ${queryString}`);
 
         const iterator = await this.stub.getQueryResult(queryString);
 
@@ -48,7 +57,7 @@ export class TransactionHelper {
      */
     async getStateByRangeAsList(startKey: string, endKey: string): Promise<KV[]> {
 
-        Helpers.log(`StartKey: ${startKey} - EndKey: ${endKey}`);
+        this.logger.debug(`StartKey: ${startKey} - EndKey: ${endKey}`);
 
         const iterator = await this.stub.getStateByRange(startKey, endKey);
 
@@ -97,7 +106,7 @@ export class TransactionHelper {
      *
      * @return the state for the given key parsed as a String
      */
-    async getStateAsString(key: string) {
+    async getStateAsString(key: string): Promise<string> {
 
         const rawValue = await this.stub.getState(key);
 
@@ -109,7 +118,7 @@ export class TransactionHelper {
      *
      * @return the state for the given key parsed as a Date
      */
-    async getStateAsDate(key: string) {
+    async getStateAsDate(key: string): Promise<Date> {
 
         const rawValue = await this.stub.getState(key);
 
@@ -138,7 +147,7 @@ export class TransactionHelper {
             bufferedPayload = Buffer.from(JSON.stringify(payload));
         }
 
-        Helpers.log(`Setting Event ${name} with payload ${JSON.stringify(payload)}`);
+        this.logger.debug(`Setting Event ${name} with payload ${JSON.stringify(payload)}`);
 
         this.stub.setEvent(name, bufferedPayload);
     }

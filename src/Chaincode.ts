@@ -8,14 +8,16 @@ import { TransactionHelper } from './TransactionHelper';
 import { Transform } from './utils/datatransform';
 
 /**
- * Chaincode base wrapper
+ * The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required
+ * by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your Chaincode implementation
+ * class.
  */
 export class Chaincode implements ChaincodeInterface {
 
     private logger: LoggerInstance;
 
     constructor(logLevel: string) {
-        this.logger = Helpers.log(this.name, logLevel);
+        this.logger = Helpers.getLoggerInstance(this.name, logLevel);
     }
 
     /**
@@ -33,7 +35,7 @@ export class Chaincode implements ChaincodeInterface {
      * the Default TransactionHelper with extra functionality and return your own instance.
      *
      * @param {Stub} stub
-     * @returns the transaction helper for the given stub. This can be used to extend
+     * @returns the transaction helper for the given stub. This can be used to extend the stub functionality
      * @memberof Chaincode
      */
     getTransactionHelperFor(stub: Stub) {

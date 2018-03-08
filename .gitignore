@@ -1,8 +1,8 @@
 .DS_Store
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+npm-debug.getLoggerInstance*
+yarn-debug.getLoggerInstance*
+yarn-error.getLoggerInstance*
 
 # Editor directories and files
 .idea

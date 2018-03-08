@@ -36,7 +36,7 @@ export class TestChaincode extends Chaincode {
     }
 
     async initLedger(stub: Stub, txHelper: TransactionHelper, args?: string[]) {
-        Helpers.log('============= START : Initialize Ledger ===========');
+        this.logger.debug('============= START : Initialize Ledger ===========');
         let cars = [];
         cars.push({
             make: 'Toyota',
@@ -104,13 +104,13 @@ export class TestChaincode extends Chaincode {
 
             car.docType = 'car';
             await stub.putState('CAR' + i, Buffer.from(JSON.stringify(car)));
-            Helpers.log('Added <--> ', car);
+            this.logger.debug('Added <--> ', car);
         }
-        Helpers.log('============= END : Initialize Ledger ===========');
+        this.logger.debug('============= END : Initialize Ledger ===========');
     }
 
     async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        Helpers.log('============= START : Create Car ===========');
+        this.logger.debug('============= START : Create Car ===========')
 
         Helpers.checkArgs(args, 5);
 
@@ -123,7 +123,7 @@ export class TestChaincode extends Chaincode {
         };
 
         await txHelper.putState(args[0], car);
-        Helpers.log('============= END : Create Car ===========');
+        this.logger.debug('============= END : Create Car ===========');
     }
 
     async queryAllCars(stub: Stub, txHelper: TransactionHelper, args: string[]) {
@@ -135,7 +135,7 @@ export class TestChaincode extends Chaincode {
     }
 
     async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        Helpers.log('============= START : changeCarOwner ===========');
+        this.logger.debug('============= START : changeCarOwner ===========');
         Helpers.checkArgs(args, 2);
 
 
@@ -144,7 +144,7 @@ export class TestChaincode extends Chaincode {
         car.owner = args[1];
 
         await stub.putState(args[0], Buffer.from(JSON.stringify(car)));
-        Helpers.log('============= END : changeCarOwner ===========');
+        this.logger.debug('============= END : changeCarOwner ===========');
         shim.success();
     }
 }

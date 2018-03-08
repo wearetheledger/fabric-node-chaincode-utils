@@ -15,7 +15,7 @@ export class Helpers {
      * @returns {LoggerInstance}
      * @memberof Helpers
      */
-    public static log(name: string, level?: string): LoggerInstance {
+    public static getLoggerInstance(name: string, level?: string): LoggerInstance {
         return new Logger({
             transports: [new transports.Console({
                 level: level || 'debug',

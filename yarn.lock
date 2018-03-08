@@ -577,7 +577,7 @@ coveralls@^3.0.0:
   dependencies:
     js-yaml "^3.6.1"
     lcov-parse "^0.0.10"
-    log-driver "^1.2.5"
+    getLoggerInstance-driver "^1.2.5"
     minimist "^1.2.0"
     request "^2.79.0"
 
@@ -1522,9 +1522,9 @@ lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.17.5:
   version "4.17.5"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
-log-driver@^1.2.5:
+getLoggerInstance-driver@^1.2.5:
   version "1.2.7"
-  resolved "https://registry.yarnpkg.com/log-driver/-/log-driver-1.2.7.tgz#63b95021f0702fedfa2c9bb0a24e7797d71871d8"
+  resolved "https://registry.yarnpkg.com/getLoggerInstance-driver/-/getLoggerInstance-driver-1.2.7.tgz#63b95021f0702fedfa2c9bb0a24e7797d71871d8"
 
 log4js@*, log4js@^2.2.0:
   version "2.5.3"
