@@ -3,7 +3,6 @@ import { TransactionHelper } from './TransactionHelper';
 import { ChaincodeError } from './ChaincodeError';
 import { Transform } from './utils/datatransform';
 import { ChaincodeMockStub } from './mocking/ChaincodeMockStub';
-import { MockStateQueryIterator } from './mocking/MockStateQueryIterator';
 import { Helpers } from './utils/helpers';
 
 export {
@@ -12,6 +11,5 @@ export {
     ChaincodeError,
     Transform,
     ChaincodeMockStub,
-    MockStateQueryIterator,
     Helpers
 }
