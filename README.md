@@ -163,7 +163,7 @@ On *error*, this response will look like this.
 
 ```json
 {
-    "status": 200,
+    "status": 500,
     "message": <Buffer_with_your_error_message>
 }
 ```
