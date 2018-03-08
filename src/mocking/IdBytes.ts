@@ -1,3 +1,6 @@
+/**
+ * @hidden
+ */
 export class IdBytes {
     constructor(private cert: string) {
 

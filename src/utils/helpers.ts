@@ -1,6 +1,9 @@
 import { Logger, LoggerInstance, transports } from 'winston';
 import { isArray } from 'util';
 
+/**
+ * helper functions
+ */
 export class Helpers {
 
     /**

@@ -1,5 +1,8 @@
 import { SplitCompositekey } from 'fabric-shim';
 
+/**
+ * @hidden
+ */
 export class CompositeKeys {
 
     static MIN_UNICODE_RUNE_VALUE = '\u0000';

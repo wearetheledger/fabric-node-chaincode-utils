@@ -1,5 +1,8 @@
 import { Iterators, KV } from 'fabric-shim';
 
+/**
+ * @hidden
+ */
 export class MockStateQueryIterator implements Iterators.StateQueryIterator {
 
     private currentLoc = 0;

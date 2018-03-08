@@ -1,5 +1,8 @@
 import * as _ from 'lodash';
 
+/**
+ * ChaincodeError
+ */
 export class ChaincodeError extends Error {
 
     private data: any;

@@ -1,6 +1,9 @@
 import * as _ from 'lodash';
 import { Iterators, KV } from 'fabric-shim';
 
+/**
+ * Transform
+ */
 export class Transform {
 
     /**

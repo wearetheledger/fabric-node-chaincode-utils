@@ -3,6 +3,9 @@ import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
 
+/**
+ *  TransactionHelper
+ */
 export class TransactionHelper {
 
     constructor(private stub: Stub) {
