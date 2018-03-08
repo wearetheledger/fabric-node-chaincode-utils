@@ -10,7 +10,7 @@
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
     "clean": "rimraf dist",
     "prepare": "npm run build",
-    "generate:docs": "rimraf docs && typedoc src --out docs --excludePrivate && touch docs/.nojekyll"
+    "generate:docs": "rimraf docs && typedoc src --out docs && touch docs/.nojekyll && touch docs/modules/.nojekyll"
   },
   "repository": {
     "type": "git",
