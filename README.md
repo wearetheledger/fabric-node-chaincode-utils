@@ -33,7 +33,7 @@ export class MyChaincode extends Chaincode {
 }
 ```
 
-The Chaincode base class also implements the `Invoke()` method, it will search in your class for existing chaincode methods with the function name your sent. It will also automatically wrap and serialize the reponse with `shim.success()` and `shim.error()`. You can just return the javascript object and it will do the rest. So for example, if we invoke our chaincode with function `queryCar`, the function below will be executed.
+The Chaincode base class also implements the `Invoke()` method, it will search in your class for existing chaincode methods with the function name your sent. It will also automatically wrap and serialize the reponse with `shim.success()` and `shim.error()`. You can just return the javascript object and it will do the rest, **BUT** returning a Buffer is still supported aswell. So for example, if we invoke our chaincode with function `queryCar`, the function below will be executed.
 
 ```javascript
 
@@ -148,9 +148,7 @@ Examples are located at [examples/tests](examples/tests)
 ### How to test
 Testing NodeJS chaincode works similarly to testing using the mockstub in the GOlang chaincode.
 
-The **ChaincodeMockStub** has 2 important mock functions `mockInit`and `mockInvoke`. By passing your chaincode, it will mock a transaction and execute a invoke/init similarly to how it will originally be called.
-
-Both the `mockInit`and the `mockInvoke` will return a [ChaincodeResponse](https://github.com/wearetheledger/fabric-shim-types/blob/4b8844769c2439303954d03f5c8a66dc0a795ed4/index.d.ts#L93). Using this ChaincodeResponse object, we can test whether or not the action returned an expected result.
+The **ChaincodeMockStub** has 2 important mock functions `mockInit`and `mockInvoke`. By passing your chaincode, it will mock a transaction and execute a invoke/init similarly to how it will originally be called. Both these functions will return a [ChaincodeResponse](https://github.com/wearetheledger/fabric-shim-types/blob/4b8844769c2439303954d03f5c8a66dc0a795ed4/index.d.ts#L93). Using this ChaincodeResponse object, we can test whether or not the action returned an expected result.
 
 On *success*, this response will look like this. If the method returns something, the reponse will also contain a `payload`.
 
@@ -217,7 +215,7 @@ describe('Test MyChaincode', () => {
 ```
 
 ### Test Init
-The `Init()`method can be tested using the `mockStub.mockInit(txId,args)`. It will create a new mock transaction and call the init method on your chaincode. Since the init happens when instantiating your chaincode, you generally don't want it to return anything. 
+The `Init()`method can be tested using the `mockStub.mockInit(txId: string, args: string[])` function. It will create a new mock transaction and call the init method on your chaincode. Since the init happens when instantiating your chaincode, you generally don't want it to return anything. So we check for the response status here.
 
 ```javascript
 import { MyChaincode } from '../MyChaincode';
@@ -229,15 +227,135 @@ const chaincode = new MyChaincode();
 describe('Test MyChaincode', () => {
 
     it("Should init without issues", async () => {
-        const stub = new ChaincodeMockStub("MyMockStub", chaincode);
+        const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
 
-        const response = await stub.mockInit("tx1", []);
+        const response = await mockStub.mockInit("tx1", []);
 
         expect(response.status).to.eql(200)
     });
 });
 ```
 
+### Test Invoke
+The `Invoke()`method can be tested using the `mockStub.mockInvoke(txId: string, args: string[])` function. It will create a new mock transaction and call the invoke method on your chaincode. The client will either send a query or an invoke, but the chaincode will accept these both as invoke. In your tests there isn't any difference, both invokes and queries can return a result.
+
+**Test queryCar**
+```javascript
+import { MyChaincode } from '../MyChaincode';
+import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
+
+// You always need your chaincode so it knows which chaincode to invoke on
+const chaincode = new MyChaincode();
+
+describe('Test MyChaincode', () => {
+
+    it("Should query car", async () => {
+        const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
+        
+        const response = await mockStub.mockInvoke("tx2", ['queryCar', `CAR0`]);
+
+        expect(Transform.bufferToObject(response.payload)).to.deep.eq({
+            'make': 'prop1',
+            'model': 'prop2',
+            'color': 'prop3',
+            'owner': 'owner',
+            'docType': 'car'
+        });
+    });
+});
+```
+
+**Test createCar**
+```javascript
+import { MyChaincode } from '../MyChaincode';
+import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
+
+// You always need your chaincode so it knows which chaincode to invoke on
+const chaincode = new MyChaincode();
+
+describe('Test MyChaincode', () => {
+
+    it("Should be able to add car", async () => {
+        const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
+
+        const response = await mockStub.mockInvoke("tx1", ['createCar', `CAR0`, `prop1`, `prop2`, `prop3`, `owner`]);
+
+        expect(response.status).to.eql(200)
+
+        const response = await mockStub.mockInvoke("tx1", ['queryCar', `CAR0`]);
+
+        expect(Transform.bufferToObject(response.payload)).to.deep.eq({
+            'make': 'prop1',
+            'model': 'prop2',
+            'color': 'prop3',
+            'owner': 'owner',
+            'docType': 'car'
+        })
+    });
+});
+```
+
+### Testing individual classes
+You are not required to only test using the `mockInvoke` and `mockInit`. You can directly call the methods on your chaincode or on the mockStub if you really want to.
+
+#### Testing using Mychaincode directly
+A remark when using this, depending what you return in your function, you will be able to recieve a Buffer or an object in your tests. This is discussed in [chaincode](#chaincode)
+```javascript
+import { MyChaincode } from '../MyChaincode';
+import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
+
+// You always need your chaincode so it knows which chaincode to invoke on
+const chaincode = new MyChaincode();
+
+describe('Test MyChaincode', () => {
+
+    it("Should be able to add car", async () => {
+        const stub = new ChaincodeMockStub("MyMockStub", chaincode);
+
+        const car0 = {
+            'make': 'Toyota',
+            'model': 'Prius',
+            'color': 'blue',
+            'owner': 'Tomoko',
+            'docType': 'car'
+        };
+
+        const car = await chaincode.queryCar(stub, new TransactionHelper(stub), ["CAR0"])
+
+        expect(car).to.deep.equal(car0);
+    });
+});
+```
+#### Testing using ChaincodeMockStub directly 🤨
+You can do this, but you shouldn't. Your logic should be written in your functions, not your tests. 
+```javascript
+import { MyChaincode } from '../MyChaincode';
+import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
+
+// You always need your chaincode so it knows which chaincode to invoke on
+const chaincode = new MyChaincode();
+
+describe('Test MyChaincode', () => {
+
+    it("Should be able to add car", async () => {
+        const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
+
+        const query = {
+            selector: {
+                model: {
+                    "$in": ['Nano', "Punto"]
+                }
+            }
+        };
+
+        const it = await mockStub.getQueryResult(JSON.stringify(query));
+
+        const items = await Transform.iteratorToList(it);
+
+        expect(items).to.be.length(2)
+    });
+});
+```
 
 ## Contributing
  
