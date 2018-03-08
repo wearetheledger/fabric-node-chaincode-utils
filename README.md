@@ -299,7 +299,7 @@ describe('Test MyChaincode', () => {
 You are not required to only test using the `mockInvoke` and `mockInit`. You can directly call the methods on your chaincode or on the mockStub if you really want to.
 
 #### Testing using Mychaincode directly
-A remark when using this, depending what you return in your function, you will be able to recieve a Buffer or an object in your tests. This is discussed in [chaincode](#chaincode)
+A remark when using this, depending what you return in your function, you will be able to recieve a Buffer or an object in your tests. This is discussed in [chaincode](#writing-chaincode)
 ```javascript
 import { MyChaincode } from '../MyChaincode';
 import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
