@@ -6,7 +6,8 @@ export class ChaincodeProposalCreator implements ProposalCreator {
     [fieldName: string]: any;
     mspid: string;
 
-    constructor(private mspId: string, private signingId: string) { }
+    constructor(private mspId: string, private signingId: string) {
+    }
 
     getMspid(): string {
         return this.mspId;

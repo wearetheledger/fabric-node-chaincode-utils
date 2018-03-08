@@ -33,6 +33,9 @@ const defaultUserCert = '-----BEGIN CERTIFICATE-----' +
     '9v3hRt1r8j8vN0pMcg==' +
     '-----END CERTIFICATE-----';
 
+/**
+ * Mock implementation of the fabric-shim stub
+ */
 export class ChaincodeMockStub implements MockStub {
 
     private logger: LoggerInstance;
@@ -44,22 +47,43 @@ export class ChaincodeMockStub implements MockStub {
     private invokables: Map<string, MockStub>;
     private signedProposal: SignedProposal;
 
+    /**
+     * @param {string} name - Name of the mockstub
+     * @param {Chaincode} cc - Your chaincode
+     * @param {string} [usercert] - User creds certificate with/without attributes
+     */
     constructor(private name: string, private cc: Chaincode, private usercert: string = defaultUserCert) {
         this.logger = Helpers.log(this.name);
     }
 
+    /**
+     * @returns {string}
+     */
     getTxID(): string {
         return this.txID;
     }
 
+    /**
+     * Get the current arguments
+     *
+     * @returns {string[]}
+     */
     getArgs(): string[] {
         return this.args;
     }
 
+    /**
+     * Same as getArgs()
+     *
+     * @returns {string[]}
+     */
     getStringArgs(): string[] {
         return this.args;
     }
 
+    /**
+     * @returns {{params: string[]; fcn: string}}
+     */
     getFunctionAndParameters(): { params: string[]; fcn: string } {
 
         const params = this.getStringArgs();
@@ -76,29 +100,48 @@ export class ChaincodeMockStub implements MockStub {
         };
     }
 
-    // Used to indicate to a chaincode that it is part of a transaction.
-    // This is important when chaincodes invoke each other.
-    // MockStub doesn't support concurrent transactions at present.
+    /**
+     * Used to indicate to a chaincode that it is part of a transaction.
+     * This is important when chaincodes invoke each other.
+     * MockStub doesn't support concurrent transactions at present.
+     *
+     * @param {string} txid
+     */
     mockTransactionStart(txid: string): void {
         this.txID = txid;
         this.setSignedProposal(<SignedProposal>{});
         this.setTxTimestamp(new Timestamp());
     }
 
-    // End a mocked transaction, clearing the UUID.
+    /**
+     * End a mocked transaction, clearing the UUID.
+     *
+     * @param {string} uuid
+     */
     mockTransactionEnd(uuid: string): void {
         this.signedProposal = null;
         this.txID = '';
     }
 
-    // Register a peer chaincode with this MockStub
-    // invokableChaincodeName is the name or hash of the peer
-    // otherStub is a MockStub of the peer, already intialised
+    /**
+     * Register a peer chaincode with this MockStub
+     * invokableChaincodeName is the name or hash of the peer
+     * otherStub is a MockStub of the peer, already intialised
+     *
+     * @param {string} invokableChaincodeName
+     * @param {"fabric-shim".MockStub} otherStub
+     */
     mockPeerChaincode(invokableChaincodeName: string, otherStub: MockStub): void {
         this.invokables[invokableChaincodeName] = otherStub;
     }
 
-    // Initialise this chaincode,  also starts and ends a transaction.
+    /**
+     * Initialise this chaincode,  also starts and ends a transaction.
+     *
+     * @param {string} uuid
+     * @param {string[]} args
+     * @returns {Promise<"fabric-shim".ChaincodeReponse>}
+     */
     async mockInit(uuid: string, args: string[]): Promise<ChaincodeReponse> {
         this.args = args;
         this.mockTransactionStart(uuid);
@@ -107,7 +150,13 @@ export class ChaincodeMockStub implements MockStub {
         return res;
     }
 
-    // Invoke this chaincode, also starts and ends a transaction.
+    /**
+     * Invoke this chaincode, also starts and ends a transaction.
+     *
+     * @param {string} uuid
+     * @param {string[]} args
+     * @returns {Promise<"fabric-shim".ChaincodeReponse>}
+     */
     async mockInvoke(uuid: string, args: string[]): Promise<ChaincodeReponse> {
         this.args = args;
         this.mockTransactionStart(uuid);
@@ -116,7 +165,14 @@ export class ChaincodeMockStub implements MockStub {
         return res;
     }
 
-    // InvokeChaincode calls a peered chaincode.
+    /**
+     * InvokeChaincode calls a peered chaincode.
+     *
+     * @param {string} chaincodeName
+     * @param {Buffer[]} args
+     * @param {string} channel
+     * @returns {Promise<"fabric-shim".ChaincodeReponse>}
+     */
     async invokeChaincode(chaincodeName: string, args: Buffer[], channel: string): Promise<ChaincodeReponse> {
         // Internally we use chaincode name as a composite name
         if (channel != '') {
@@ -128,7 +184,14 @@ export class ChaincodeMockStub implements MockStub {
         return await otherStub.MockInvoke(this.txID, args);
     }
 
-    // Invoke this chaincode, also starts and ends a transaction.
+    /**
+     * Invoke this chaincode, also starts and ends a transaction.
+     *
+     * @param {string} uuid
+     * @param {string[]} args
+     * @param {"fabric-shim".SignedProposal} sp
+     * @returns {Promise<"fabric-shim".ChaincodeReponse>}
+     */
     async mockInvokeWithSignedProposal(uuid: string, args: string[], sp: SignedProposal): Promise<ChaincodeReponse> {
         this.args = args;
         this.mockTransactionStart(uuid);
@@ -138,10 +201,23 @@ export class ChaincodeMockStub implements MockStub {
         return res;
     }
 
+    /**
+     * Get a stored value for this key in the local state
+     *
+     * @param {string} key
+     * @returns {Promise<Buffer>}
+     */
     getState(key: string): Promise<Buffer> {
         return this.state[key];
     }
 
+    /**
+     * Store a value for this key in the local state
+     *
+     * @param {string} key
+     * @param value
+     * @returns {Promise<Buffer>}
+     */
     putState(key: string, value: Buffer): Promise<any> {
         if (this.txID == '') {
             return Promise.reject('Cannot putState without a transactions - call stub.mockTransactionStart()?');
@@ -152,13 +228,25 @@ export class ChaincodeMockStub implements MockStub {
         return Promise.resolve();
     }
 
-    // DelState removes the specified `key` and its value from the ledger.
+    /**
+     * DelState removes the specified `key` and its value from the ledger.
+     *
+     * @param {string} key
+     * @returns {Promise<any>}
+     */
     deleteState(key: string): Promise<any> {
         delete this.state[key];
 
         return Promise.resolve();
     }
 
+    /**
+     * Get state by range of keys, empty keys will return everything
+     *
+     * @param {string} startKey
+     * @param {string} endKey
+     * @returns {Promise<"fabric-shim".Iterators.StateQueryIterator>}
+     */
     getStateByRange(startKey: string, endKey: string): Promise<Iterators.StateQueryIterator> {
 
         function strcmp(a: string, b: string) {
@@ -189,14 +277,20 @@ export class ChaincodeMockStub implements MockStub {
 
     }
 
-    // GetQueryResult function can be invoked by a chaincode to perform a
-    // rich query against state database.  Only supported by state database implementations
-    // that support rich query.  The query string is in the syntax of the underlying
-    // state database. An iterator is returned which can be used to iterate (next) over
-    // the query result set
-    // ==========================
-    // Blog post on writing rich queries -
-    // https://medium.com/wearetheledger/hyperledger-fabric-couchdb-fantastic-queries-and-where-to-find-them-f8a3aecef767
+    /**
+     *
+     * GetQueryResult function can be invoked by a chaincode to perform a
+     * rich query against state database.  Only supported by state database implementations
+     * that support rich query.  The query string is in the syntax of the underlying
+     * state database. An iterator is returned which can be used to iterate (next) over
+     * the query result set.
+     *
+     * Blog post on writing rich queries -
+     * https://medium.com/wearetheledger/hyperledger-fabric-couchdb-fantastic-queries-and-where-to-find-them-f8a3aecef767
+     *
+     * @param {string} query
+     * @returns {Promise<"fabric-shim".Iterators.StateQueryIterator>}
+     */
     getQueryResult(query: string): Promise<Iterators.StateQueryIterator> {
 
         const keyValues: any = {};
@@ -225,10 +319,22 @@ export class ChaincodeMockStub implements MockStub {
         return Promise.resolve(new MockStateQueryIterator(items));
     }
 
+    /**
+     * @todo Implement
+     * @param {string} key
+     * @returns {Promise<"fabric-shim".Iterators.HistoryQueryIterator>}
+     */
     getHistoryForKey(key: string): Promise<Iterators.HistoryQueryIterator> {
         return undefined;
     }
 
+    /**
+     * Retrieve state by partial keys
+     *
+     * @param {string} objectType
+     * @param {string[]} attributes
+     * @returns {Promise<"fabric-shim".Iterators.StateQueryIterator>}
+     */
     getStateByPartialCompositeKey(objectType: string, attributes: string[]): Promise<Iterators.StateQueryIterator> {
         const partialCompositeKey = CompositeKeys.createCompositeKey(objectType, attributes);
 
@@ -266,22 +372,38 @@ export class ChaincodeMockStub implements MockStub {
         return new ChaincodeProposalCreator('dummymspId', this.usercert);
     }
 
-    // Not implemented
+    /**
+     * @todo Implement
+     * @returns {string}
+     */
     getBinding(): string {
         return undefined;
     }
 
-    // Not implemented
+    /**
+     * @todo Implement
+     *
+     * @returns {Map<string, Buffer>}
+     */
     getTransient(): Map<string, Buffer> {
         return undefined;
     }
 
-    // Not implemented
+    /**
+     * @todo Implement
+     *
+     * @param {string} name
+     * @param {Buffer} payload
+     */
     setEvent(name: string, payload: Buffer): void {
         throw new Error('Not implemented');
     }
 
-    // Not implemented
+    /**
+     * @todo Implement
+     *
+     * @returns {string}
+     */
     getChannelID(): string {
         return undefined;
     }

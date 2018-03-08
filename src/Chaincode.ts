@@ -7,6 +7,9 @@ import { ChaincodeError } from './ChaincodeError';
 import { TransactionHelper } from './TransactionHelper';
 import { Transform } from './utils/datatransform';
 
+/**
+ * Chaincode base wrapper
+ */
 export class Chaincode implements ChaincodeInterface {
 
     private logger: LoggerInstance;
