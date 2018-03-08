@@ -11,8 +11,8 @@ export class Chaincode implements ChaincodeInterface {
 
     private logger: LoggerInstance;
 
-    constructor() {
-        this.logger = Helpers.log(this.name);
+    constructor(logLevel: string) {
+        this.logger = Helpers.log(this.name, logLevel);
     }
 
     /**
@@ -90,12 +90,15 @@ export class Chaincode implements ChaincodeInterface {
         }
 
         try {
+            this.logger.debug(`============= START : ${ret.fcn} ===========`);
 
             let payload = await method.call(this, stub, this.getTransactionHelperFor(stub), parsedParameters);
 
             if (payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
             }
+
+            this.logger.debug(`============= END : ${ret.fcn} ===========`);
 
             return shim.success(payload);
 

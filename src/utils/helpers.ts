@@ -5,11 +5,11 @@ export class Helpers {
 
     /**
      * Winston Logger with default level: debug
-     * 
+     *
      * @static
-     * @param {string} name 
-     * @param {string} [level] 
-     * @returns {LoggerInstance} 
+     * @param {string} name
+     * @param {string} [level]
+     * @returns {LoggerInstance}
      * @memberof Helpers
      */
     public static log(name: string, level?: string): LoggerInstance {
@@ -29,15 +29,17 @@ export class Helpers {
     /**
      * Check number of args
      * accepts array of numbers
-     * 
+     *
      * @static
-     * @param {string[]} args 
-     * @param {(number | number[])} amount 
+     * @param {string[]} args
+     * @param {(number | number[])} amount
      * @memberof Helpers
      */
     public static checkArgs(args: string[], amount: number | number[]) {
         if (isArray(amount)) {
-            if (!amount.filter(a => { return args.length === a; }).length) {
+            if (!amount.filter(a => {
+                    return args.length === a;
+                }).length) {
                 throw new Error(`Incorrect number of arguments. Expecting ${amount}`);
             }
         } else {

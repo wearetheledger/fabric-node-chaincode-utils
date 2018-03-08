@@ -16,3 +16,4 @@ test
 .travis.yml
 .tslint.json
 tsconfig.json
+examples
