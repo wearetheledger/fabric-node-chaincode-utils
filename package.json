@@ -54,7 +54,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run generate:docs",
       "pre-push": "npm run test"
     }
   }
