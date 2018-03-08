@@ -8,7 +8,8 @@
     "build": "npm run clean && tsc",
     "test": "npm run lint && mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,7 @@
   },
   "keywords": [],
   "author": "TheLedger <https://github.com/wearetheledger>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/wearetheledger/fabric-chaincode-utils/issues"
   },
