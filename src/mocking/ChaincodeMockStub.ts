@@ -320,15 +320,6 @@ export class ChaincodeMockStub implements MockStub {
     }
 
     /**
-     * @todo Implement
-     * @param {string} key
-     * @returns {Promise<"fabric-shim".Iterators.HistoryQueryIterator>}
-     */
-    getHistoryForKey(key: string): Promise<Iterators.HistoryQueryIterator> {
-        return undefined;
-    }
-
-    /**
      * Retrieve state by partial keys
      *
      * @param {string} objectType
@@ -370,6 +361,15 @@ export class ChaincodeMockStub implements MockStub {
 
     getCreator(): ProposalCreator {
         return new ChaincodeProposalCreator('dummymspId', this.usercert);
+    }
+
+    /**
+     * @todo Implement
+     * @param {string} key
+     * @returns {Promise<"fabric-shim".Iterators.HistoryQueryIterator>}
+     */
+    getHistoryForKey(key: string): Promise<Iterators.HistoryQueryIterator> {
+        return undefined;
     }
 
     /**

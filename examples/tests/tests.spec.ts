@@ -7,6 +7,15 @@ import { expect } from "chai";
 const chaincode = new MyChaincode();
 
 describe('Test MyChaincode', () => {
+
+    it("Should init without issues", async () => {
+        const stub = new ChaincodeMockStub("MyMockStub", chaincode);
+
+        const response = await stub.mockInit("tx1", []);
+
+        expect(response.status).to.eql(200)
+    });
+
     it("Should be able to init and query all cars", async () => {
         const stub = new ChaincodeMockStub("MyMockStub", chaincode);
 
@@ -95,7 +104,7 @@ describe('Test MyChaincode', () => {
 
         const response = await stub.mockInvoke("tx1", ['createCar', `CAR0`, `prop1`, `prop2`, `prop3`, `owner`]);
 
-        expect(response.status).to.eql(200)
+        expect(response.status).to.eql(200);
 
         const response = await stub.mockInvoke("tx1", ['queryCar', `CAR0`]);
 

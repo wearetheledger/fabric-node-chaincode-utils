@@ -6,6 +6,7 @@ import { ChaincodeReponse } from 'fabric-shim';
 import { Transform } from '../src/utils/datatransform';
 
 import { expect } from 'chai';
+import { TransactionHelper } from "../src/TransactionHelper";
 
 const chaincode = new TestChaincode();
 
@@ -162,4 +163,5 @@ describe('Test Mockstub', () => {
 
         expect(items).to.be.length(2)
     });
+
 });
