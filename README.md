@@ -192,7 +192,7 @@ After this, in your tests, you can create a new mockstub. You have to pass a ran
 ```javascript
 import { ChaincodeMockStub, Transform } from "@theledger/fabric-chaincode-utils";
 
-const stub = new ChaincodeMockStub("MyMockStub", chaincode);
+const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
 ```
 
 #### Example
@@ -207,7 +207,7 @@ const chaincode = new MyChaincode();
 describe('Test MyChaincode', () => {
 
     it("Should init without issues", async () => {
-        const stub = new ChaincodeMockStub("MyMockStub", chaincode);
+        const mockStub = new ChaincodeMockStub("MyMockStub", chaincode);
 
         // Your test code
     });
