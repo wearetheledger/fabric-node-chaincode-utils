@@ -12,6 +12,7 @@ script:
 deploy:
   provider: npm
   email: jonas.snellinckx@theledger.be
+  skip_cleanup: true
   api_key: $NPM_TOKEN
   on:
     tags: true

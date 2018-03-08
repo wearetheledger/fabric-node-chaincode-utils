@@ -1,6 +1,6 @@
 {
   "name": "@theledger/fabric-chaincode-utils",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,7 @@
     "test": "npm run lint && mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
     "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
     "clean": "rimraf dist",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
