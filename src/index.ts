@@ -1,15 +1,13 @@
 import { Chaincode } from './Chaincode';
-import { TransactionHelper } from './TransactionHelper';
+import { StubHelper } from './StubHelper';
 import { ChaincodeError } from './ChaincodeError';
 import { Transform } from './utils/datatransform';
-import { ChaincodeMockStub } from './mocking/ChaincodeMockStub';
 import { Helpers } from './utils/helpers';
 
 export {
     Chaincode,
-    TransactionHelper,
+    StubHelper,
     ChaincodeError,
     Transform,
-    ChaincodeMockStub,
     Helpers
 }

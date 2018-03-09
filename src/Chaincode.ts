@@ -4,7 +4,7 @@ import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
 import { ERRORS } from './constants/errors';
 import { ChaincodeError } from './ChaincodeError';
-import { TransactionHelper } from './TransactionHelper';
+import { StubHelper } from './StubHelper';
 import { Transform } from './utils/datatransform';
 
 /**
@@ -32,15 +32,14 @@ export class Chaincode implements ChaincodeInterface {
     }
 
     /**
-     * the Default TransactionHelper with extra functionality and return your own instance.
+     * the Default StubHelper with extra functionality and return your own instance.
      *
      * @param {Stub} stub
-     * @returns the transaction helper for the given stub. This can be used to extend the stub functionality
+     * @returns the stub helper for the given stub. This can be used to extend the stub functionality
      * @memberof Chaincode
      */
-    getTransactionHelperFor(stub: Stub) {
-
-        return new TransactionHelper(stub);
+    getStubHelperFor(stub: Stub) {
+        return new StubHelper(stub);
     }
 
     /**
@@ -54,7 +53,13 @@ export class Chaincode implements ChaincodeInterface {
     async Init(stub: Stub): Promise<ChaincodeReponse> {
         this.logger.info(`=========== Instantiated ${this.name} chaincode ===========`);
 
-        return shim.success();
+        this.logger.info(`Transaction ID: ${stub.getTxID()}`);
+        this.logger.info(`Args: ${stub.getArgs().join(',')}`);
+
+        let args = stub.getArgs();
+
+        return await this.executeMethod('init', args, stub, true);
+
     }
 
     /**
@@ -74,20 +79,38 @@ export class Chaincode implements ChaincodeInterface {
 
         let ret = stub.getFunctionAndParameters();
 
-        let method = this[ret.fcn];
+        return await this.executeMethod(ret.fcn, ret.params, stub);
+
+    }
+
+    /**
+     * Handle custom method execution
+     *
+     * @param {string} fcn
+     * @param {string[]} params
+     * @param stub
+     * @param {boolean} silent
+     * @returns {Promise<any>}
+     */
+    private async executeMethod(fcn: string, params: string[], stub: Stub, silent = false) {
+        let method = this[fcn];
 
         if (!method) {
-            this.logger.error(`no function of name: ${ret.fcn} found`);
+            if (!silent) {
+                this.logger.error(`no function of name: ${fcn} found`);
 
-            throw new ChaincodeError(ERRORS.UNKNOWN_FUNCTION_ERROR, {
-                'function': ret.fcn
-            });
+                throw new ChaincodeError(ERRORS.UNKNOWN_FUNCTION_ERROR, {
+                    'function': fcn
+                });
+            } else {
+                return;
+            }
         }
 
         let parsedParameters;
 
         try {
-            parsedParameters = this.parseParameters(ret.params);
+            parsedParameters = this.parseParameters(params);
         } catch (err) {
             throw new ChaincodeError(ERRORS.PARSING_PARAMETERS_ERROR, {
                 'message': err.message
@@ -95,15 +118,15 @@ export class Chaincode implements ChaincodeInterface {
         }
 
         try {
-            this.logger.debug(`============= START : ${ret.fcn} ===========`);
+            this.logger.debug(`============= START : ${fcn} ===========`);
 
-            let payload = await method.call(this, stub, this.getTransactionHelperFor(stub), parsedParameters);
+            let payload = await method.call(this, this.getStubHelperFor(stub), parsedParameters);
 
             if (payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
             }
 
-            this.logger.debug(`============= END : ${ret.fcn} ===========`);
+            this.logger.debug(`============= END : ${fcn} ===========`);
 
             return shim.success(payload);
 

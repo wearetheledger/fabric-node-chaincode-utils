@@ -1,15 +1,14 @@
-import { Stub } from 'fabric-shim';
-import { Chaincode, ChaincodeError, Helpers, TransactionHelper } from '@theledger/fabric-chaincode-utils';
+import { Chaincode, ChaincodeError, Helpers, StubHelper } from '@theledger/fabric-chaincode-utils';
 
 export class MyChaincode extends Chaincode {
 
-    async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async queryCar(stubHelper: StubHelper, args: string[]) {
 
         Helpers.checkArgs(args, 1);
 
         let carNumber = args[0];
 
-        const car = txHelper.getStateAsObject(carNumber);
+        const car = stubHelper.getStateAsObject(carNumber);
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
@@ -18,7 +17,7 @@ export class MyChaincode extends Chaincode {
         return car;
     }
 
-    async initLedger(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async initLedger(stubHelper: StubHelper, args: string[]) {
 
         let cars = [{
             make: 'Toyota',
@@ -76,13 +75,13 @@ export class MyChaincode extends Chaincode {
             const car: any = cars[i];
 
             car.docType = 'car';
-            await txHelper.putState('CAR' + i, car);
+            await stubHelper.putState('CAR' + i, car);
             Helpers.log('Added <--> ', car);
         }
 
     }
 
-    async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async createCar(stubHelper: StubHelper, args: string[]) {
         Helpers.checkArgs(args, 5);
 
         let car = {
@@ -93,25 +92,25 @@ export class MyChaincode extends Chaincode {
             owner: args[4]
         };
 
-        await txHelper.putState(args[0], car);
+        await stubHelper.putState(args[0], car);
     }
 
-    async queryAllCars(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async queryAllCars(stubHelper: StubHelper, args: string[]) {
 
         let startKey = 'CAR0';
         let endKey = 'CAR999';
 
-        return await txHelper.getStateByRangeAsList(startKey, endKey);
+        return await stubHelper.getStateByRangeAsList(startKey, endKey);
 
     }
 
-    async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async changeCarOwner(stubHelper: StubHelper, args: string[]) {
         Helpers.checkArgs(args, 2);
 
-        let car = await txHelper.getStateAsObject(args[0]);
+        let car = await stubHelper.getStateAsObject(args[0]);
 
         car.owner = args[1];
 
-        await txHelper.putState(args[0], car);
+        await stubHelper.putState(args[0], car);
     }
 }
