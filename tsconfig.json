@@ -9,6 +9,7 @@
     "outDir": "./dist",
     "types": [
       "@theledger/fabric-shim-types",
+      "@theledger/yup-types",
       "@types/chai"
     ],
     "rootDir": "./src",

@@ -1,5 +1,6 @@
 import { Logger, LoggerInstance, transports } from 'winston';
 import { isArray } from 'util';
+import { YupSchema } from './yupschema.model';
 
 /**
  * helper functions
@@ -32,17 +33,17 @@ export class Helpers {
     /**
      * Check number of args
      * accepts array of numbers
-     *
+     * 
      * @static
-     * @param {string[]} args
-     * @param {(number | number[])} amount
+     * @param {YupSchema[]} args 
+     * @param {(number | number[])} amount 
      * @memberof Helpers
      */
-    public static checkArgs(args: string[], amount: number | number[]) {
+    public static checkArgs(args: YupSchema[], amount: number | number[]) {
         if (isArray(amount)) {
             if (!amount.filter(a => {
-                    return args.length === a;
-                }).length) {
+                return args.length === a;
+            }).length) {
                 throw new Error(`Incorrect number of arguments. Expecting ${amount}`);
             }
         } else {
