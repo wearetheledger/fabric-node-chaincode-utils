@@ -19,9 +19,9 @@
     lodash "^4.17.5"
     winston "^2.4.0"
 
-"@theledger/fabric-shim-types@^1.0.4":
+"@theledger/fabric-shim-types@https://github.com/wearetheledger/fabric-shim-types":
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@theledger/fabric-shim-types/-/fabric-shim-types-1.0.4.tgz#29846a4ab92e3c72a6c498017c5ebedaa1f13ed1"
+  resolved "https://github.com/wearetheledger/fabric-shim-types#fab9bcc12b36a93c6d234b729515c4904b058a28"
   dependencies:
     "@types/google-protobuf" "^3.2.7"
     "@types/log4js" "^2.3.5"
@@ -102,10 +102,6 @@
   resolved "https://registry.yarnpkg.com/@types/winston/-/winston-2.3.8.tgz#88964f45ecb5ed1feb4bfb38a24316bee8bf8768"
   dependencies:
     "@types/node" "*"
-
-"@types/yup@^0.24":
-  version "0.24.1"
-  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.24.1.tgz#d80d9589b17cd8d90aa7aab428b46a93d3b509c7"
 
 abbrev@1:
   version "1.1.1"

@@ -1,10 +1,9 @@
-import * as Yup from 'yup';
-/* tslint:disable */
 import { Helpers } from '../src/utils/helpers';
 import { ChaincodeReponse } from 'fabric-shim';
 import { Chaincode } from '../src/Chaincode';
 import { ChaincodeError } from '../src/ChaincodeError';
-import { StubHelper } from "../src/StubHelper";
+import { StubHelper } from '../src/StubHelper';
+import * as Yup from 'yup';
 
 export class TestChaincode extends Chaincode {
 
