@@ -15,13 +15,6 @@
     "@types/google-protobuf" "^3.2.7"
     "@types/log4js" "^2.3.5"
 
-"@theledger/yup-types@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@theledger/yup-types/-/yup-types-1.0.1.tgz#7c57a813662630d3c588e330334f0a1918ea45a8"
-  dependencies:
-    "@types/google-protobuf" "^3.2.7"
-    "@types/log4js" "^2.3.5"
-
 "@types/chai@^4.0.4":
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.2.tgz#f1af664769cfb50af805431c407425ed619daa21"
@@ -98,6 +91,10 @@
   resolved "https://registry.yarnpkg.com/@types/winston/-/winston-2.3.8.tgz#88964f45ecb5ed1feb4bfb38a24316bee8bf8768"
   dependencies:
     "@types/node" "*"
+
+"@types/yup@^0.24":
+  version "0.24.1"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.24.1.tgz#d80d9589b17cd8d90aa7aab428b46a93d3b509c7"
 
 abbrev@1:
   version "1.1.1"

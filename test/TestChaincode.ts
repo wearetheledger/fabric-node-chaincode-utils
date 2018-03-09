@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 /* tslint:disable */
 import { Helpers } from '../src/utils/helpers';
 import { ChaincodeReponse, Stub } from 'fabric-shim';
@@ -6,8 +7,6 @@ import { TransactionHelper } from '../src/TransactionHelper';
 import { Transform } from '../src/utils/datatransform';
 import { ChaincodeError } from '../src/ChaincodeError';
 import shim = require('fabric-shim');
-import Yup from 'yup';
-
 
 export class TestChaincode extends Chaincode {
 
@@ -26,12 +25,12 @@ export class TestChaincode extends Chaincode {
 
     async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
 
-        let verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
 
-        let carAsBytes: any = await stub.getState(verifiedArgs.key); //get the car from chaincode state
+        const carAsBytes: any = await stub.getState(verifiedArgs.key); //get the car from chaincode state
 
         if (!carAsBytes || carAsBytes.toString().length <= 0) {
             throw new ChaincodeError('This car does not exist');
@@ -117,7 +116,7 @@ export class TestChaincode extends Chaincode {
     async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : Create Car ===========')
 
-        let verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
                 make: Yup.string().required(),
@@ -132,8 +131,8 @@ export class TestChaincode extends Chaincode {
 
     async queryAllCars(stub: Stub, txHelper: TransactionHelper, args: string[]) {
 
-        let startKey = 'CAR0';
-        let endKey = 'CAR999';
+        const startKey = 'CAR0';
+        const endKey = 'CAR999';
 
         return await txHelper.getStateByRangeAsList(startKey, endKey);
     }
@@ -141,13 +140,13 @@ export class TestChaincode extends Chaincode {
     async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : changeCarOwner ===========');
 
-        let verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
                 owner: Yup.string().required(),
             }));
 
-        let carAsBytes = await stub.getState(verifiedArgs.key);
+        const carAsBytes = await stub.getState(verifiedArgs.key);
         let car = JSON.parse(carAsBytes.toString());
         car.owner = verifiedArgs.owner;
 
