@@ -141,8 +141,8 @@ The Transform class is a helper to provide data transformation to and from the f
 ## Credits
 
 - [@Kunstmaan](https://github.com/Kunstmaan/hyperledger-fabric-node-chaincode-utils) for the initial idea and part of the util code.
-- Developer - Jo ([@jestersimpps](https://github.com/@jestersimpps))
-- Developer - Jonas ([@Superjo149](https://github.com/@Superjo149))
+- Developer - Jo ([@jestersimpps](https://github.com/jestersimpps))
+- Developer - Jonas ([@Superjo149](https://github.com/Superjo149))
 - Company - TheLedger ([theledger.be](https://theledger.be))
 
 ## License
