@@ -103,7 +103,7 @@ export class Chaincode implements ChaincodeInterface {
                     'function': fcn
                 });
             } else {
-                return;
+                return shim.success();
             }
         }
 
