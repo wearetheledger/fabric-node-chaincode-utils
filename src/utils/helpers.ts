@@ -45,7 +45,7 @@ export class Helpers {
 
         const keys = yupSchema._nodes;
 
-        if (args.length != keys.length) {
+        if (!keys || args.length != keys.length) {
             throw new Error(`Incorrect number of arguments. Expecting ${keys.length}`);
         }
 

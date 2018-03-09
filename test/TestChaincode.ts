@@ -1,121 +1,105 @@
 import * as Yup from 'yup';
 /* tslint:disable */
 import { Helpers } from '../src/utils/helpers';
-import { ChaincodeReponse, Stub } from 'fabric-shim';
+import { ChaincodeReponse } from 'fabric-shim';
 import { Chaincode } from '../src/Chaincode';
-import { TransactionHelper } from '../src/TransactionHelper';
-import { Transform } from '../src/utils/datatransform';
 import { ChaincodeError } from '../src/ChaincodeError';
-import shim = require('fabric-shim');
+import { StubHelper } from "../src/StubHelper";
 
 export class TestChaincode extends Chaincode {
 
-    async Init(stub: Stub): Promise<ChaincodeReponse> {
-
-        const args = stub.getArgs();
+    async init(stubHelper: StubHelper, args: string[]): Promise<ChaincodeReponse> {
 
         if (args[0] == 'init') {
-            await this.initLedger(stub, new TransactionHelper(stub));
+            await this.initLedger(stubHelper, args);
         }
 
-        return shim.success(Transform.serialize({
-            args: stub.getArgs()
-        }));
+        return {
+            args
+        }
     }
 
-    async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async queryCar(stubHelper: StubHelper, args: string[]) {
 
         const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
 
-        const carAsBytes: any = await stub.getState(verifiedArgs.key); //get the car from chaincode state
+        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
 
-        if (!carAsBytes || carAsBytes.toString().length <= 0) {
-            throw new ChaincodeError('This car does not exist');
+        if (!car) {
+            throw new ChaincodeError('Car does not exist');
         }
 
-        return carAsBytes;
+        return car;
     }
 
-    async initLedger(stub: Stub, txHelper: TransactionHelper, args?: string[]) {
-        this.logger.debug('============= START : Initialize Ledger ===========');
-        let cars = [];
-        cars.push({
+    async initLedger(stubHelper: StubHelper, args: string[]) {
+
+        let cars = [{
             make: 'Toyota',
             model: 'Prius',
             color: 'blue',
             owner: 'Tomoko'
-        });
-        cars.push({
+        }, {
             make: 'Ford',
             model: 'Mustang',
             color: 'red',
             owner: 'Brad'
-        });
-        cars.push({
+        }, {
             make: 'Hyundai',
             model: 'Tucson',
             color: 'green',
             owner: 'Jin Soo'
-        });
-        cars.push({
+        }, {
             make: 'Volkswagen',
             model: 'Passat',
             color: 'yellow',
             owner: 'Max'
-        });
-        cars.push({
+        }, {
             make: 'Tesla',
             model: 'S',
             color: 'black',
             owner: 'Adriana'
-        });
-        cars.push({
+        }, {
             make: 'Peugeot',
             model: '205',
             color: 'purple',
             owner: 'Michel'
-        });
-        cars.push({
+        }, {
             make: 'Chery',
             model: 'S22L',
             color: 'white',
             owner: 'Aarav'
-        });
-        cars.push({
+        }, {
             make: 'Fiat',
             model: 'Punto',
             color: 'violet',
             owner: 'Pari'
-        });
-        cars.push({
+        }, {
             make: 'Tata',
             model: 'Nano',
             color: 'indigo',
             owner: 'Valeria'
-        });
-        cars.push({
+        }, {
             make: 'Holden',
             model: 'Barina',
             color: 'brown',
             owner: 'Shotaro'
-        });
+        }];
 
         for (let i = 0; i < cars.length; i++) {
             const car: any = cars[i];
 
             car.docType = 'car';
-            await stub.putState('CAR' + i, Buffer.from(JSON.stringify(car)));
-            this.logger.debug('Added <--> ', car);
+            await stubHelper.putState('CAR' + i, car);
+            this.logger.info('Added <--> ', car);
         }
-        this.logger.debug('============= END : Initialize Ledger ===========');
+
     }
 
-    async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        this.logger.debug('============= START : Create Car ===========')
-
+    async createCar(stubHelper: StubHelper, args: string[]) {
         const verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
@@ -125,20 +109,27 @@ export class TestChaincode extends Chaincode {
                 owner: Yup.string().required(),
             }));
 
-        await txHelper.putState(verifiedArgs.key, verifiedArgs);
-        this.logger.debug('============= END : Create Car ===========');
+        let car = {
+            docType: 'car',
+            make: verifiedArgs.make,
+            model: verifiedArgs.model,
+            color: verifiedArgs.color,
+            owner: verifiedArgs.owner
+        };
+
+        await stubHelper.putState(verifiedArgs.key, car);
     }
 
-    async queryAllCars(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async queryAllCars(stubHelper: StubHelper, args: string[]) {
 
         const startKey = 'CAR0';
         const endKey = 'CAR999';
 
-        return await txHelper.getStateByRangeAsList(startKey, endKey);
+        return await stubHelper.getStateByRangeAsList(startKey, endKey);
+
     }
 
-    async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        this.logger.debug('============= START : changeCarOwner ===========');
+    async changeCarOwner(stubHelper: StubHelper, args: string[]) {
 
         const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
             .shape({
@@ -146,12 +137,10 @@ export class TestChaincode extends Chaincode {
                 owner: Yup.string().required(),
             }));
 
-        const carAsBytes = await stub.getState(verifiedArgs.key);
-        let car = JSON.parse(carAsBytes.toString());
+        let car = await stubHelper.getStateAsObject(verifiedArgs.key);
+
         car.owner = verifiedArgs.owner;
 
-        await stub.putState(car.key, Buffer.from(JSON.stringify(car)));
-        shim.success();
-        this.logger.debug('============= END : changeCarOwner ===========');
+        await stubHelper.putState(verifiedArgs.key, car);
     }
 }

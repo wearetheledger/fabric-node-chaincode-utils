@@ -8,6 +8,17 @@
   dependencies:
     babel-runtime "^6.26.0"
 
+"@theledger/fabric-mock-stub@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@theledger/fabric-mock-stub/-/fabric-mock-stub-1.0.1.tgz#08c94d5c9f1a5edb98696c5472c7ba16a760c702"
+  dependencies:
+    "@theledger/couchdb-query-engine" "^2.4.4"
+    "@types/lodash" "^4.14.104"
+    fabric-shim "^1.1.0-alpha"
+    google-protobuf "^3.5.0"
+    lodash "^4.17.5"
+    winston "^2.4.0"
+
 "@theledger/fabric-shim-types@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@theledger/fabric-shim-types/-/fabric-shim-types-1.0.4.tgz#29846a4ab92e3c72a6c498017c5ebedaa1f13ed1"
