@@ -1,8 +1,9 @@
-import { KV, Stub } from 'fabric-shim';
+import { Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
+import { KV } from './index';
 
 /**
  *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
