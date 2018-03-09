@@ -16,7 +16,7 @@ export class Chaincode implements ChaincodeInterface {
 
     public logger: LoggerInstance;
 
-    constructor(logLevel: string) {
+    constructor(logLevel?: string) {
         this.logger = Helpers.getLoggerInstance(this.name, logLevel);
     }
 
@@ -84,20 +84,10 @@ export class Chaincode implements ChaincodeInterface {
             });
         }
 
-        let parsedParameters;
-
-        try {
-            parsedParameters = this.parseParameters(ret.params);
-        } catch (err) {
-            throw new ChaincodeError(ERRORS.PARSING_PARAMETERS_ERROR, {
-                'message': err.message
-            });
-        }
-
         try {
             this.logger.debug(`============= START : ${ret.fcn} ===========`);
 
-            let payload = await method.call(this, stub, this.getTransactionHelperFor(stub), parsedParameters);
+            let payload = await method.call(this, stub, this.getTransactionHelperFor(stub), ret.params);
 
             if (payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
@@ -122,29 +112,5 @@ export class Chaincode implements ChaincodeInterface {
 
             return shim.error(error.serialized);
         }
-    }
-
-    /**
-     * Try and parse params to json
-     *
-     * @private
-     * @param {string[]} params
-     * @returns {any[]} the parsed parameters
-     * @memberof Chaincode
-     */
-    private parseParameters(params: string[]): any[] {
-        const parsedParams: any[] = [];
-
-        params.forEach((param) => {
-            try {
-                // try to parse ...
-                parsedParams.push(JSON.parse(param));
-            } catch (err) {
-                // if it fails fall back to original param
-                parsedParams.push(param);
-            }
-        });
-
-        return parsedParams;
     }
 }

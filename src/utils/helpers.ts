@@ -39,22 +39,23 @@ export class Helpers {
     public static checkArgs<T>(args: string[], yupSchema: any): Promise<T> {
 
         const keys = yupSchema._nodes;
+
         if (args.length != keys.length) {
             throw new Error(`Incorrect number of arguments. Expecting ${keys.length}`);
         }
 
-        let objectToValidate: T;
-        keys.forEach((key: string, index: number) => {
+        let objectToValidate: T = <T>{};
+
+        keys.reverse().forEach((key: string, index: number) => {
             objectToValidate[key] = args[index];
         });
-        return yupSchema.isValid(objectToValidate).then((valid: boolean) => {
-            if (valid) {
-                return objectToValidate;
-            } else {
-                return yupSchema.validate(objectToValidate).catch((errors: any) => {
-                    throw new Error(errors);
-                });
-            }
+
+        yupSchema.cast(objectToValidate);
+
+        return yupSchema.validate(objectToValidate).then((validatedObject: T) => {
+            return validatedObject;
+        }).catch((errors: any) => {
+            throw new Error(errors);
         });
     }
 

@@ -63,21 +63,21 @@ describe('Test Mockstub', () => {
         stub.mockTransactionStart("composite");
 
         // Add car 1
-        const car1 = {objectType: "CAR", make: "volvo", color: "red"};
+        const car1 = { objectType: "CAR", make: "volvo", color: "red" };
 
         const ck1 = stub.createCompositeKey(car1.objectType, [car1.make, car1.color]);
 
         await stub.putState(ck1, Transform.serialize(car1));
 
         // Add car 2
-        const car2 = {objectType: "CAR", make: "volvo", color: "blue"};
+        const car2 = { objectType: "CAR", make: "volvo", color: "blue" };
 
         const ck2 = stub.createCompositeKey(car2.objectType, [car2.make, car2.color]);
 
         await stub.putState(ck2, Transform.serialize(car2));
 
         // Add car 3
-        const car3 = {objectType: "CAR", make: "jaguar", color: "red"};
+        const car3 = { objectType: "CAR", make: "jaguar", color: "red" };
 
         const ck3 = stub.createCompositeKey(car1.objectType, [car3.make, car3.color]);
 
@@ -115,7 +115,7 @@ describe('Test Mockstub', () => {
         }
     });
 
-    it('Test invoke', async () => {
+    it('Test create new car', async () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
 
@@ -125,6 +125,7 @@ describe('Test Mockstub', () => {
 
         expect(Object.keys(stub.state).length).to.equal(1);
     });
+
 
     it('Should be able to query using rich queries', async () => {
 

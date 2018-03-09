@@ -8,6 +8,7 @@ import { ChaincodeError } from '../src/ChaincodeError';
 import shim = require('fabric-shim');
 import Yup from 'yup';
 
+
 export class TestChaincode extends Chaincode {
 
     async Init(stub: Stub): Promise<ChaincodeReponse> {
@@ -25,9 +26,12 @@ export class TestChaincode extends Chaincode {
 
     async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
 
-        let carNumber = args[0];
+        let verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+            }));
 
-        let carAsBytes: any = await stub.getState(carNumber); //get the car from chaincode state
+        let carAsBytes: any = await stub.getState(verifiedArgs.key); //get the car from chaincode state
 
         if (!carAsBytes || carAsBytes.toString().length <= 0) {
             throw new ChaincodeError('This car does not exist');
@@ -113,16 +117,16 @@ export class TestChaincode extends Chaincode {
     async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : Create Car ===========')
 
-        let car = await Helpers.checkArgs(args, Yup.object().shape({
-            key: Yup.string().required(),
-            make: Yup.string().required(),
-            model: Yup.string().required(),
-            color: Yup.string().required(),
-            owner: Yup.string().required(),
-        }));
+        let verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                make: Yup.string().required(),
+                model: Yup.string().required(),
+                color: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
-
-        await txHelper.putState(args[0], car);
+        await txHelper.putState(verifiedArgs.key, verifiedArgs);
         this.logger.debug('============= END : Create Car ===========');
     }
 
@@ -136,15 +140,19 @@ export class TestChaincode extends Chaincode {
 
     async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : changeCarOwner ===========');
-        // Helpers.checkArgs(args, 2);
 
+        let verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
-        let carAsBytes = await stub.getState(args[0]);
+        let carAsBytes = await stub.getState(verifiedArgs.key);
         let car = JSON.parse(carAsBytes.toString());
-        car.owner = args[1];
+        car.owner = verifiedArgs.owner;
 
-        await stub.putState(args[0], Buffer.from(JSON.stringify(car)));
-        this.logger.debug('============= END : changeCarOwner ===========');
+        await stub.putState(car.key, Buffer.from(JSON.stringify(car)));
         shim.success();
+        this.logger.debug('============= END : changeCarOwner ===========');
     }
 }
