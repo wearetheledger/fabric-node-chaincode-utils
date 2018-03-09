@@ -2,7 +2,7 @@
 
 import { ChaincodeReponse } from 'fabric-shim';
 import { expect } from 'chai';
-import { ChaincodeMockStub, Transform } from '@theledger/fabric-chaincode-utils';
+import { ChaincodeMockStub, Transform } from '@theledger/fabric-mock-stub';
 
 export interface InvokeObject {
     fcn: string;
