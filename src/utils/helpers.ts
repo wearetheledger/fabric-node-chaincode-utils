@@ -29,11 +29,16 @@ export class Helpers {
     };
 
     /**
-     * check args number and types
+     * Check number of arguments
+     * try to cast object using yup
+     * validate arguments against predefined types using yup
+     * return validated object
      * 
      * @static
+     * @template T 
      * @param {string[]} args 
-     * @param {YupSchema[]} yupSchema 
+     * @param {*} yupSchema 
+     * @returns {Promise<T>} 
      * @memberof Helpers
      */
     public static checkArgs<T>(args: string[], yupSchema: any): Promise<T> {
