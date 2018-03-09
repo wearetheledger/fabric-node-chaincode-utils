@@ -14,7 +14,7 @@ import { Transform } from './utils/datatransform';
  */
 export class Chaincode implements ChaincodeInterface {
 
-    private logger: LoggerInstance;
+    public logger: LoggerInstance;
 
     constructor(logLevel: string) {
         this.logger = Helpers.getLoggerInstance(this.name, logLevel);

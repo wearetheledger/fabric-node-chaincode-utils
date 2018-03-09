@@ -6,6 +6,7 @@ import { TransactionHelper } from '../src/TransactionHelper';
 import { Transform } from '../src/utils/datatransform';
 import { ChaincodeError } from '../src/ChaincodeError';
 import shim = require('fabric-shim');
+import Yup from 'yup';
 
 export class TestChaincode extends Chaincode {
 
@@ -112,15 +113,14 @@ export class TestChaincode extends Chaincode {
     async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : Create Car ===========')
 
-        Helpers.checkArgs(args, 5);
+        let car = await Helpers.checkArgs(args, Yup.object().shape({
+            key: Yup.string().required(),
+            make: Yup.string().required(),
+            model: Yup.string().required(),
+            color: Yup.string().required(),
+            owner: Yup.string().required(),
+        }));
 
-        let car = {
-            docType: 'car',
-            make: args[1],
-            model: args[2],
-            color: args[3],
-            owner: args[4]
-        };
 
         await txHelper.putState(args[0], car);
         this.logger.debug('============= END : Create Car ===========');
@@ -136,7 +136,7 @@ export class TestChaincode extends Chaincode {
 
     async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
         this.logger.debug('============= START : changeCarOwner ===========');
-        Helpers.checkArgs(args, 2);
+        // Helpers.checkArgs(args, 2);
 
 
         let carAsBytes = await stub.getState(args[0]);

@@ -24,8 +24,8 @@
     },
     "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
     "devDependencies": {
-        "@theledger/fabric-shim-types": "https://github.com/wearetheledger/fabric-shim-types",
-        "@theledger/yup-types": "https://github.com/wearetheledger/yup-types",
+        "@theledger/fabric-shim-types": "^1.0.4",
+        "@theledger/yup-types": "^1.0.1",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.43",
         "@types/node": "^9.4.6",

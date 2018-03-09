@@ -1,6 +1,4 @@
 import { Logger, LoggerInstance, transports } from 'winston';
-import { isArray } from 'util';
-import { YupSchema } from './yupschema.model';
 
 /**
  * helper functions
@@ -31,25 +29,33 @@ export class Helpers {
     };
 
     /**
-     * Check number of args
-     * accepts array of numbers
+     * check args number and types
      * 
      * @static
-     * @param {YupSchema[]} args 
-     * @param {(number | number[])} amount 
+     * @param {string[]} args 
+     * @param {YupSchema[]} yupSchema 
      * @memberof Helpers
      */
-    public static checkArgs(args: YupSchema[], amount: number | number[]) {
-        if (isArray(amount)) {
-            if (!amount.filter(a => {
-                return args.length === a;
-            }).length) {
-                throw new Error(`Incorrect number of arguments. Expecting ${amount}`);
-            }
-        } else {
-            if (args.length != amount) {
-                throw new Error(`Incorrect number of arguments. Expecting ${amount}`);
-            }
+    public static checkArgs<T>(args: string[], yupSchema: any): Promise<T> {
+
+        const keys = yupSchema._nodes;
+        if (args.length != keys.length) {
+            throw new Error(`Incorrect number of arguments. Expecting ${keys.length}`);
         }
+
+        let objectToValidate: T;
+        keys.forEach((key: string, index: number) => {
+            objectToValidate[key] = args[index];
+        });
+        return yupSchema.isValid(objectToValidate).then((valid: boolean) => {
+            if (valid) {
+                return objectToValidate;
+            } else {
+                return yupSchema.validate(objectToValidate).catch((errors: any) => {
+                    throw new Error(errors);
+                });
+            }
+        });
     }
+
 }

@@ -8,16 +8,16 @@
   dependencies:
     babel-runtime "^6.26.0"
 
-"@theledger/fabric-shim-types@https://github.com/wearetheledger/fabric-shim-types":
-  version "1.0.3"
-  resolved "https://github.com/wearetheledger/fabric-shim-types#4b8844769c2439303954d03f5c8a66dc0a795ed4"
+"@theledger/fabric-shim-types@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@theledger/fabric-shim-types/-/fabric-shim-types-1.0.4.tgz#29846a4ab92e3c72a6c498017c5ebedaa1f13ed1"
   dependencies:
     "@types/google-protobuf" "^3.2.7"
     "@types/log4js" "^2.3.5"
 
-"@theledger/yup-types@https://github.com/wearetheledger/yup-types":
+"@theledger/yup-types@^1.0.1":
   version "1.0.1"
-  resolved "https://github.com/wearetheledger/yup-types#549ad3dcc027d6b3dcb47debeca8278253a09a21"
+  resolved "https://registry.yarnpkg.com/@theledger/yup-types/-/yup-types-1.0.1.tgz#7c57a813662630d3c588e330334f0a1918ea45a8"
   dependencies:
     "@types/google-protobuf" "^3.2.7"
     "@types/log4js" "^2.3.5"
