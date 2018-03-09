@@ -63,7 +63,59 @@ export class MyChaincode extends Chaincode {
 
 The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
 
-#### Query by key
+#### API documentation
+**Get an object by key**
+
+This is the same as the *getState* function, but it will deserialize the Buffer to an object.
+```javascript
+stubHelper.getStateAsObject(verifiedArgs.key);
+```
+
+**Get a date by key**
+
+This is the same as the *getState* function, but it will deserialize the Buffer to a Date.
+```javascript
+stubHelper.getStateAsDate(verifiedArgs.key);
+```
+
+**Get a string by key**
+
+This is the same as the *getState* function, but it will deserialize the Buffer to a String.
+```javascript
+stubHelper.getStateAsString(verifiedArgs.key);
+```
+
+**Get a String by key**
+
+This is the same as the *putState* function, but it will serialize the object to a Buffer for you.
+```javascript
+stubHelper.putState(verifiedArgs.key, data);
+```
+
+**Get an Array from  rich query**
+
+This is the same as the *getQueryResult* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
+```javascript
+stubHelper.getQueryResultAsList(queryString, keyValue);
+```
+
+**Get an Array from range query**
+
+This is the same as the *getStateByRange* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
+```javascript
+stubHelper.getStateByRangeAsList(startKey, endKey);
+```
+
+**Get the original stub**
+
+This will expose the stub which is returned by fabric-shim.
+```javascript
+stubHelper.getStub();
+```
+
+### Examples
+
+**Query by key**
 
 Returns an array of items matching the rich query
 ```javascript
@@ -84,7 +136,7 @@ async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 }
 ```
 
-#### Query by range
+**Query by range**
 
 ```javascript
 async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
@@ -95,7 +147,7 @@ async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
         return await stubHelper.getStateByRangeAsList(startKey, endKey);
 }
 ```
-#### Creating
+**Creating**
 
 ```javascript
 async createCar(stubHelper: StubHelper, args: string[]) {
@@ -120,7 +172,7 @@ async createCar(stubHelper: StubHelper, args: string[]) {
 }
 ```
 
-#### Updating object
+**Updating object**
 
 ```javascript
 async changeCarOwner(stubHelper: StubHelper, args: string[]) {
