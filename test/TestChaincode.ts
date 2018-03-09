@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 /* tslint:disable */
 import { Helpers } from '../src/utils/helpers';
 import { ChaincodeReponse } from 'fabric-shim';
@@ -20,11 +21,12 @@ export class TestChaincode extends Chaincode {
 
     async queryCar(stubHelper: StubHelper, args: string[]) {
 
-        Helpers.checkArgs(args, 1);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+            }));
 
-        let carNumber = args[0];
-
-        const car = stubHelper.getStateAsObject(carNumber);
+        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
@@ -98,35 +100,47 @@ export class TestChaincode extends Chaincode {
     }
 
     async createCar(stubHelper: StubHelper, args: string[]) {
-        Helpers.checkArgs(args, 5);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                make: Yup.string().required(),
+                model: Yup.string().required(),
+                color: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
         let car = {
             docType: 'car',
-            make: args[1],
-            model: args[2],
-            color: args[3],
-            owner: args[4]
+            make: verifiedArgs.make,
+            model: verifiedArgs.model,
+            color: verifiedArgs.color,
+            owner: verifiedArgs.owner
         };
 
-        await stubHelper.putState(args[0], car);
+        await stubHelper.putState(verifiedArgs.key, car);
     }
 
     async queryAllCars(stubHelper: StubHelper, args: string[]) {
 
-        let startKey = 'CAR0';
-        let endKey = 'CAR999';
+        const startKey = 'CAR0';
+        const endKey = 'CAR999';
 
         return await stubHelper.getStateByRangeAsList(startKey, endKey);
 
     }
 
     async changeCarOwner(stubHelper: StubHelper, args: string[]) {
-        Helpers.checkArgs(args, 2);
 
-        let car = await stubHelper.getStateAsObject(args[0]);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
-        car.owner = args[1];
+        let car = await stubHelper.getStateAsObject(verifiedArgs.key);
 
-        await stubHelper.putState(args[0], car);
+        car.owner = verifiedArgs.owner;
+
+        await stubHelper.putState(verifiedArgs.key, car);
     }
 }
