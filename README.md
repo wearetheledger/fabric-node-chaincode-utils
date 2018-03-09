@@ -63,7 +63,6 @@ export class MyChaincode extends Chaincode {
 
 The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
 
-#### API documentation
 **Get an object by key**
 
 This is the same as the *getState* function, but it will deserialize the Buffer to an object.
