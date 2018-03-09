@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils.svg?branch=master)](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils)
 # fabric-node-chaincode-utils
-A Node.js module that helps you to build your Hyperledger Fabric nodejs chaincode.
+A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. Testing is done using the [fabric-mock-stub](github.com/wearetheledger/fabric-mock-stub).
 
 - [docs](https://wearetheledger.github.io/fabric-node-chaincode-utils)
 - [example usage](https://github.com/wearetheledger/fabric-network-boilerplate/tree/master/chaincode/node)
@@ -38,7 +38,7 @@ The Chaincode base class also implements the `Invoke()` method, it will search i
 
 export class MyChaincode extends Chaincode {
 
-    async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+    async queryCar(stub: Stub, txHelper: S, args: string[]) {
 
         Helpers.checkArgs(args, 1);
 
@@ -56,73 +56,83 @@ export class MyChaincode extends Chaincode {
 
 ```
 
-### TransactionHelper [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_transactionhelper_.transactionhelper.html)
+### StubHelper [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_stubhelper_.stubhelper.html)
 
-The TransactionHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
+The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
 
 #### Query by key
 
 Returns an array of items matching the rich query
 ```javascript
-async queryCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        Helpers.checkArgs(args, 1);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+            }));
 
-        let carNumber = args[0];
-
-        const car = txHelper.getStateAsObject(carNumber);
+        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
         }
 
         return car;
-    }
+}
 ```
 
 #### Query by range
 
 ```javascript
-async queryAllCars(stub: Stub, txHelper: TransactionHelper, args: string[]) {
+async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
 
         const startKey = 'CAR0';
         const endKey = 'CAR999';
 
-        return await txHelper.getStateByRangeAsList(startKey, endKey);
+        return await stubHelper.getStateByRangeAsList(startKey, endKey);
 }
 ```
 #### Creating
 
 ```javascript
-async createCar(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        Helpers.log('============= START : Create Car ===========');
+async createCar(stubHelper: StubHelper, args: string[]) {
+        const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                make: Yup.string().required(),
+                model: Yup.string().required(),
+                color: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
-        Helpers.checkArgs(args, 5);
-
-        const car = {
+        let car = {
             docType: 'car',
-            make: args[1],
-            model: args[2],
-            color: args[3],
-            owner: args[4]
+            make: verifiedArgs.make,
+            model: verifiedArgs.model,
+            color: verifiedArgs.color,
+            owner: verifiedArgs.owner
         };
 
-        await txHelper.putState(args[0], car);
-        Helpers.log('============= END : Create Car ===========');
+        await stubHelper.putState(verifiedArgs.key, car);
 }
 ```
 
 #### Updating object
 
 ```javascript
-async changeCarOwner(stub: Stub, txHelper: TransactionHelper, args: string[]) {
-        Helpers.checkArgs(args, 2);
+async changeCarOwner(stubHelper: StubHelper, args: string[]) {
 
-        let car = await txHelper.getStateAsObject(args[0]);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+                owner: Yup.string().required(),
+            }));
 
-        car.owner = args[1];
+        let car = await <any>stubHelper.getStateAsObject(verifiedArgs.key);
 
-        await txHelper.putState(args[0], car);
+        car.owner = verifiedArgs.owner;
+
+        await stubHelper.putState(verifiedArgs.key, car);
 }
 ```
 
