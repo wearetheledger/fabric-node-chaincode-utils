@@ -19,7 +19,7 @@ export class Chaincode implements ChaincodeInterface {
     constructor(logLevel: string) {
         this.logger = Helpers.getLoggerInstance(this.name, logLevel);
     }
-
+    
     /**
      * the name of the current chaincode.
      *
@@ -40,6 +40,7 @@ export class Chaincode implements ChaincodeInterface {
      */
     getStubHelperFor(stub: Stub) {
         return new StubHelper(stub);
+        
     }
 
     /**
