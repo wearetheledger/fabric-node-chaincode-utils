@@ -1,12 +1,11 @@
 /* tslint:disable */
 
-import { ChaincodeMockStub } from '../src/mocking/ChaincodeMockStub';
+import { ChaincodeMockStub } from '@theledger/fabric-mock-stub';
 import { TestChaincode } from './TestChaincode';
 import { ChaincodeReponse } from 'fabric-shim';
 import { Transform } from '../src/utils/datatransform';
 
 import { expect } from 'chai';
-import { TransactionHelper } from "../src/TransactionHelper";
 
 const chaincode = new TestChaincode();
 
@@ -44,6 +43,9 @@ describe('Test Mockstub', () => {
         };
 
         const response: ChaincodeReponse = await stubWithInit.mockInvoke('test', ['queryCar', 'CAR0']);
+
+        expect(response.status).to.eq(200);
+
 
         expect(Transform.bufferToObject(response.payload)).to.deep.equal(car0);
     });

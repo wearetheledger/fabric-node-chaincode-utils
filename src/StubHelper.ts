@@ -5,20 +5,26 @@ import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
 
 /**
- *  The TransactionHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
+ *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
  *  deserialize data being saved/retreived.
  */
-export class TransactionHelper {
+export class StubHelper {
 
     private logger: LoggerInstance;
 
     /**
      * @param {"fabric-shim".Stub} stub
-     * @param logLevel
      */
     constructor(private stub: Stub) {
         this.stub = stub;
-        this.logger = Helpers.getLoggerInstance('TransactionHelper');
+        this.logger = Helpers.getLoggerInstance('StubHelper');
+    }
+
+    /**
+     * @returns {"fabric-shim".Stub}
+     */
+    getStub() {
+        return this.stub;
     }
 
     /**
@@ -108,9 +114,13 @@ export class TransactionHelper {
      */
     async getStateAsString(key: string): Promise<string> {
 
-        const rawValue = await this.stub.getState(key);
+        const valueAsBytes = await this.stub.getState(key);
 
-        return Transform.bufferToString(rawValue);
+        if (!valueAsBytes || valueAsBytes.toString().length <= 0) {
+            return null;
+        }
+
+        return Transform.bufferToString(valueAsBytes);
     }
 
     /**
@@ -120,9 +130,13 @@ export class TransactionHelper {
      */
     async getStateAsDate(key: string): Promise<Date> {
 
-        const rawValue = await this.stub.getState(key);
+        const valueAsBytes = await this.stub.getState(key);
 
-        return Transform.bufferToDate(rawValue);
+        if (!valueAsBytes || valueAsBytes.toString().length <= 0) {
+            return null;
+        }
+
+        return Transform.bufferToDate(valueAsBytes);
     }
 
     /**
