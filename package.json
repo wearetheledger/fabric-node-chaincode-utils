@@ -25,11 +25,12 @@
   "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
   "devDependencies": {
     "@theledger/fabric-mock-stub": "^1.0.1",
-    "@theledger/fabric-shim-types": "https://github.com/wearetheledger/fabric-shim-types",
+    "@theledger/fabric-shim-types": "^1.0.4",
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.43",
     "@types/node": "^9.4.6",
     "@types/winston": "^2.3.8",
+    "@types/yup": "^0.24",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "husky": "^0.15.0-rc.8",
@@ -47,7 +48,8 @@
     "fabric-shim": "^1.1.0-alpha",
     "google-protobuf": "^3.5.0",
     "lodash": "^4.17.5",
-    "winston": "^2.4.0"
+    "winston": "^2.4.0",
+    "yup": "^0.24.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
