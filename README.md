@@ -18,17 +18,18 @@ yarn add @theledger/fabric-chaincode-utils
 ```
 
 ## Writing chaincode
-An example implementation of this chaincode is located at [examples/MyChaincode.ts](examples/MyChaincode.ts)
+An example implementation of this chaincode is located at [examples/MyChaincode.ts](examples/MyChaincode.ts). A full chaincode project is located at [wearetheledger/fabric-network-boilerplate](https://github.com/wearetheledger/fabric-network-boilerplate).
 
 ### Chaincode [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_chaincode_.chaincode.html)
-The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your MyChaincode class.
+The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your MyChaincode class, this function should be called `init` and will also be injected with the same arguments as your custom functions.
 
 ```javascript
 export class MyChaincode extends Chaincode {
 
-    async Init(stub: Stub) {
+    async init(stubHelper: StubHelper, args: string[]) {
       return 'this will override the init method in Chaincode';
     }
+    
 }
 ```
 
