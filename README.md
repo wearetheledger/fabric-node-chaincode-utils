@@ -38,13 +38,14 @@ The Chaincode base class also implements the `Invoke()` method, it will search i
 
 export class MyChaincode extends Chaincode {
 
-    async queryCar(stub: Stub, txHelper: S, args: string[]) {
+    async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        Helpers.checkArgs(args, 1);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+            }));
 
-        const carNumber = args[0];
-
-        const car = txHelper.getStateAsObject(carNumber);
+        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
@@ -52,6 +53,7 @@ export class MyChaincode extends Chaincode {
 
         return car;
     }
+    
 }
 
 ```
