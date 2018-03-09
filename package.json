@@ -1,12 +1,12 @@
 {
     "name": "@theledger/fabric-chaincode-utils",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "npm run clean && tsc",
-        "test": "npm run lint && mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
+        "test": "mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
         "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
         "clean": "rimraf dist",
         "prepare": "npm run build",
@@ -58,7 +58,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-push": "npm run test"
+            "pre-push": "npm run lint && npm run test"
         }
     },
     "watch": {
