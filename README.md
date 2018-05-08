@@ -70,6 +70,13 @@ This is the same as the *getState* function, but it will deserialize the Buffer 
 stubHelper.getStateAsObject(verifiedArgs.key);
 ```
 
+**Put an object by key**
+
+This is the same as the *putState* function, but it will serialize the object to a Buffer for you.
+```javascript
+stubHelper.putState(verifiedArgs.key, data);
+```
+
 **Get a date by key**
 
 This is the same as the *getState* function, but it will deserialize the Buffer to a Date.
@@ -82,13 +89,6 @@ stubHelper.getStateAsDate(verifiedArgs.key);
 This is the same as the *getState* function, but it will deserialize the Buffer to a String.
 ```javascript
 stubHelper.getStateAsString(verifiedArgs.key);
-```
-
-**Get a String by key**
-
-This is the same as the *putState* function, but it will serialize the object to a Buffer for you.
-```javascript
-stubHelper.putState(verifiedArgs.key, data);
 ```
 
 **Get an Array from  rich query**
@@ -116,7 +116,7 @@ stubHelper.getStub();
 
 **Query by key**
 
-Returns an array of items matching the rich query
+Returns an item matching the key
 ```javascript
 async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
@@ -132,6 +132,18 @@ async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
         }
 
         return car;
+}
+```
+**Perform a rich query**
+
+Returns an array of items matching the rich query.
+Notice that we add the property 'docType' in the create method.
+```javascript
+async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
+
+        return await stubHelper.getQueryResultAsList(
+            {selector:{ docType: 'car'}}
+        ); 
 }
 ```
 
