@@ -41,7 +41,7 @@ export class MyChaincode extends Chaincode {
 
     async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
@@ -105,11 +105,31 @@ This is the same as the *getStateByRange* function, but it will deserialize and 
 stubHelper.getStateByRangeAsList(startKey, endKey);
 ```
 
+**Get an Array from history by key**
+
+This is the same as the *getHistoryByKey* function, but it will deserialize and convert the iterator to an Array for you.
+```javascript
+stubHelper.getHistoryForKeyAsList(key);
+```
+
 **Get the original stub**
 
 This will expose the stub which is returned by fabric-shim.
 ```javascript
 stubHelper.getStub();
+```
+
+**Get ClientIdentity**
+
+This will expose the ClientIdentity which is returned by fabric-shim.
+```javascript
+stubHelper.getClientIdentity();
+```
+**Get ChaincodeCrypto**
+
+This will expose the ShimCrypto which is returned by fabric-shim-crypto required for encryption, decryption, signing and verification.
+```javascript
+stubHelper.getChaincodeCrypto();
 ```
 
 ### Examples
@@ -120,7 +140,7 @@ Returns an item matching the key
 ```javascript
 async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
@@ -162,7 +182,7 @@ async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
 
 ```javascript
 async createCar(stubHelper: StubHelper, args: string[]) {
-        const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<any>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
                 make: Yup.string().required(),
@@ -188,7 +208,7 @@ async createCar(stubHelper: StubHelper, args: string[]) {
 ```javascript
 async changeCarOwner(stubHelper: StubHelper, args: string[]) {
 
-        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
                 owner: Yup.string().required(),
