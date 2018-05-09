@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils.svg?branch=master)](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils)
 # fabric-node-chaincode-utils
-A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. Testing is done using the [fabric-mock-stub](github.com/wearetheledger/fabric-mock-stub).
+A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. Testing is done using the [fabric-mock-stub](https://github.com/wearetheledger/fabric-mock-stub).
 
 - [docs](https://wearetheledger.github.io/fabric-node-chaincode-utils)
 - [example usage](https://github.com/wearetheledger/fabric-network-boilerplate/tree/master/chaincode/node)
@@ -18,33 +18,35 @@ yarn add @theledger/fabric-chaincode-utils
 ```
 
 ## Writing chaincode
-An example implementation of this chaincode is located at [examples/MyChaincode.ts](examples/MyChaincode.ts)
+An example implementation of this chaincode is located at [examples/MyChaincode.ts](examples/MyChaincode.ts). A full chaincode project is located at [wearetheledger/fabric-network-boilerplate](https://github.com/wearetheledger/fabric-network-boilerplate).
 
 ### Chaincode [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_chaincode_.chaincode.html)
-The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your MyChaincode class.
+The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your MyChaincode class, this function should be called `init` and will also be injected with the same arguments as your custom functions.
 
 ```javascript
 export class MyChaincode extends Chaincode {
 
-    async Init(stub: Stub) {
+    async init(stubHelper: StubHelper, args: string[]) {
       return 'this will override the init method in Chaincode';
     }
+    
 }
 ```
 
-The Chaincode base class also implements the `Invoke()` method, it will search in your class for existing chaincode methods with the function name your sent. It will also automatically wrap and serialize the reponse with `shim.success()` and `shim.error()`. You can just return the javascript object and it will do the rest, **BUT** returning a Buffer is still supported aswell. So for example, if we invoke our chaincode with function `queryCar`, the function below will be executed.
+The Chaincode base class also implements the `Invoke()` method, it will search in your class for existing chaincode methods with the function name you sent. It will also automatically wrap and serialize the reponse with `shim.success()` and `shim.error()`. You can just return the javascript object and it will do the rest, **BUT** returning a Buffer is still supported aswell. So for example, if we invoke our chaincode with function `queryCar`, the function below will be executed.
 
 ```javascript
 
 export class MyChaincode extends Chaincode {
 
-    async queryCar(stub: Stub, txHelper: S, args: string[]) {
+    async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        Helpers.checkArgs(args, 1);
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+            .shape({
+                key: Yup.string().required(),
+            }));
 
-        const carNumber = args[0];
-
-        const car = txHelper.getStateAsObject(carNumber);
+        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
@@ -52,6 +54,7 @@ export class MyChaincode extends Chaincode {
 
         return car;
     }
+    
 }
 
 ```
@@ -60,9 +63,60 @@ export class MyChaincode extends Chaincode {
 
 The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
 
-#### Query by key
+**Get an object by key**
 
-Returns an array of items matching the rich query
+This is the same as the *getState* function, but it will deserialize the Buffer to an object.
+```javascript
+stubHelper.getStateAsObject(verifiedArgs.key);
+```
+
+**Put an object by key**
+
+This is the same as the *putState* function, but it will serialize the object to a Buffer for you.
+```javascript
+stubHelper.putState(verifiedArgs.key, data);
+```
+
+**Get a date by key**
+
+This is the same as the *getState* function, but it will deserialize the Buffer to a Date.
+```javascript
+stubHelper.getStateAsDate(verifiedArgs.key);
+```
+
+**Get a string by key**
+
+This is the same as the *getState* function, but it will deserialize the Buffer to a String.
+```javascript
+stubHelper.getStateAsString(verifiedArgs.key);
+```
+
+**Get an Array from  rich query**
+
+This is the same as the *getQueryResult* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
+```javascript
+stubHelper.getQueryResultAsList(queryString, keyValue);
+```
+
+**Get an Array from range query**
+
+This is the same as the *getStateByRange* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
+```javascript
+stubHelper.getStateByRangeAsList(startKey, endKey);
+```
+
+**Get the original stub**
+
+This will expose the stub which is returned by fabric-shim.
+```javascript
+stubHelper.getStub();
+```
+
+### Examples
+
+**Query by key**
+
+Returns an item matching the key
 ```javascript
 async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
@@ -80,8 +134,20 @@ async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
         return car;
 }
 ```
+**Perform a rich query**
 
-#### Query by range
+Returns an array of items matching the rich query.
+Notice that we add the property 'docType' in the create method.
+```javascript
+async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
+
+        return await stubHelper.getQueryResultAsList(
+            {selector:{ docType: 'car'}}
+        ); 
+}
+```
+
+**Query by range**
 
 ```javascript
 async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
@@ -92,7 +158,7 @@ async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
         return await stubHelper.getStateByRangeAsList(startKey, endKey);
 }
 ```
-#### Creating
+**Creating**
 
 ```javascript
 async createCar(stubHelper: StubHelper, args: string[]) {
@@ -117,7 +183,7 @@ async createCar(stubHelper: StubHelper, args: string[]) {
 }
 ```
 
-#### Updating object
+**Updating object**
 
 ```javascript
 async changeCarOwner(stubHelper: StubHelper, args: string[]) {

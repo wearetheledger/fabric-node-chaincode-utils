@@ -171,7 +171,7 @@ export class Transform {
 
                 parsedItem.is_delete = res.value.is_delete;
                 parsedItem.tx_id = res.value.tx_id;
-                parsedItem.timestamp = res.value.timestamp.getSeconds()
+                parsedItem.timestamp = res.value.timestamp.getSeconds();
 
                 allResults.push(parsedItem);
             }
