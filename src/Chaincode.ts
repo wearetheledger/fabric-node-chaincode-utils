@@ -2,10 +2,11 @@ import shim = require('fabric-shim');
 import { ChaincodeInterface, ChaincodeReponse, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
-import { ERRORS } from './constants/errors';
-import { ChaincodeError } from './ChaincodeError';
 import { StubHelper } from './StubHelper';
 import { Transform } from './utils/datatransform';
+import { ChaincodeError } from './utils/errors/ChaincodeError';
+
+const serialize = require('serialize-error');
 
 /**
  * The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required
@@ -88,9 +89,7 @@ export class Chaincode implements ChaincodeInterface {
             if (!silent) {
                 this.logger.error(`no function of name: ${fcn} found`);
 
-                throw new ChaincodeError(ERRORS.UNKNOWN_FUNCTION_ERROR, {
-                    'function': fcn
-                });
+                return shim.error(serialize(new ChaincodeError(`no function of name: ${fcn} found`, 400)));
             } else {
                 return shim.success();
             }
@@ -112,17 +111,13 @@ export class Chaincode implements ChaincodeInterface {
         } catch (err) {
             let error = err;
 
-            const stacktrace = err.stack;
+            this.logger.error(error);
 
-            if (!(err instanceof ChaincodeError)) {
-                error = new ChaincodeError(ERRORS.UNKNOWN_ERROR, {
-                    'message': err.message
-                });
+            if (error.name !== 'ChaincodeError') {
+                error = new ChaincodeError(error.message, 500);
             }
-            this.logger.error(stacktrace);
-            this.logger.error(`Data of error ${err.message}: ${JSON.stringify(err.data)}`);
 
-            return shim.error(error.serialized);
+            return shim.error(serialize(error));
         }
     }
 }
