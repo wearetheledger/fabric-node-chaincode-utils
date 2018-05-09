@@ -1,9 +1,8 @@
 /* tslint:disable */
-
+import { ChaincodeReponse } from 'fabric-shim';
 import { ChaincodeMockStub } from '@theledger/fabric-mock-stub';
 import { TestChaincode } from './TestChaincode';
-import { ChaincodeReponse } from 'fabric-shim';
-import { Transform } from '../src/utils/datatransform';
+import { Transform } from '../src';
 
 import { expect } from 'chai';
 
@@ -17,6 +16,8 @@ describe('Test Mockstub', () => {
         const args = ['arg1', 'arg2'];
 
         const response: ChaincodeReponse = await stub.mockInit('uudif', args);
+
+        console.log("response", Transform.bufferToObject(response.payload))
 
         expect(Transform.bufferToObject(response.payload)['args']).to.deep.equal(args);
     });
@@ -56,6 +57,56 @@ describe('Test Mockstub', () => {
         expect(response.status).to.eq(200);
 
         expect(Transform.bufferToObject(response.payload)).to.be.length(10);
+    });
+
+    it('Should be able to query using getQueryResult', async () => {
+
+        const response: ChaincodeReponse = await stubWithInit.mockInvoke('test', ['richQueryAllCars']);
+
+        expect(response.status).to.eq(200);
+
+        expect(Transform.bufferToObject(response.payload)).to.be.length(10);
+    });
+
+    it('Should be able to query using getHistoryForKey', async () => {
+
+        const response: ChaincodeReponse = await stubWithInit.mockInvoke('test', ['getCarHistory']);
+
+        expect(response.status).to.eq(200);
+
+        expect(Transform.bufferToObject(response.payload)).to.be.length(1);
+    });
+
+    it('Update and getHistoryForKey', async () => {
+        const stub = new ChaincodeMockStub('Update and getHistoryForKey\'', chaincode);
+
+        const car1 = [
+            "CAR0",
+            "make",
+            "model",
+            "color",
+            "owner"
+        ];
+
+        const response: ChaincodeReponse = await stub.mockInvoke('create', ['createCar', ...car1]);
+
+        expect(response.status).to.eq(200);
+
+        const queryResponse: ChaincodeReponse = await stub.mockInvoke('querytest', ['queryCar', 'CAR0']);
+
+        expect(queryResponse.status).to.eq(200);
+
+        expect((<any>Transform.bufferToObject(queryResponse.payload)).owner).to.equal("owner");
+
+        await stub.mockInvoke('update', ['changeCarOwner', "CAR0","newowner"]);
+
+        const getCarHistoryresponse: ChaincodeReponse = await stub.mockInvoke('test', ['getCarHistory']);
+
+        expect(getCarHistoryresponse.status).to.eq(200);
+        console.log(Transform.bufferToObject(getCarHistoryresponse.payload))
+
+        expect(Transform.bufferToObject(getCarHistoryresponse.payload)).to.be.length(2);
+        expect(Transform.bufferToObject(getCarHistoryresponse.payload)[1].value.owner).to.be.eq("newowner");
     });
 
     it('Should be able to mock composite keys', async () => {
@@ -154,7 +205,7 @@ describe('Test Mockstub', () => {
         const query = {
             selector: {
                 model: {
-                    "$in": ['Nano', "Punto"]
+                    $in: ['Nano', "Punto"]
                 }
             }
         };

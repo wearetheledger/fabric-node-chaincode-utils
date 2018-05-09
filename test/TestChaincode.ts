@@ -1,13 +1,17 @@
-import { Helpers } from '../src/utils/helpers';
-import { ChaincodeReponse } from 'fabric-shim';
-import { Chaincode } from '../src/Chaincode';
-import { ChaincodeError } from '../src/ChaincodeError';
-import { StubHelper } from '../src/StubHelper';
+import { Chaincode, ChaincodeError, Helpers, StubHelper } from '../src';
 import * as Yup from 'yup';
+
+interface Car {
+    docType?: string;
+    make: string;
+    model: string;
+    color: string;
+    owner: string;
+}
 
 export class TestChaincode extends Chaincode {
 
-    async init(stubHelper: StubHelper, args: string[]): Promise<ChaincodeReponse> {
+    async init(stubHelper: StubHelper, args: string[]): Promise<any> {
 
         if (args[0] == 'init') {
             await this.initLedger(stubHelper, args);
@@ -15,17 +19,17 @@ export class TestChaincode extends Chaincode {
 
         return {
             args
-        }
+        };
     }
 
-    async queryCar(stubHelper: StubHelper, args: string[]) {
+    async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
         const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
 
-        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
+        const car = stubHelper.getStateAsObject(verifiedArgs.key) as Promise<Car>; //get the car from chaincode state
 
         if (!car) {
             throw new ChaincodeError('Car does not exist');
@@ -36,7 +40,7 @@ export class TestChaincode extends Chaincode {
 
     async initLedger(stubHelper: StubHelper, args: string[]) {
 
-        let cars = [{
+        let cars: Car[] = [{
             make: 'Toyota',
             model: 'Prius',
             color: 'blue',
@@ -84,12 +88,12 @@ export class TestChaincode extends Chaincode {
         }, {
             make: 'Holden',
             model: 'Barina',
-            color: 'brown',
+            color: 'violet',
             owner: 'Shotaro'
         }];
 
         for (let i = 0; i < cars.length; i++) {
-            const car: any = cars[i];
+            const car: Car = cars[i];
 
             car.docType = 'car';
             await stubHelper.putState('CAR' + i, car);
@@ -99,7 +103,7 @@ export class TestChaincode extends Chaincode {
     }
 
     async createCar(stubHelper: StubHelper, args: string[]) {
-        const verifiedArgs = await Helpers.checkArgs<{ key: string; }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object()
             .shape({
                 key: Yup.string().required(),
                 make: Yup.string().required(),
@@ -108,7 +112,7 @@ export class TestChaincode extends Chaincode {
                 owner: Yup.string().required(),
             }));
 
-        let car = {
+        let car: Car = {
             docType: 'car',
             make: verifiedArgs.make,
             model: verifiedArgs.model,
@@ -119,12 +123,28 @@ export class TestChaincode extends Chaincode {
         await stubHelper.putState(verifiedArgs.key, car);
     }
 
-    async queryAllCars(stubHelper: StubHelper, args: string[]) {
+    async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
 
         const startKey = 'CAR0';
         const endKey = 'CAR999';
 
         return await stubHelper.getStateByRangeAsList(startKey, endKey);
+
+    }
+
+    async richQueryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
+
+        return await stubHelper.getQueryResultAsList({
+            selector: {
+                docType: 'car'
+            }
+        });
+
+    }
+
+    async getCarHistory(stubHelper: StubHelper, args: string[]): Promise<any> {
+
+        return await stubHelper.getHistoryForKeyAsList('CAR0');
 
     }
 
@@ -136,7 +156,7 @@ export class TestChaincode extends Chaincode {
                 owner: Yup.string().required(),
             }));
 
-        let car = await stubHelper.getStateAsObject(verifiedArgs.key);
+        let car = await <Promise<Car>>stubHelper.getStateAsObject(verifiedArgs.key);
 
         car.owner = verifiedArgs.owner;
 

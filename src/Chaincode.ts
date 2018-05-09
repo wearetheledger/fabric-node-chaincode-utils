@@ -19,7 +19,7 @@ export class Chaincode implements ChaincodeInterface {
     constructor(logLevel?: string) {
         this.logger = Helpers.getLoggerInstance(this.name, logLevel);
     }
-    
+
     /**
      * the name of the current chaincode.
      *
@@ -29,18 +29,6 @@ export class Chaincode implements ChaincodeInterface {
      */
     get name(): string {
         return this.constructor.name;
-    }
-
-    /**
-     * the Default StubHelper with extra functionality and return your own instance.
-     *
-     * @param {Stub} stub
-     * @returns the stub helper for the given stub. This can be used to extend the stub functionality
-     * @memberof Chaincode
-     */
-    getStubHelperFor(stub: Stub) {
-        return new StubHelper(stub);
-        
     }
 
     /**
@@ -111,7 +99,7 @@ export class Chaincode implements ChaincodeInterface {
         try {
             this.logger.debug(`============= START : ${fcn} ===========`);
 
-            let payload = await method.call(this, this.getStubHelperFor(stub), params);
+            let payload = await method.call(this, new StubHelper(stub), params);
 
             if (payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));

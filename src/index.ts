@@ -16,3 +16,10 @@ export interface KV {
     key: string;
     value: any;
 }
+
+export interface KeyModificationItem {
+    is_delete: boolean;
+    value: Object;
+    timestamp: number;
+    tx_id: string;
+}
