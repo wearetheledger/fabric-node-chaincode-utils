@@ -5,7 +5,7 @@ export class ChaincodeError extends Error {
 
     status: number;
 
-    constructor(message: string, status: number) {
+    constructor(message: string, status ?: number) {
 
         // Calling parent constructor of base Error class.
         super(message);

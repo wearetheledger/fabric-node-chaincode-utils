@@ -3,11 +3,13 @@ import { StubHelper } from './StubHelper';
 import { Transform } from './utils/datatransform';
 import { Helpers } from './utils/helpers';
 import { ChaincodeError } from './utils/errors/ChaincodeError';
+import { NotFoundError } from './utils/errors/NotFoundError';
 
 export {
     Chaincode,
     StubHelper,
     ChaincodeError,
+    NotFoundError,
     Transform,
     Helpers
 }

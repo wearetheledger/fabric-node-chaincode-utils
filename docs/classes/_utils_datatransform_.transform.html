@@ -94,6 +94,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#buffertodate" class="tsd-kind-icon">buffer<wbr>ToDate</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#buffertoobject" class="tsd-kind-icon">buffer<wbr>ToObject</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#buffertostring" class="tsd-kind-icon">buffer<wbr>ToString</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#iteratortohistorylist" class="tsd-kind-icon">iterator<wbr>ToHistory<wbr>List</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#iteratortokvlist" class="tsd-kind-icon">iterator<wbr>ToKVList</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#iteratortolist" class="tsd-kind-icon">iterator<wbr>ToList</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="_utils_datatransform_.transform.html#normalizepayload" class="tsd-kind-icon">normalize<wbr>Payload</a></li>
@@ -115,7 +116,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L55">utils/datatransform.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L57">utils/datatransform.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -153,7 +154,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L34">utils/datatransform.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L35">utils/datatransform.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -191,7 +192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L75">utils/datatransform.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L77">utils/datatransform.ts:77</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -208,6 +209,34 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="iteratortohistorylist" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> iterator<wbr>ToHistory<wbr>List</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">iterator<wbr>ToHistory<wbr>List<span class="tsd-signature-symbol">(</span>iterator<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HistoryQueryIterator</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.keymodificationitem.html" class="tsd-signature-type">KeyModificationItem</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L152">utils/datatransform.ts:152</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transform iterator to array of objects</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>iterator: <span class="tsd-signature-type">HistoryQueryIterator</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.keymodificationitem.html" class="tsd-signature-type">KeyModificationItem</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
 					<a name="iteratortokvlist" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> iterator<wbr>ToKVList</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -217,7 +246,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L118">utils/datatransform.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L121">utils/datatransform.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,7 +274,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L89">utils/datatransform.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L91">utils/datatransform.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -273,7 +302,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L150">utils/datatransform.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L193">utils/datatransform.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -308,7 +337,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/datatransform.ts#L17">utils/datatransform.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/datatransform.ts#L18">utils/datatransform.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -345,9 +374,6 @@
 						<a href="../modules/_chaincode_.html">"<wbr>Chaincode"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_chaincodeerror_.html">"<wbr>Chaincode<wbr>Error"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_stubhelper_.html">"<wbr>Stub<wbr>Helper"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -358,6 +384,15 @@
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_utils_datatransform_.html">"utils/datatransform"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_chaincodeerror_.html">"utils/errors/<wbr>Chaincode<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_notfounderror_.html">"utils/errors/<wbr>Not<wbr>Found<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_objectvalidationerror_.html">"utils/errors/<wbr>Object<wbr>Validation<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utils_helpers_.html">"utils/helpers"</a>
@@ -379,6 +414,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="_utils_datatransform_.transform.html#buffertostring" class="tsd-kind-icon">buffer<wbr>ToString</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="_utils_datatransform_.transform.html#iteratortohistorylist" class="tsd-kind-icon">iterator<wbr>ToHistory<wbr>List</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
 								<a href="_utils_datatransform_.transform.html#iteratortokvlist" class="tsd-kind-icon">iterator<wbr>ToKVList</a>

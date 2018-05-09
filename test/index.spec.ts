@@ -17,7 +17,7 @@ describe('Test Mockstub', () => {
 
         const response: ChaincodeReponse = await stub.mockInit('uudif', args);
 
-        console.log("response", Transform.bufferToObject(response.payload))
+        console.log("response", Transform.bufferToObject(response.payload));
 
         expect(Transform.bufferToObject(response.payload)['args']).to.deep.equal(args);
     });
@@ -43,7 +43,9 @@ describe('Test Mockstub', () => {
             'docType': 'car'
         };
 
-        const response: ChaincodeReponse = await stubWithInit.mockInvoke('test', ['queryCar', 'CAR0']);
+        const response: ChaincodeReponse = await stubWithInit.mockInvoke('test', ['queryCar', JSON.stringify({
+            key: 'CAR0'
+        })]);
 
         expect(response.status).to.eq(200);
 
@@ -80,30 +82,33 @@ describe('Test Mockstub', () => {
     it('Update and getHistoryForKey', async () => {
         const stub = new ChaincodeMockStub('Update and getHistoryForKey\'', chaincode);
 
-        const car1 = [
-            "CAR0",
-            "make",
-            "model",
-            "color",
-            "owner"
-        ];
-
-        const response: ChaincodeReponse = await stub.mockInvoke('create', ['createCar', ...car1]);
+        const response: ChaincodeReponse = await stub.mockInvoke('create', ['createCar', JSON.stringify({
+            key: 'CAR0',
+            make: "make",
+            model: "model",
+            color: "color",
+            owner: 'owner'
+        })]);
 
         expect(response.status).to.eq(200);
 
-        const queryResponse: ChaincodeReponse = await stub.mockInvoke('querytest', ['queryCar', 'CAR0']);
+        const queryResponse: ChaincodeReponse = await stub.mockInvoke('querytest', ['queryCar', JSON.stringify({
+            key: 'CAR0'
+        })]);
 
         expect(queryResponse.status).to.eq(200);
 
         expect((<any>Transform.bufferToObject(queryResponse.payload)).owner).to.equal("owner");
 
-        await stub.mockInvoke('update', ['changeCarOwner', "CAR0","newowner"]);
+        await stub.mockInvoke('update', ['changeCarOwner', JSON.stringify({
+            key: "CAR0",
+            owner: "newowner"
+        })]);
 
         const getCarHistoryresponse: ChaincodeReponse = await stub.mockInvoke('test', ['getCarHistory']);
 
         expect(getCarHistoryresponse.status).to.eq(200);
-        console.log(Transform.bufferToObject(getCarHistoryresponse.payload))
+        console.log(Transform.bufferToObject(getCarHistoryresponse.payload));
 
         expect(Transform.bufferToObject(getCarHistoryresponse.payload)).to.be.length(2);
         expect(Transform.bufferToObject(getCarHistoryresponse.payload)[1].value.owner).to.be.eq("newowner");
@@ -171,7 +176,13 @@ describe('Test Mockstub', () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
 
-        const response: ChaincodeReponse = await stub.mockInvoke('test', ['createCar', 'CAR0', 'prop1', 'prop2', 'prop3', 'test']);
+        const response: ChaincodeReponse = await stub.mockInvoke('test', ['createCar', JSON.stringify({
+            key: 'CAR0',
+            make: "prop1",
+            model: "prop2",
+            color: "prop3",
+            owner: 'test'
+        })]);
 
         expect(response.status).to.eq(200);
 
@@ -187,7 +198,7 @@ describe('Test Mockstub', () => {
             }
         };
 
-        const it = await stubWithInit.getQueryResult(JSON.stringify(query))
+        const it = await stubWithInit.getQueryResult(JSON.stringify(query));
 
         const items = await Transform.iteratorToList(it);
 
@@ -216,7 +227,6 @@ describe('Test Mockstub', () => {
 
         expect(items).to.be.length(2)
     });
-
 
 
 });

@@ -104,18 +104,18 @@
 					<a name="checkargs" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> check<wbr>Args</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
-						<li class="tsd-signature tsd-kind-icon">check<wbr>Args&lt;T&gt;<span class="tsd-signature-symbol">(</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, yupSchema<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">check<wbr>Args&lt;T&gt;<span class="tsd-signature-symbol">(</span>object<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span>, yupSchema<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/helpers.ts#L44">utils/helpers.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/helpers.ts#L46">utils/helpers.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Check number of arguments
+									<p>Check first argument
 										try to cast object using yup
 										validate arguments against predefined types using yup
 									return validated object</p>
@@ -140,7 +140,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>args: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>object: <span class="tsd-signature-type">Object</span></h5>
 								</li>
 								<li>
 									<h5>yupSchema: <span class="tsd-signature-type">any</span></h5>
@@ -160,7 +160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/e0c81cc/src/utils/helpers.ts#L17">utils/helpers.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/helpers.ts#L19">utils/helpers.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,9 +200,6 @@
 						<a href="../modules/_chaincode_.html">"<wbr>Chaincode"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_chaincodeerror_.html">"<wbr>Chaincode<wbr>Error"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
 						<a href="../modules/_stubhelper_.html">"<wbr>Stub<wbr>Helper"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -213,6 +210,15 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utils_datatransform_.html">"utils/datatransform"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_chaincodeerror_.html">"utils/errors/<wbr>Chaincode<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_notfounderror_.html">"utils/errors/<wbr>Not<wbr>Found<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_utils_errors_objectvalidationerror_.html">"utils/errors/<wbr>Object<wbr>Validation<wbr>Error"</a>
 					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_utils_helpers_.html">"utils/helpers"</a>

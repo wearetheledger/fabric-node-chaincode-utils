@@ -2,9 +2,9 @@ import { ChaincodeError } from './ChaincodeError';
 import { ValidationError } from 'yup';
 
 /**
- * ChaincodeValidationError
+ * ObjectValidationError
  */
-export class ChaincodeValidationError extends ChaincodeError {
+export class ObjectValidationError extends ChaincodeError {
 
     value: any;
     /**

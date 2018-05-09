@@ -1,4 +1,4 @@
-import { Chaincode, ChaincodeError, Helpers, StubHelper } from '../src';
+import { Chaincode, Helpers, NotFoundError, StubHelper } from '../src';
 import * as Yup from 'yup';
 
 interface Car {
@@ -24,7 +24,7 @@ export class TestChaincode extends Chaincode {
 
     async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
             }));
@@ -32,7 +32,7 @@ export class TestChaincode extends Chaincode {
         const car = stubHelper.getStateAsObject(verifiedArgs.key) as Promise<Car>; //get the car from chaincode state
 
         if (!car) {
-            throw new ChaincodeError('Car does not exist');
+            throw new NotFoundError('Car does not exist');
         }
 
         return car;
@@ -103,7 +103,7 @@ export class TestChaincode extends Chaincode {
     }
 
     async createCar(stubHelper: StubHelper, args: string[]) {
-        const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<any>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
                 make: Yup.string().required(),
@@ -150,7 +150,7 @@ export class TestChaincode extends Chaincode {
 
     async changeCarOwner(stubHelper: StubHelper, args: string[]) {
 
-        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args, Yup.object()
+        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args[0], Yup.object()
             .shape({
                 key: Yup.string().required(),
                 owner: Yup.string().required(),

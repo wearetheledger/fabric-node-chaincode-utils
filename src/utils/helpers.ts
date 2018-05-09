@@ -1,5 +1,5 @@
 import { Logger, LoggerInstance, transports } from 'winston';
-import { ChaincodeValidationError } from './errors/ChaincodeValidationError';
+import { ObjectValidationError } from './errors/ObjectValidationError';
 import { ChaincodeError } from './errors/ChaincodeError';
 
 /**
@@ -31,40 +31,30 @@ export class Helpers {
     };
 
     /**
-     * Check number of arguments
+     * Check first argument
      * try to cast object using yup
      * validate arguments against predefined types using yup
      * return validated object
      *
      * @static
      * @template T
-     * @param {string[]} args
+     * @param object
      * @param {*} yupSchema
      * @returns {Promise<T>}
      * @memberof Helpers
      */
-    public static checkArgs<T>(args: string[], yupSchema: any): Promise<T> {
+    public static checkArgs<T>(object: Object, yupSchema: any): Promise<T> {
 
-        const keys = yupSchema._nodes;
-
-        if (!keys || args.length != keys.length) {
-            return Promise.reject(new ChaincodeError(`Incorrect number of arguments. Expecting ${keys.length}`, 400));
+        if (!object || !yupSchema) {
+            return Promise.reject(new ChaincodeError(`CheckArgs requires an object and schema`, 400));
         }
 
-        let objectToValidate: T = <T>{};
-
-        keys.reverse().forEach((key: string, index: number) => {
-            objectToValidate[key] = args[index];
-        });
-
-        yupSchema.cast(objectToValidate);
-
-        return yupSchema.validate(objectToValidate)
+        return yupSchema.validate(object)
             .then((validatedObject: T) => {
                 return validatedObject;
             })
             .catch((error: any) => {
-                throw new ChaincodeValidationError(error);
+                throw new ObjectValidationError(error);
             });
     }
 
