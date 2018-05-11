@@ -7,7 +7,8 @@ A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. T
 
 ## Table of contents
 - [Installation](#installation)
-- [Writing chaincode](#writing-chaincode)
+- [Writing chaincode](https://github.com/wearetheledger/fabric-node-chaincode-utils/wiki/Writing-chaincode)
+- [Changes](#changes)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
@@ -17,214 +18,35 @@ A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. T
 yarn add @theledger/fabric-chaincode-utils
 ```
 
-## Writing chaincode
-An example implementation of this chaincode is located at [examples/MyChaincode.ts](examples/MyChaincode.ts). A full chaincode project is located at [wearetheledger/fabric-network-boilerplate](https://github.com/wearetheledger/fabric-network-boilerplate).
+## Changes
 
-### Chaincode [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_chaincode_.chaincode.html)
-The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required by `fabric-shim`. The `Init()` function can be overwritten by just implementing it in your MyChaincode class, this function should be called `init` and will also be injected with the same arguments as your custom functions.
-
-```javascript
-export class MyChaincode extends Chaincode {
-
-    async init(stubHelper: StubHelper, args: string[]) {
-      return 'this will override the init method in Chaincode';
-    }
-    
-}
+### v2.0.0 - BREAKING
+- Objects parsed as multiple arguments, should now only be passed as a JSON object in 1 argument.
+**before**
+```
+["function","prop1","prop2"]
 ```
 
-The Chaincode base class also implements the `Invoke()` method, it will search in your class for existing chaincode methods with the function name you sent. It will also automatically wrap and serialize the reponse with `shim.success()` and `shim.error()`. You can just return the javascript object and it will do the rest, **BUT** returning a Buffer is still supported aswell. So for example, if we invoke our chaincode with function `queryCar`, the function below will be executed.
-
 ```javascript
-
-export class MyChaincode extends Chaincode {
-
-    async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
-
-        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args[0], Yup.object()
+const verifiedArgs = await Helpers.checkArgs<{ prop1: string, prop2: string }>(args, Yup.object()
             .shape({
-                key: Yup.string().required(),
+                prop1: Yup.string().required(),
+                prop2: Yup.string().required(),
             }));
-
-        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
-
-        if (!car) {
-            throw new ChaincodeError('Car does not exist');
-        }
-
-        return car;
-    }
-    
-}
-
 ```
 
-### StubHelper [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_stubhelper_.stubhelper.html)
-
-The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and deserialize data being saved/retreived.
-
-**Get an object by key**
-
-This is the same as the *getState* function, but it will deserialize the Buffer to an object.
-```javascript
-stubHelper.getStateAsObject(verifiedArgs.key);
+**after**
+```
+["function","{\"prop1\":\"prop1\",\"prop2\":\"prop2\"}"]
 ```
 
-**Put an object by key**
-
-This is the same as the *putState* function, but it will serialize the object to a Buffer for you.
 ```javascript
-stubHelper.putState(verifiedArgs.key, data);
-```
-
-**Get a date by key**
-
-This is the same as the *getState* function, but it will deserialize the Buffer to a Date.
-```javascript
-stubHelper.getStateAsDate(verifiedArgs.key);
-```
-
-**Get a string by key**
-
-This is the same as the *getState* function, but it will deserialize the Buffer to a String.
-```javascript
-stubHelper.getStateAsString(verifiedArgs.key);
-```
-
-**Get an Array from  rich query**
-
-This is the same as the *getQueryResult* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
-```javascript
-stubHelper.getQueryResultAsList(queryString, keyValue);
-```
-
-**Get an Array from range query**
-
-This is the same as the *getStateByRange* function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.
-```javascript
-stubHelper.getStateByRangeAsList(startKey, endKey);
-```
-
-**Get an Array from history by key**
-
-This is the same as the *getHistoryByKey* function, but it will deserialize and convert the iterator to an Array for you.
-```javascript
-stubHelper.getHistoryForKeyAsList(key);
-```
-
-**Get the original stub**
-
-This will expose the stub which is returned by fabric-shim.
-```javascript
-stubHelper.getStub();
-```
-
-**Get ClientIdentity**
-
-This will expose the ClientIdentity which is returned by fabric-shim.
-```javascript
-stubHelper.getClientIdentity();
-```
-**Get ChaincodeCrypto**
-
-This will expose the ShimCrypto which is returned by fabric-shim-crypto required for encryption, decryption, signing and verification.
-```javascript
-stubHelper.getChaincodeCrypto();
-```
-
-### Examples
-
-**Query by key**
-
-Returns an item matching the key
-```javascript
-async queryCar(stubHelper: StubHelper, args: string[]): Promise<any> {
-
-        const verifiedArgs = await Helpers.checkArgs<{ key: string }>(args[0], Yup.object()
+const verifiedArgs = await Helpers.checkArgs<{ prop1: string, prop2: string }>(args[0], Yup.object()
             .shape({
-                key: Yup.string().required(),
+                prop1: Yup.string().required(),
+                prop2: Yup.string().required(),
             }));
-
-        const car = stubHelper.getStateAsObject(verifiedArgs.key); //get the car from chaincode state
-
-        if (!car) {
-            throw new ChaincodeError('Car does not exist');
-        }
-
-        return car;
-}
 ```
-**Perform a rich query**
-
-Returns an array of items matching the rich query.
-Notice that we add the property 'docType' in the create method.
-```javascript
-async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
-
-        return await stubHelper.getQueryResultAsList(
-            {selector:{ docType: 'car'}}
-        ); 
-}
-```
-
-**Query by range**
-
-```javascript
-async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {
-
-        const startKey = 'CAR0';
-        const endKey = 'CAR999';
-
-        return await stubHelper.getStateByRangeAsList(startKey, endKey);
-}
-```
-**Creating**
-
-```javascript
-async createCar(stubHelper: StubHelper, args: string[]) {
-        const verifiedArgs = await Helpers.checkArgs<any>(args[0], Yup.object()
-            .shape({
-                key: Yup.string().required(),
-                make: Yup.string().required(),
-                model: Yup.string().required(),
-                color: Yup.string().required(),
-                owner: Yup.string().required(),
-            }));
-
-        let car = {
-            docType: 'car',
-            make: verifiedArgs.make,
-            model: verifiedArgs.model,
-            color: verifiedArgs.color,
-            owner: verifiedArgs.owner
-        };
-
-        await stubHelper.putState(verifiedArgs.key, car);
-}
-```
-
-**Updating object**
-
-```javascript
-async changeCarOwner(stubHelper: StubHelper, args: string[]) {
-
-        const verifiedArgs = await Helpers.checkArgs<{ key: string; owner: string }>(args[0], Yup.object()
-            .shape({
-                key: Yup.string().required(),
-                owner: Yup.string().required(),
-            }));
-
-        let car = await <any>stubHelper.getStateAsObject(verifiedArgs.key);
-
-        car.owner = verifiedArgs.owner;
-
-        await stubHelper.putState(verifiedArgs.key, car);
-}
-```
-
-### Transform [View definition](https://wearetheledger.github.io/fabric-node-chaincode-utils/classes/_utils_datatransform_.transform.html)
-
-The Transform class is a helper to provide data transformation to and from the formats required by hyperledger fabric.
 
 ## Contributing
  
