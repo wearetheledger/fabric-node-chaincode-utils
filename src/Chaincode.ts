@@ -46,9 +46,9 @@ export class Chaincode implements ChaincodeInterface {
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);
         this.logger.info(`Args: ${stub.getArgs().join(',')}`);
 
-        let args = stub.getArgs();
+        let ret = stub.getFunctionAndParameters();
 
-        return await this.executeMethod('init', args, stub, true);
+        return await this.executeMethod('init', ret.params, stub, true);
 
     }
 

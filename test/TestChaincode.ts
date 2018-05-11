@@ -13,9 +13,7 @@ export class TestChaincode extends Chaincode {
 
     async init(stubHelper: StubHelper, args: string[]): Promise<any> {
 
-        if (args[0] == 'init') {
-            await this.initLedger(stubHelper, args);
-        }
+        await this.initLedger(stubHelper, args);
 
         return {
             args
