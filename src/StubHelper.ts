@@ -4,8 +4,7 @@ import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
 import { KV } from './index';
-
-const ShimCrypto = require('fabric-shim-crypto');
+import ShimCrypto = require('fabric-shim-crypto');
 
 /**
  *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
@@ -26,7 +25,7 @@ export class StubHelper {
     /**
      * @returns {"fabric-shim".Stub}
      */
-    getStub() {
+    getStub(): Stub {
         return this.stub;
     }
 
@@ -35,7 +34,7 @@ export class StubHelper {
      *
      * @returns {module:fabric-shim-crypto.ShimCrypto}
      */
-    getChaincodeCrypto() {
+    getChaincodeCrypto(): ShimCrypto {
         return new ShimCrypto(this.stub);
     }
 
@@ -44,7 +43,7 @@ export class StubHelper {
      *
      * @returns {module:fabric-shim.ClientIdentity}
      */
-    getClientIdentity() {
+    getClientIdentity(): ClientIdentity {
         return new ClientIdentity(this.stub);
     }
 
