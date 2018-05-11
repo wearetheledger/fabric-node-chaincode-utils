@@ -32,7 +32,7 @@ export class StubHelper {
     /**
      * Return Fabric crypto library for signing and encryption
      *
-     * @returns {module:fabric-shim-crypto.ShimCrypto}
+     * @returns {"fabric-shim-crypto".ShimCrypto}
      */
     getChaincodeCrypto(): ShimCrypto {
         return new ShimCrypto(this.stub);
@@ -41,7 +41,7 @@ export class StubHelper {
     /**
      * Return the Client Identity
      *
-     * @returns {module:fabric-shim.ClientIdentity}
+     * @returns {"fabric-shim".ClientIdentity}
      */
     getClientIdentity(): ClientIdentity {
         return new ClientIdentity(this.stub);

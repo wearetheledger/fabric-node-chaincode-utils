@@ -1,6 +1,6 @@
 {
     "name": "@theledger/fabric-chaincode-utils",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -26,7 +26,7 @@
     "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
     "devDependencies": {
         "@theledger/fabric-mock-stub": "^1.2.1",
-        "@theledger/fabric-shim-crypto-types": "^1.0.3",
+        "@theledger/fabric-shim-crypto-types": "^1.0.4",
         "@theledger/fabric-shim-types": "^1.0.6",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^2.2.43",

@@ -19,9 +19,9 @@
     lodash "^4.17.5"
     winston "^2.4.0"
 
-"@theledger/fabric-shim-crypto-types@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@theledger/fabric-shim-crypto-types/-/fabric-shim-crypto-types-1.0.3.tgz#9a59d38c46894e9d032b53c8488db4233ed7f983"
+"@theledger/fabric-shim-crypto-types@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@theledger/fabric-shim-crypto-types/-/fabric-shim-crypto-types-1.0.4.tgz#3d282fecc6a5bcf65536e209dcfbd2f9ca8cde45"
   dependencies:
     "@types/google-protobuf" "^3.2.7"
     "@types/log4js" "^2.3.5"
