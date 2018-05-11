@@ -22,6 +22,7 @@ yarn add @theledger/fabric-chaincode-utils
 
 ### v2.0.0 - BREAKING
 - Objects parsed as multiple arguments, should now only be passed as a JSON object in 1 argument.
+
 **before**
 ```
 ["function","prop1","prop2"]
