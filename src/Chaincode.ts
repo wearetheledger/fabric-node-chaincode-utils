@@ -2,10 +2,11 @@ import shim = require('fabric-shim');
 import { ChaincodeInterface, ChaincodeReponse, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
-import { ERRORS } from './constants/errors';
-import { ChaincodeError } from './ChaincodeError';
 import { StubHelper } from './StubHelper';
 import { Transform } from './utils/datatransform';
+import { ChaincodeError } from './utils/errors/ChaincodeError';
+
+const serialize = require('serialize-error');
 
 /**
  * The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required
@@ -19,7 +20,7 @@ export class Chaincode implements ChaincodeInterface {
     constructor(logLevel?: string) {
         this.logger = Helpers.getLoggerInstance(this.name, logLevel);
     }
-    
+
     /**
      * the name of the current chaincode.
      *
@@ -29,18 +30,6 @@ export class Chaincode implements ChaincodeInterface {
      */
     get name(): string {
         return this.constructor.name;
-    }
-
-    /**
-     * the Default StubHelper with extra functionality and return your own instance.
-     *
-     * @param {Stub} stub
-     * @returns the stub helper for the given stub. This can be used to extend the stub functionality
-     * @memberof Chaincode
-     */
-    getStubHelperFor(stub: Stub) {
-        return new StubHelper(stub);
-        
     }
 
     /**
@@ -57,9 +46,9 @@ export class Chaincode implements ChaincodeInterface {
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);
         this.logger.info(`Args: ${stub.getArgs().join(',')}`);
 
-        let args = stub.getArgs();
+        let ret = stub.getFunctionAndParameters();
 
-        return await this.executeMethod('init', args, stub, true);
+        return await this.executeMethod('init', ret.params, stub, true);
 
     }
 
@@ -100,9 +89,7 @@ export class Chaincode implements ChaincodeInterface {
             if (!silent) {
                 this.logger.error(`no function of name: ${fcn} found`);
 
-                throw new ChaincodeError(ERRORS.UNKNOWN_FUNCTION_ERROR, {
-                    'function': fcn
-                });
+                return shim.error(serialize(new ChaincodeError(`no function of name: ${fcn} found`, 400)));
             } else {
                 return shim.success();
             }
@@ -111,7 +98,7 @@ export class Chaincode implements ChaincodeInterface {
         try {
             this.logger.debug(`============= START : ${fcn} ===========`);
 
-            let payload = await method.call(this, this.getStubHelperFor(stub), params);
+            let payload = await method.call(this, new StubHelper(stub), params);
 
             if (payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
@@ -124,17 +111,13 @@ export class Chaincode implements ChaincodeInterface {
         } catch (err) {
             let error = err;
 
-            const stacktrace = err.stack;
+            this.logger.error(error);
 
-            if (!(err instanceof ChaincodeError)) {
-                error = new ChaincodeError(ERRORS.UNKNOWN_ERROR, {
-                    'message': err.message
-                });
+            if (error.name !== 'ChaincodeError') {
+                error = new ChaincodeError(error.message, 500);
             }
-            this.logger.error(stacktrace);
-            this.logger.error(`Data of error ${err.message}: ${JSON.stringify(err.data)}`);
 
-            return shim.error(error.serialized);
+            return shim.error(serialize(error));
         }
     }
 }

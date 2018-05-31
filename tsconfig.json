@@ -9,6 +9,7 @@
     "outDir": "./dist",
     "types": [
       "@theledger/fabric-shim-types",
+      "@theledger/fabric-shim-crypto-types",
       "@types/chai"
     ],
     "rootDir": "./src",

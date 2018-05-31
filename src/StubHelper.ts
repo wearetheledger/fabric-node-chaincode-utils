@@ -1,9 +1,10 @@
-import { Stub } from 'fabric-shim';
+import { ClientIdentity, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
 import { KV } from './index';
+import ShimCrypto = require('fabric-shim-crypto');
 
 /**
  *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
@@ -24,8 +25,26 @@ export class StubHelper {
     /**
      * @returns {"fabric-shim".Stub}
      */
-    getStub() {
+    getStub(): Stub {
         return this.stub;
+    }
+
+    /**
+     * Return Fabric crypto library for signing and encryption
+     *
+     * @returns {"fabric-shim-crypto".ShimCrypto}
+     */
+    getChaincodeCrypto(): ShimCrypto {
+        return new ShimCrypto(this.stub);
+    }
+
+    /**
+     * Return the Client Identity
+     *
+     * @returns {"fabric-shim".ClientIdentity}
+     */
+    getClientIdentity(): ClientIdentity {
+        return new ClientIdentity(this.stub);
     }
 
     /**
@@ -69,6 +88,21 @@ export class StubHelper {
         const iterator = await this.stub.getStateByRange(startKey, endKey);
 
         return Transform.iteratorToList(iterator);
+    }
+
+    /**
+     * Fetch a history for a specific key and return a list of results.
+     *
+     * @returns {Promise<any>}
+     * @param key
+     */
+    async getHistoryForKeyAsList(key: string): Promise<object[]> {
+
+        this.logger.debug(`History for key: ${key}`);
+
+        const iterator = await this.stub.getHistoryForKey(key);
+
+        return Transform.iteratorToHistoryList(iterator);
     }
 
     /**

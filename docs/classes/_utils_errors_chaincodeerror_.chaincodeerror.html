@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Chaincode | @theledger/fabric-chaincode-utils</title>
+	<title>ChaincodeError | @theledger/fabric-chaincode-utils</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_chaincode_.html">&quot;Chaincode&quot;</a>
+					<a href="../modules/_utils_errors_chaincodeerror_.html">&quot;utils/errors/ChaincodeError&quot;</a>
 				</li>
 				<li>
-					<a href="_chaincode_.chaincode.html">Chaincode</a>
+					<a href="_utils_errors_chaincodeerror_.chaincodeerror.html">ChaincodeError</a>
 				</li>
 			</ul>
-			<h1>Class Chaincode</h1>
+			<h1>Class ChaincodeError</h1>
 		</div>
 	</div>
 </header>
@@ -72,9 +72,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The Chaincode class is a base class containing handlers for the <code>Invoke()</code> and <code>Init()</code> function which are required
-							by <code>fabric-shim</code>. The <code>Init()</code> function can be overwritten by just implementing it in your Chaincode implementation
-						class.</p>
+						<p>ChaincodeError</p>
 					</div>
 				</div>
 			</section>
@@ -82,14 +80,21 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Chaincode</span>
+						<span class="tsd-signature-type">Error</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">ChaincodeError</span>
+								<ul class="tsd-hierarchy">
+									<li>
+										<a href="_utils_errors_objectvalidationerror_.objectvalidationerror.html" class="tsd-signature-type">ObjectValidationError</a>
+									</li>
+									<li>
+										<a href="_utils_errors_notfounderror_.notfounderror.html" class="tsd-signature-type">NotFoundError</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><span class="tsd-signature-type">ChaincodeInterface</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -99,26 +104,17 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_chaincode_.chaincode.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_chaincode_.chaincode.html#logger" class="tsd-kind-icon">logger</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Accessors</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_chaincode_.chaincode.html#name" class="tsd-kind-icon">name</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_chaincode_.chaincode.html#init" class="tsd-kind-icon">Init</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_chaincode_.chaincode.html#invoke" class="tsd-kind-icon">Invoke</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#status" class="tsd-kind-icon">status</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#error" class="tsd-kind-icon">Error</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static"><a href="_utils_errors_chaincodeerror_.chaincodeerror.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
 					</div>
@@ -130,22 +126,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Chaincode<span class="tsd-signature-symbol">(</span>logLevel<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_chaincode_.chaincode.html" class="tsd-signature-type">Chaincode</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Chaincode<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, status<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_utils_errors_chaincodeerror_.chaincodeerror.html" class="tsd-signature-type">ChaincodeError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/Chaincode.ts#L18">Chaincode.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/errors/ChaincodeError.ts#L6">utils/errors/ChaincodeError.ts:6</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> logLevel: <span class="tsd-signature-type">string</span></h5>
+									<h5>message: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> status: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="_chaincode_.chaincode.html" class="tsd-signature-type">Chaincode</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="_utils_errors_chaincodeerror_.chaincodeerror.html" class="tsd-signature-type">ChaincodeError</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -153,121 +152,58 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="logger" class="tsd-anchor"></a>
-					<h3>logger</h3>
-					<div class="tsd-signature tsd-kind-icon">logger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">LoggerInstance</span></div>
+					<a name="status" class="tsd-anchor"></a>
+					<h3>status</h3>
+					<div class="tsd-signature tsd-kind-icon">status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/Chaincode.ts#L18">Chaincode.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/utils/errors/ChaincodeError.ts#L6">utils/errors/ChaincodeError.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="error" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Error</h3>
+					<div class="tsd-signature tsd-kind-icon">Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ErrorConstructor</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in /Users/jonassnellinckx/Projects/TheLedger/utils/fabric-node-chaincode-utils/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:896</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+					<a name="message" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> message</h3>
+					<div class="tsd-signature tsd-kind-icon">message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from Error.message</p>
+						<ul>
+							<li>Defined in /Users/jonassnellinckx/Projects/TheLedger/utils/fabric-node-chaincode-utils/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:886</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
 					<a name="name" class="tsd-anchor"></a>
-					<h3>name</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> name<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/Chaincode.ts#L31">Chaincode.ts:31</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>the name of the current chaincode.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>readonly</dt>
-									<dd></dd>
-									<dt>type</dt>
-									<dd><p>{string}</p>
-									</dd>
-									<dt>memberof</dt>
-									<dd><p>Chaincode</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> name</h3>
+					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from Error.name</p>
+						<ul>
+							<li>Defined in /Users/jonassnellinckx/Projects/TheLedger/utils/fabric-node-chaincode-utils/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:885</li>
+						</ul>
+					</aside>
 				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="init" class="tsd-anchor"></a>
-					<h3>Init</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Init<span class="tsd-signature-symbol">(</span>stub<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Stub</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChaincodeReponse</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/Chaincode.ts#L43">Chaincode.ts:43</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The Init method is called when the Smart Contract is instantiated by the blockchain network
-									Best practice is to have any Ledger initialization in separate function -- see initLedger()</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>memberof</dt>
-									<dd><p>Chaincode</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>stub: <span class="tsd-signature-type">Stub</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChaincodeReponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="invoke" class="tsd-anchor"></a>
-					<h3>Invoke</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">Invoke<span class="tsd-signature-symbol">(</span>stub<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Stub</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChaincodeReponse</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/f77226a/src/Chaincode.ts#L64">Chaincode.ts:64</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>The Invoke method is called as a result of an application request to run the Smart Contract.
-										The calling application program has also specified the particular smart contract
-									function to be called, with arguments</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>memberof</dt>
-									<dd><p>Chaincode</p>
-									</dd>
-								</dl>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>stub: <span class="tsd-signature-type">Stub</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">ChaincodeReponse</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
+					<a name="stack" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
+					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from Error.stack</p>
+						<p>Overrides Error.stack</p>
+						<ul>
+							<li>Defined in /Users/jonassnellinckx/Projects/TheLedger/utils/fabric-node-chaincode-utils/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:887</li>
+						</ul>
+					</aside>
 				</section>
 			</section>
 		</div>
@@ -277,7 +213,7 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_chaincode_.html">"<wbr>Chaincode"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -292,7 +228,7 @@
 					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utils_datatransform_.html">"utils/datatransform"</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class="current tsd-kind-external-module">
 						<a href="../modules/_utils_errors_chaincodeerror_.html">"utils/errors/<wbr>Chaincode<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -311,30 +247,30 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
-						<a href="_chaincode_.chaincode.html" class="tsd-kind-icon">Chaincode</a>
+						<a href="_utils_errors_chaincodeerror_.chaincodeerror.html" class="tsd-kind-icon">Chaincode<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="_chaincode_.chaincode.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_chaincode_.chaincode.html#logger" class="tsd-kind-icon">logger</a>
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#status" class="tsd-kind-icon">status</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_chaincode_.chaincode.html#name" class="tsd-kind-icon">name</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#error" class="tsd-kind-icon">Error</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_chaincode_.chaincode.html#init" class="tsd-kind-icon">Init</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#message" class="tsd-kind-icon">message</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_chaincode_.chaincode.html#invoke" class="tsd-kind-icon">Invoke</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-static">
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#name" class="tsd-kind-icon">name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited tsd-is-static">
+								<a href="_utils_errors_chaincodeerror_.chaincodeerror.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-variable tsd-parent-kind-external-module tsd-is-not-exported">
-						<a href="../modules/_chaincode_.html#serialize" class="tsd-kind-icon">serialize</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

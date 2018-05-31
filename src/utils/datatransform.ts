@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import { Iterators, KV } from 'fabric-shim';
+import { Iterators, KV, NextKeyModificationResult, NextResult } from 'fabric-shim';
+import { KeyModificationItem } from '../index';
 
 /**
  * The Transform class is a helper to provide data transformation to and from the formats required by hyperledger fabric.
@@ -36,7 +37,8 @@ export class Transform {
             return;
         }
 
-        const bufferString = buffer.toString();
+        const bufferString = buffer.toString('utf8');
+
         if (bufferString.length <= 0) {
             return;
         }
@@ -88,7 +90,8 @@ export class Transform {
      */
     public static async iteratorToList(iterator: Iterators.Iterator) {
         const allResults = [];
-        let res;
+
+        let res: NextResult;
         while (res == null || !res.done) {
             res = await iterator.next();
 
@@ -117,11 +120,12 @@ export class Transform {
      */
     public static async iteratorToKVList(iterator: Iterators.Iterator): Promise<KV[]> {
         const allResults = [];
-        let res;
+
+        let res: NextResult;
         while (res == null || !res.done) {
             res = await iterator.next();
             if (res.value && res.value.value.toString()) {
-                let parsedItem: { key: string, value: any } = {key: '', value: {}};
+                let parsedItem: KV = {key: '', value: {}};
 
                 parsedItem.key = res.value.key;
 
@@ -130,6 +134,45 @@ export class Transform {
                 } catch (err) {
                     parsedItem.value = res.value.value.toString('utf8');
                 }
+                allResults.push(parsedItem);
+            }
+        }
+
+        await iterator.close();
+
+        return allResults;
+    };
+
+    /**
+     * Transform iterator to array of objects
+     *
+     * @param {'fabric-shim'.Iterators.HistoryQueryIterator} iterator
+     * @returns {Promise<Array>}
+     */
+    public static async iteratorToHistoryList(iterator: Iterators.HistoryQueryIterator): Promise<KeyModificationItem[]> {
+        const allResults = [];
+
+        let res: NextKeyModificationResult;
+        while (res == null || !res.done) {
+            res = await iterator.next();
+            if (res.value && res.value.value.toString()) {
+                let parsedItem: KeyModificationItem = {
+                    is_delete: false,
+                    value: {},
+                    timestamp: null,
+                    tx_id: ''
+                };
+
+                try {
+                    parsedItem.value = JSON.parse(res.value.value.toString('utf8'));
+                } catch (err) {
+                    parsedItem.value = res.value.value.toString('utf8');
+                }
+
+                parsedItem.is_delete = res.value.is_delete;
+                parsedItem.tx_id = res.value.tx_id;
+                parsedItem.timestamp = res.value.timestamp.getSeconds();
+
                 allResults.push(parsedItem);
             }
         }
