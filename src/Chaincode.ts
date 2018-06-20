@@ -100,7 +100,7 @@ export class Chaincode implements ChaincodeInterface {
 
             let payload = await method.call(this, new StubHelper(stub), params);
 
-            if (payload && !Buffer.isBuffer(payload)) {
+            if (null == payload && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
             }
 
