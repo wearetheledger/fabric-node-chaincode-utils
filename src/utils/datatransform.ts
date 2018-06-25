@@ -1,11 +1,14 @@
 import * as _ from 'lodash';
 import { Iterators, KV, NextKeyModificationResult, NextResult } from 'fabric-shim';
 import { KeyModificationItem } from '../index';
+import { Helpers } from './helpers';
+import { LoggerInstance } from 'winston';
 
 /**
  * The Transform class is a helper to provide data transformation to and from the formats required by hyperledger fabric.
  */
 export class Transform {
+    public static logger: LoggerInstance = Helpers.getLoggerInstance('Transform', 'info');
 
     /**
      * serialize payload
@@ -16,8 +19,9 @@ export class Transform {
      * @memberof Transform
      */
     public static serialize(value: any) {
-        if (_.isDate(value) || _.isString(value)) {
-
+        if (value instanceof Buffer) {
+            return value;
+        } else if (_.isDate(value) || _.isString(value)) {
             return Buffer.from(this.normalizePayload(value).toString());
         }
 
@@ -32,18 +36,27 @@ export class Transform {
      * @returns {(object | undefined)}
      * @memberof Transform
      */
-    public static bufferToObject(buffer: Buffer): object | undefined {
+    public static bufferToObject(buffer: Buffer): object | string {
         if (buffer == null) {
-            return;
+            return null;
+        }
+
+        if (Number(parseFloat(buffer.toString())) === (buffer as any)) {
+            return buffer;
         }
 
         const bufferString = buffer.toString('utf8');
 
         if (bufferString.length <= 0) {
-            return;
+            return null;
         }
 
-        return JSON.parse(bufferString);
+        try {
+            return JSON.parse(bufferString);
+        } catch (err) {
+            this.logger.error('Error parsing buffer to JSON', bufferString);
+            return bufferString;
+        }
     };
 
     /**

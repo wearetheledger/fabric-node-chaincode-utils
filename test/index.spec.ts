@@ -228,5 +228,27 @@ describe('Test Mockstub', () => {
         expect(items).to.be.length(2)
     });
 
+    it('Should be able to return 0', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        await stub.putState('a', 0);
+
+        const result = await stub.mockInvoke("testReturn0", ["testReturn0"]);
+
+        expect(Transform.bufferToObject(result.payload)).to.equal(0)
+    });
+
+    it('Should be able to return null', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        await stub.putState('a', 0);
+
+        const result = await stub.mockInvoke("testReturn0", ["testReturn0", "b"]);
+
+        expect(Transform.bufferToObject(result.payload)).to.equal(null)
+    });
+
 
 });

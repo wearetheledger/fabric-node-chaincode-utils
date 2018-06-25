@@ -5,6 +5,7 @@ import { LoggerInstance } from 'winston';
 import { StubHelper } from './StubHelper';
 import { Transform } from './utils/datatransform';
 import { ChaincodeError } from './utils/errors/ChaincodeError';
+import { InternalServerError } from './utils/errors/InternalServerError';
 
 const serialize = require('serialize-error');
 
@@ -100,7 +101,7 @@ export class Chaincode implements ChaincodeInterface {
 
             let payload = await method.call(this, new StubHelper(stub), params);
 
-            if (payload && !Buffer.isBuffer(payload)) {
+            if ((payload !== undefined && payload !== null) && !Buffer.isBuffer(payload)) {
                 payload = Buffer.from(JSON.stringify(Transform.normalizePayload(payload)));
             }
 
@@ -111,13 +112,15 @@ export class Chaincode implements ChaincodeInterface {
         } catch (err) {
             let error = err;
 
-            this.logger.error(error);
+            this.logger.error(err);
 
             if (error.name !== 'ChaincodeError') {
-                error = new ChaincodeError(error.message, 500);
+                error = new InternalServerError(error.message);
             }
 
-            return shim.error(serialize(error));
+            delete error.stack;
+
+            return shim.error(JSON.stringify(serialize(error)));
         }
     }
 }

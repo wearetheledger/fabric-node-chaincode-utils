@@ -135,7 +135,7 @@ export class StubHelper {
 
         const valueAsBytes = await this.stub.getState(key);
 
-        if (!valueAsBytes || valueAsBytes.toString().length <= 0) {
+        if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
         }
 
@@ -151,7 +151,7 @@ export class StubHelper {
 
         const valueAsBytes = await this.stub.getState(key);
 
-        if (!valueAsBytes || valueAsBytes.toString().length <= 0) {
+        if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
         }
 
@@ -167,7 +167,7 @@ export class StubHelper {
 
         const valueAsBytes = await this.stub.getState(key);
 
-        if (!valueAsBytes || valueAsBytes.toString().length <= 0) {
+        if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
         }
 

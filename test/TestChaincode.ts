@@ -160,4 +160,10 @@ export class TestChaincode extends Chaincode {
 
         await stubHelper.putState(verifiedArgs.key, car);
     }
+
+    async testReturn0(stubHelper: StubHelper, args: string[]): Promise<any> {
+
+        return await stubHelper.getStateAsObject(args[0] || 'a');
+
+    }
 }

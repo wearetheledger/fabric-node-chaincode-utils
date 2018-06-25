@@ -100,7 +100,7 @@
 
     <span class="hljs-keyword">async</span> queryCar(stubHelper: StubHelper, <span class="hljs-attr">args</span>: string[]): <span class="hljs-built_in">Promise</span>&lt;any&gt; {
 
-        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string }&gt;(args, Yup.object()
+        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string }&gt;(args[<span class="hljs-number">0</span>], Yup.object()
             .shape({
                 <span class="hljs-attr">key</span>: Yup.string().required(),
             }));
@@ -143,16 +143,28 @@
 				<p>This is the same as the <em>getStateByRange</em> function, but it will deserialize and convert the iterator to an Array for you. Passing the keyValue is optional and will return an array with key values.</p>
 				<pre><code class="lang-javascript">stubHelper.getStateByRangeAsList(startKey, endKey);
 </code></pre>
+				<p><strong>Get an Array from history by key</strong></p>
+				<p>This is the same as the <em>getHistoryByKey</em> function, but it will deserialize and convert the iterator to an Array for you.</p>
+				<pre><code class="lang-javascript">stubHelper.getHistoryForKeyAsList(key);
+</code></pre>
 				<p><strong>Get the original stub</strong></p>
 				<p>This will expose the stub which is returned by fabric-shim.</p>
 				<pre><code class="lang-javascript">stubHelper.getStub();
+</code></pre>
+				<p><strong>Get ClientIdentity</strong></p>
+				<p>This will expose the ClientIdentity which is returned by fabric-shim.</p>
+				<pre><code class="lang-javascript">stubHelper.getClientIdentity();
+</code></pre>
+				<p><strong>Get ChaincodeCrypto</strong></p>
+				<p>This will expose the ShimCrypto which is returned by fabric-shim-crypto required for encryption, decryption, signing and verification.</p>
+				<pre><code class="lang-javascript">stubHelper.getChaincodeCrypto();
 </code></pre>
 				<h3 id="examples">Examples</h3>
 				<p><strong>Query by key</strong></p>
 				<p>Returns an item matching the key</p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> queryCar(stubHelper: StubHelper, <span class="hljs-attr">args</span>: string[]): <span class="hljs-built_in">Promise</span>&lt;any&gt; {
 
-        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string }&gt;(args, Yup.object()
+        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string }&gt;(args[<span class="hljs-number">0</span>], Yup.object()
             .shape({
                 <span class="hljs-attr">key</span>: Yup.string().required(),
             }));
@@ -187,7 +199,7 @@
 </code></pre>
 				<p><strong>Creating</strong></p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> createCar(stubHelper: StubHelper, <span class="hljs-attr">args</span>: string[]) {
-        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;any&gt;(args, Yup.object()
+        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;any&gt;(args[<span class="hljs-number">0</span>], Yup.object()
             .shape({
                 <span class="hljs-attr">key</span>: Yup.string().required(),
                 <span class="hljs-attr">make</span>: Yup.string().required(),
@@ -210,7 +222,7 @@
 				<p><strong>Updating object</strong></p>
 				<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> changeCarOwner(stubHelper: StubHelper, <span class="hljs-attr">args</span>: string[]) {
 
-        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string; owner: string }&gt;(args, Yup.object()
+        <span class="hljs-keyword">const</span> verifiedArgs = <span class="hljs-keyword">await</span> Helpers.checkArgs&lt;{ <span class="hljs-attr">key</span>: string; owner: string }&gt;(args[<span class="hljs-number">0</span>], Yup.object()
             .shape({
                 <span class="hljs-attr">key</span>: Yup.string().required(),
                 <span class="hljs-attr">owner</span>: Yup.string().required(),
@@ -271,6 +283,9 @@
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_utils_errors_chaincodeerror_.html">"utils/errors/<wbr>Chaincode<wbr>Error"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_utils_errors_internalservererror_.html">"utils/errors/<wbr>Internal<wbr>Server<wbr>Error"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/_utils_errors_notfounderror_.html">"utils/errors/<wbr>Not<wbr>Found<wbr>Error"</a>
