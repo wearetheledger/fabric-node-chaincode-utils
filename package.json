@@ -54,7 +54,7 @@
         "google-protobuf": "^3.5.0",
         "lodash": "^4.17.5",
         "serialize-error": "^2.1.0",
-        "winston": "^2.4.0",
+        "winston": "^3.0.0",
         "yup": "^0.24.1"
     },
     "publishConfig": {
