@@ -26,7 +26,7 @@ export class Transform {
         }
 
         return Buffer.from(JSON.stringify(this.normalizePayload(value)));
-    };
+    }
 
     /**
      * parse string to object
@@ -57,7 +57,7 @@ export class Transform {
             this.logger.error('Error parsing buffer to JSON', bufferString);
             return bufferString;
         }
-    };
+    }
 
     /**
      * bufferToDate
@@ -85,7 +85,7 @@ export class Transform {
         }
 
         return;
-    };
+    }
 
     public static bufferToString(buffer: Buffer): string | undefined {
         if (buffer == null) {
@@ -93,7 +93,7 @@ export class Transform {
         }
 
         return buffer.toString();
-    };
+    }
 
     /**
      * Transform iterator to array of objects
@@ -123,7 +123,7 @@ export class Transform {
         await iterator.close();
 
         return allResults;
-    };
+    }
 
     /**
      * Transform iterator to array of objects
@@ -154,7 +154,7 @@ export class Transform {
         await iterator.close();
 
         return allResults;
-    };
+    }
 
     /**
      * Transform iterator to array of objects
@@ -193,7 +193,7 @@ export class Transform {
         await iterator.close();
 
         return allResults;
-    };
+    }
 
     /**
      * normalizePayload
@@ -220,5 +220,5 @@ export class Transform {
         }
 
         return value;
-    };
+    }
 }

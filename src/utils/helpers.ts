@@ -28,7 +28,7 @@ export class Helpers {
             })],
             exitOnError: false,
         });
-    };
+    }
 
     /**
      * Check first argument

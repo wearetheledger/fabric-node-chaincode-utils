@@ -12,7 +12,7 @@ export {
     NotFoundError,
     Transform,
     Helpers
-}
+};
 
 export interface KV {
     key: string;
