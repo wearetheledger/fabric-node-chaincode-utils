@@ -6,6 +6,8 @@ import { LoggerInstance } from 'winston';
 import { KV } from './index';
 import ShimCrypto = require('fabric-shim-crypto');
 
+const aguid = require('aguid');
+
 /**
  *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
  *  deserialize data being saved/retreived.
@@ -45,6 +47,19 @@ export class StubHelper {
      */
     getClientIdentity(): ClientIdentity {
         return new ClientIdentity(this.stub);
+    }
+
+    /**
+     * Generate deterministic UUID
+     *
+     * @param {string} name
+     * @returns {any}
+     */
+    generateUUID(name: string) {
+        const txId = this.stub.getTxID();
+        const txTimestamp = this.getTxDate().getTime();
+
+        return aguid(`${name}_${txId}_${txTimestamp}`);
     }
 
     /**

@@ -189,6 +189,25 @@ describe('Test Mockstub', () => {
         expect(Object.keys(stub.state).length).to.equal(1);
     });
 
+    it('Test create new car with deterministic uuid', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const response: ChaincodeReponse = await stub.mockInvoke('test', ['createCar', JSON.stringify({
+            make: "prop1",
+            model: "prop2",
+            color: "prop3",
+            owner: 'test'
+        })]);
+
+        expect(response.status).to.eq(200);
+
+        expect(Object.keys(stub.state).length).to.equal(1);
+
+        expect(Object.keys(stub.state)[0]).to.not.equal("CAR0")
+
+    });
+
 
     it('Should be able to query using rich queries', async () => {
 

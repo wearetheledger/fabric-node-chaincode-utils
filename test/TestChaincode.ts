@@ -103,7 +103,7 @@ export class TestChaincode extends Chaincode {
     async createCar(stubHelper: StubHelper, args: string[]) {
         const verifiedArgs = await Helpers.checkArgs<any>(args[0], Yup.object()
             .shape({
-                key: Yup.string().required(),
+                key: Yup.string(),
                 make: Yup.string().required(),
                 model: Yup.string().required(),
                 color: Yup.string().required(),
@@ -118,7 +118,7 @@ export class TestChaincode extends Chaincode {
             owner: verifiedArgs.owner
         };
 
-        await stubHelper.putState(verifiedArgs.key, car);
+        await stubHelper.putState(verifiedArgs.key || stubHelper.generateUUID('CAR'), car);
     }
 
     async queryAllCars(stubHelper: StubHelper, args: string[]): Promise<any> {

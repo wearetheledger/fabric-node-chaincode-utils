@@ -48,6 +48,7 @@
     "dependencies": {
         "@theledger/couchdb-query-engine": "^2.4.4",
         "@types/lodash": "^4.14.104",
+        "aguid": "^2.0.0",
         "fabric-shim": "^1.1.2",
         "fabric-shim-crypto": "^1.1.2",
         "google-protobuf": "^3.5.0",
