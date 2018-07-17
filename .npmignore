@@ -19,3 +19,4 @@ tsconfig.json
 examples
 coverage
 .nyc_output
+docs
