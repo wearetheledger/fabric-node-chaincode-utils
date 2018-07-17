@@ -1,6 +1,6 @@
 {
     "name": "@theledger/fabric-chaincode-utils",
-    "version": "2.1.0",
+    "version": "3.0.0",
     "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -88,7 +88,7 @@
         "reporter": [
             "text"
         ],
-        "exclude":[
+        "exclude": [
             "src/utils/errors/*.ts"
         ],
         "sourceMap": true,
