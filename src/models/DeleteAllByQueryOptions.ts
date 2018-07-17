@@ -1,0 +1,3 @@
+interface DeleteAllByQueryOptions {
+    privateCollection?: string;
+}

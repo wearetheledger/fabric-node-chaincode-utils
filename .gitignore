@@ -10,5 +10,7 @@ yarn-error.getLoggerInstance*
 *.ntvs*
 *.njsproj
 *.sln
-coverage
 dist
+.nyc_output
+coverage
+*.lcov

@@ -1,0 +1,3 @@
+interface GetHistoryForKeyAsListOptions {
+    privateCollection?: string;
+}

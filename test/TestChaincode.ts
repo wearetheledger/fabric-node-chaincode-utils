@@ -154,7 +154,7 @@ export class TestChaincode extends Chaincode {
                 owner: Yup.string().required(),
             }));
 
-        let car = await <Promise<Car>>stubHelper.getStateAsObject(verifiedArgs.key);
+        let car: Car = await stubHelper.getStateAsObject(verifiedArgs.key) as Car;
 
         car.owner = verifiedArgs.owner;
 

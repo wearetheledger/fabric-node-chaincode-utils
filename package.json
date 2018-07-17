@@ -6,7 +6,9 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "npm run clean && tsc",
-        "test": "mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
+        "test": "nyc mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
+        "test:coverage": "nyc --no-clean mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
+        "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
         "lint": "tslint --fix -c tslint.json './src/**/*.ts'",
         "clean": "rimraf dist",
         "prepare": "npm run build",
@@ -25,20 +27,22 @@
     },
     "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
     "devDependencies": {
-        "@theledger/fabric-mock-stub": "^1.2.1",
+        "@theledger/fabric-mock-stub": "^2.0.0",
         "@theledger/fabric-shim-crypto-types": "^1.0.4",
-        "@theledger/fabric-shim-types": "^1.0.6",
+        "@theledger/fabric-shim-types": "^2.0.6",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^5.2.1",
         "@types/node": "^10.3.0",
         "@types/winston": "^2.3.8",
         "@types/yup": "^0.24.3",
         "chai": "^4.1.2",
+        "codecov": "^3.0.4",
         "coveralls": "^3.0.0",
         "husky": "^0.15.0-rc.8",
         "istanbul": "^0.4.5",
         "mocha": "^5.0.3",
         "npm-scripts-watcher": "^1.0.2",
+        "nyc": "^12.0.2",
         "rimraf": "^2.6.2",
         "ts-node": "^5.0.1",
         "tslint": "5.9.1",
@@ -49,8 +53,8 @@
         "@theledger/couchdb-query-engine": "^2.4.4",
         "@types/lodash": "^4.14.104",
         "aguid": "^2.0.0",
-        "fabric-shim": "^1.1.2",
-        "fabric-shim-crypto": "^1.1.2",
+        "fabric-shim": "^1.2.0",
+        "fabric-shim-crypto": "^1.2.0",
         "google-protobuf": "^3.5.0",
         "lodash": "^4.17.5",
         "serialize-error": "^2.1.0",
@@ -70,5 +74,24 @@
         "{src,test}/**/*.ts": [
             "test"
         ]
+    },
+    "nyc": {
+        "include": [
+            "src/**/*.ts"
+        ],
+        "extension": [
+            ".ts"
+        ],
+        "require": [
+            "ts-node/register"
+        ],
+        "reporter": [
+            "text"
+        ],
+        "exclude":[
+            "src/utils/errors/*.ts"
+        ],
+        "sourceMap": true,
+        "instrument": true
     }
 }

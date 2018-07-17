@@ -1,0 +1,3 @@
+interface GetStateOptions {
+    privateCollection?: string;
+}

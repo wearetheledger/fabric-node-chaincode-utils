@@ -1,0 +1,3 @@
+interface GetStateByRangeAsListOptions {
+    privateCollection?: string;
+}

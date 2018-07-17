@@ -9,6 +9,9 @@ install:
 script:
   - yarn run test
 
+after_success: npm run report-coverage
+
+
 deploy:
   provider: npm
   email: jonas.snellinckx@theledger.be
