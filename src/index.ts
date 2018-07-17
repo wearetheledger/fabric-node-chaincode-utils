@@ -5,6 +5,12 @@ import { Helpers } from './utils/helpers';
 import { ChaincodeError } from './utils/errors/ChaincodeError';
 import { NotFoundError } from './utils/errors/NotFoundError';
 
+export { GetQueryResultAsListOptions } from './models/GetQueryResultAsListOptions';
+export { DeleteAllByQueryOptions } from './models/DeleteAllByQueryOptions';
+export { GetStateByRangeAsListOptions } from './models/GetStateByRangeAsListOptions';
+export { PutStateOptions } from './models/PutStateOptions';
+export { GetStateOptions } from './models/GetStateOptions';
+
 export {
     Chaincode,
     StubHelper,

@@ -1,3 +1,3 @@
-export interface GetStateOptions {
+export type GetStateOptions = {
     privateCollection?: string;
 }

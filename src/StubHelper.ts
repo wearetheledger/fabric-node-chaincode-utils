@@ -254,7 +254,7 @@ export class StubHelper {
      * @param {String} name
      * @param {Object} payload
      */
-    setEvent(name: string, payload: object) {
+    setEvent(name: string, payload: object): void {
         let bufferedPayload;
 
         if (Buffer.isBuffer(payload)) {
