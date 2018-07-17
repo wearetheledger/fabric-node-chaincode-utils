@@ -1,6 +1,6 @@
 {
     "name": "@theledger/fabric-chaincode-utils",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
