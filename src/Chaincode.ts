@@ -1,5 +1,5 @@
 import shim = require('fabric-shim');
-import { ChaincodeInterface, ChaincodeReponse, Stub } from 'fabric-shim';
+import { ChaincodeInterface, ChaincodeResponse, Stub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
 import { StubHelper } from './StubHelper';
@@ -38,10 +38,10 @@ export class Chaincode implements ChaincodeInterface {
      * Best practice is to have any Ledger initialization in separate function -- see initLedger()
      *
      * @param {Stub} stub
-     * @returns {Promise<ChaincodeReponse>}
+     * @returns {Promise<ChaincodeResponse>}
      * @memberof Chaincode
      */
-    async Init(stub: Stub): Promise<ChaincodeReponse> {
+    async Init(stub: Stub): Promise<ChaincodeResponse> {
         this.logger.info(`=========== Instantiated ${this.name} chaincode ===========`);
 
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);
@@ -59,10 +59,10 @@ export class Chaincode implements ChaincodeInterface {
      * function to be called, with arguments
      *
      * @param {Stub} stub
-     * @returns {Promise<ChaincodeReponse>}
+     * @returns {Promise<ChaincodeResponse>}
      * @memberof Chaincode
      */
-    async Invoke(stub: Stub): Promise<ChaincodeReponse> {
+    async Invoke(stub: Stub): Promise<ChaincodeResponse> {
 
         this.logger.info(`=========== Invoked Chaincode ${this.name} ===========`);
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);

@@ -1,0 +1,3 @@
+interface PutStateOptions {
+    privateCollection?: string;
+}

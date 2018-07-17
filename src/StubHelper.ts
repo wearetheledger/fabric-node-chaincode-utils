@@ -17,15 +17,15 @@ export class StubHelper {
     private logger: LoggerInstance;
 
     /**
-     * @param {"fabric-shim".Stub} stub
+     * @param {Stub} stub
      */
-    constructor(private stub: Stub) {
+    constructor(private readonly stub: Stub) {
         this.stub = stub;
         this.logger = Helpers.getLoggerInstance('StubHelper');
     }
 
     /**
-     * @returns {"fabric-shim".Stub}
+     * @returns {Stub}
      */
     getStub(): Stub {
         return this.stub;
@@ -34,7 +34,7 @@ export class StubHelper {
     /**
      * Return Fabric crypto library for signing and encryption
      *
-     * @returns {"fabric-shim-crypto".ShimCrypto}
+     * @returns {ShimCrypto}
      */
     getChaincodeCrypto(): ShimCrypto {
         return new ShimCrypto(this.stub);
@@ -43,7 +43,7 @@ export class StubHelper {
     /**
      * Return the Client Identity
      *
-     * @returns {"fabric-shim".ClientIdentity}
+     * @returns {ClientIdentity}
      */
     getClientIdentity(): ClientIdentity {
         return new ClientIdentity(this.stub);
@@ -55,7 +55,7 @@ export class StubHelper {
      * @param {string} name
      * @returns {any}
      */
-    generateUUID(name: string) {
+    generateUUID(name: string): string {
         const txId = this.stub.getTxID();
         const txTimestamp = this.getTxDate().getTime();
 
@@ -66,10 +66,10 @@ export class StubHelper {
      * Query the state and return a list of results.
      *
      * @param {string | Object} query - CouchDB query
-     * @param keyValue - If the function should return an array with {KV} or just values
+     * @param {GetQueryResultAsListOptions} options
      * @returns {Promise<any>}
      */
-    async getQueryResultAsList(query: string | object, keyValue?: boolean): Promise<object[] | KV[]> {
+    async getQueryResultAsList(query: string | object, options: GetQueryResultAsListOptions = {}): Promise<object[] | KV[]> {
         let queryString: string;
 
         if (_.isObject(query)) {
@@ -80,9 +80,15 @@ export class StubHelper {
 
         this.logger.debug(`Query: ${queryString}`);
 
-        const iterator = await this.stub.getQueryResult(queryString);
+        let iterator;
 
-        if (keyValue) {
+        if (options.privateCollection) {
+            iterator = await this.stub.getPrivateDataQueryResult(options.privateCollection, queryString);
+        } else {
+            iterator = await this.stub.getQueryResult(queryString);
+        }
+
+        if (options.keyValue) {
             return Transform.iteratorToKVList(iterator);
         }
 
@@ -95,12 +101,19 @@ export class StubHelper {
      * @returns {Promise<any>}
      * @param startKey
      * @param endKey
+     * @param options
      */
-    async getStateByRangeAsList(startKey: string, endKey: string): Promise<KV[]> {
+    async getStateByRangeAsList(startKey: string, endKey: string, options: GetStateByRangeAsListOptions = {}): Promise<KV[]> {
 
         this.logger.debug(`StartKey: ${startKey} - EndKey: ${endKey}`);
 
-        const iterator = await this.stub.getStateByRange(startKey, endKey);
+        let iterator;
+
+        if (options.privateCollection) {
+            iterator = await this.stub.getPrivateDataByRange(options.privateCollection, startKey, endKey);
+        } else {
+            iterator = await this.stub.getStateByRange(startKey, endKey);
+        }
 
         return Transform.iteratorToList(iterator);
     }
@@ -123,10 +136,11 @@ export class StubHelper {
     /**
      *   Deletes all objects returned by the query
      *   @param {Object} query the query
+     * @param options
      */
-    async deleteAllReturnedByQuery(query: string | object): Promise<KV[]> {
+    async deleteAllByQuery(query: string | object, options: DeleteAllByQueryOptions = {}): Promise<KV[]> {
 
-        const allResults = <KV[]>(await this.getQueryResultAsList(query, true));
+        const allResults = <KV[]>(await this.getQueryResultAsList(query, {keyValue: true, ...options}));
 
         return Promise.all(allResults.map((record: KV) => this.stub.deleteState(record.key)));
     }
@@ -136,19 +150,32 @@ export class StubHelper {
      *
      * @param {String} key
      * @param value
+     * @param options
      */
-    async putState(key: string, value: any): Promise<any> {
+    async putState(key: string, value: any, options: PutStateOptions = {}): Promise<any> {
+
+        if (options.privateCollection) {
+            return this.stub.putPrivateData(options.privateCollection, key, Transform.serialize(value));
+        }
+
         return this.stub.putState(key, Transform.serialize(value));
     }
 
     /**
      * @param {String} key
      *
+     * @param options
      * @return the state for the given key parsed as an Object
      */
-    async getStateAsObject(key: string): Promise<Object> {
+    async getStateAsObject(key: string, options: GetStateOptions = {}): Promise<Object> {
 
-        const valueAsBytes = await this.stub.getState(key);
+        let valueAsBytes;
+
+        if (options.privateCollection) {
+            valueAsBytes = await this.stub.getPrivateData(options.privateCollection, key);
+        } else {
+            valueAsBytes = await this.stub.getState(key);
+        }
 
         if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
@@ -160,11 +187,18 @@ export class StubHelper {
     /**
      * @param {String} key
      *
+     * @param options
      * @return the state for the given key parsed as a String
      */
-    async getStateAsString(key: string): Promise<string> {
+    async getStateAsString(key: string, options: GetStateOptions = {}): Promise<string> {
 
-        const valueAsBytes = await this.stub.getState(key);
+        let valueAsBytes;
+
+        if (options.privateCollection) {
+            valueAsBytes = await this.stub.getPrivateData(options.privateCollection, key);
+        } else {
+            valueAsBytes = await this.stub.getState(key);
+        }
 
         if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
@@ -176,11 +210,18 @@ export class StubHelper {
     /**
      * @param {String} key
      *
+     * @param options
      * @return the state for the given key parsed as a Date
      */
-    async getStateAsDate(key: string): Promise<Date> {
+    async getStateAsDate(key: string, options: GetStateOptions = {}): Promise<Date> {
 
-        const valueAsBytes = await this.stub.getState(key);
+        let valueAsBytes;
+
+        if (options.privateCollection) {
+            valueAsBytes = await this.stub.getPrivateData(options.privateCollection, key);
+        } else {
+            valueAsBytes = await this.stub.getState(key);
+        }
 
         if ((valueAsBytes === undefined || valueAsBytes === null) || valueAsBytes.toString().length <= 0) {
             return null;
