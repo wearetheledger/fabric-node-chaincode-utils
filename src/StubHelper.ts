@@ -4,6 +4,11 @@ import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
 import { KV } from './index';
+import { GetQueryResultAsListOptions } from './models/GetQueryResultAsListOptions';
+import { DeleteAllByQueryOptions } from './models/DeleteAllByQueryOptions';
+import { GetStateByRangeAsListOptions } from './models/GetStateByRangeAsListOptions';
+import { PutStateOptions } from './models/PutStateOptions';
+import { GetStateOptions } from './models/GetStateOptions';
 import ShimCrypto = require('fabric-shim-crypto');
 
 const aguid = require('aguid');

@@ -1,3 +1,3 @@
-interface GetStateByRangeAsListOptions {
+export interface GetStateByRangeAsListOptions {
     privateCollection?: string;
 }

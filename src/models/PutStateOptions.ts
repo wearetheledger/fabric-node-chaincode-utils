@@ -1,3 +1,3 @@
-interface PutStateOptions {
+export interface PutStateOptions {
     privateCollection?: string;
 }

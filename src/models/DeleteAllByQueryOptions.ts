@@ -1,3 +1,3 @@
-interface DeleteAllByQueryOptions {
+export interface DeleteAllByQueryOptions {
     privateCollection?: string;
 }
