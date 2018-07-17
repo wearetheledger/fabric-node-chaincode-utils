@@ -1,28 +1,30 @@
 {
-  "compilerOptions": {
-    "suppressImplicitAnyIndexErrors": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "target": "es5",
-    "module": "commonjs",
-    "declaration": true,
-    "outDir": "./dist",
-    "types": [
-      "@theledger/fabric-shim-types",
-      "@theledger/fabric-shim-crypto-types",
-      "@types/chai"
-    ],
-    "rootDir": "./src",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
-    "lib": [
-      "es2015",
-      "dom"
+    "compilerOptions": {
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "./dist",
+        "types": [
+            "@theledger/fabric-shim-types",
+            "@theledger/fabric-shim-crypto-types",
+            "@types/chai"
+        ],
+        "rootDir": "./src",
+        "typeRoots": [
+            "./node_modules/@types"
+        ],
+        "lib": [
+            "es2015",
+            "dom"
+        ]
+    },
+    "exclude": [
+        "coverage",
+        "node_modules",
+        "!node_modules/@types",
+        "./test/*.ts"
     ]
-  },
-  "exclude": [
-    "./test/*.ts",
-    "./examples"
-  ]
 }

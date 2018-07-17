@@ -7,7 +7,10 @@ install:
   - yarn install
 
 script:
-  - yarn run test:ci
+  - yarn run test
+
+after_success: npm run report-coverage
+
 
 deploy:
   provider: npm

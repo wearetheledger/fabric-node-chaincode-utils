@@ -17,3 +17,5 @@ test
 .tslint.json
 tsconfig.json
 examples
+coverage
+.nyc_output

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils.svg?branch=master)](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils) [![npm version](https://badge.fury.io/js/%40theledger%2Ffabric-chaincode-utils.svg)](https://badge.fury.io/js/%40theledger%2Ffabric-chaincode-utils)
+[![Build Status](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils.svg?branch=master)](https://travis-ci.org/wearetheledger/fabric-node-chaincode-utils) [![npm version](https://badge.fury.io/js/%40theledger%2Ffabric-chaincode-utils.svg)](https://badge.fury.io/js/%40theledger%2Ffabric-chaincode-utils) [![codecov](https://codecov.io/gh/wearetheledger/fabric-node-chaincode-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/wearetheledger/fabric-node-chaincode-utils)
 # fabric-node-chaincode-utils
 A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. Testing is done using the [fabric-mock-stub](https://github.com/wearetheledger/fabric-mock-stub).
 
