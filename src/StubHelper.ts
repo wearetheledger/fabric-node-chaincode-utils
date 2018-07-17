@@ -142,7 +142,13 @@ export class StubHelper {
 
         const allResults = <KV[]>(await this.getQueryResultAsList(query, {keyValue: true, ...options}));
 
-        return Promise.all(allResults.map((record: KV) => this.stub.deleteState(record.key)));
+        return Promise.all(allResults.map((record: KV) => {
+            if (options.privateCollection) {
+                return this.stub.deletePrivateData(options.privateCollection, record.key);
+            } else {
+                return this.stub.deleteState(record.key);
+            }
+        }));
     }
 
     /**

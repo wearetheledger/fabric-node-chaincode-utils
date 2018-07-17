@@ -6,7 +6,7 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "npm run clean && tsc",
-        "test": "nyc mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
+        "test": "mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
         "test:coverage": "nyc --no-clean mocha -r ts-node/register test/**/*.spec.ts --reporter spec",
         "report-coverage": "nyc report --reporter=text-lcov > coverage.lcov && codecov",
         "lint": "tslint --fix -c tslint.json './src/**/*.ts'",

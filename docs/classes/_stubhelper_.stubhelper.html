@@ -98,7 +98,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_stubhelper_.stubhelper.html#deleteallreturnedbyquery" class="tsd-kind-icon">delete<wbr>All<wbr>Returned<wbr>ByQuery</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_stubhelper_.stubhelper.html#deleteallbyquery" class="tsd-kind-icon">delete<wbr>All<wbr>ByQuery</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_stubhelper_.stubhelper.html#generateuuid" class="tsd-kind-icon">generateUUID</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_stubhelper_.stubhelper.html#getchaincodecrypto" class="tsd-kind-icon">get<wbr>Chaincode<wbr>Crypto</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_stubhelper_.stubhelper.html#getclientidentity" class="tsd-kind-icon">get<wbr>Client<wbr>Identity</a></li>
@@ -129,7 +129,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L17">StubHelper.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L17">StubHelper.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -152,16 +152,16 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="deleteallreturnedbyquery" class="tsd-anchor"></a>
-					<h3>delete<wbr>All<wbr>Returned<wbr>ByQuery</h3>
+					<a name="deleteallbyquery" class="tsd-anchor"></a>
+					<h3>delete<wbr>All<wbr>ByQuery</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<wbr>Returned<wbr>ByQuery<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>All<wbr>ByQuery<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_deleteallbyqueryoptions_.deleteallbyqueryoptions.html" class="tsd-signature-type">DeleteAllByQueryOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L127">StubHelper.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L141">StubHelper.ts:141</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -175,6 +175,11 @@
 								<li>
 									<h5>query: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span></h5>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_deleteallbyqueryoptions_.deleteallbyqueryoptions.html" class="tsd-signature-type">DeleteAllByQueryOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
@@ -184,13 +189,13 @@
 					<a name="generateuuid" class="tsd-anchor"></a>
 					<h3>generateUUID</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">generateUUID<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">generateUUID<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L58">StubHelper.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L58">StubHelper.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -204,7 +209,7 @@
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -218,7 +223,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L39">StubHelper.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L39">StubHelper.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -240,7 +245,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L48">StubHelper.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L48">StubHelper.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -262,7 +267,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L114">StubHelper.ts:114</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L127">StubHelper.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -286,13 +291,13 @@
 					<a name="getqueryresultaslist" class="tsd-anchor"></a>
 					<h3>get<wbr>Query<wbr>Result<wbr>AsList</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Query<wbr>Result<wbr>AsList<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span>, keyValue<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Query<wbr>Result<wbr>AsList<span class="tsd-signature-symbol">(</span>query<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_getqueryresultaslistoptions_.getqueryresultaslistoptions.html" class="tsd-signature-type">GetQueryResultAsListOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L72">StubHelper.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L72">StubHelper.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -309,10 +314,7 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> keyValue: <span class="tsd-signature-type">boolean</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>If the function should return an array with {KV} or just values</p>
-									</div>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_getqueryresultaslistoptions_.getqueryresultaslistoptions.html" class="tsd-signature-type">GetQueryResultAsListOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -323,13 +325,13 @@
 					<a name="getstateasdate" class="tsd-anchor"></a>
 					<h3>get<wbr>State<wbr>AsDate</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsDate<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsDate<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L181">StubHelper.ts:181</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L222">StubHelper.ts:222</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -340,6 +342,9 @@
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Date</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -351,13 +356,13 @@
 					<a name="getstateasobject" class="tsd-anchor"></a>
 					<h3>get<wbr>State<wbr>AsObject</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsObject<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsObject<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L149">StubHelper.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L176">StubHelper.ts:176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -368,6 +373,9 @@
 									<h5>key: <span class="tsd-signature-type">string</span></h5>
 									<div class="tsd-comment tsd-typography">
 									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -379,13 +387,13 @@
 					<a name="getstateasstring" class="tsd-anchor"></a>
 					<h3>get<wbr>State<wbr>AsString</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsString<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>AsString<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L165">StubHelper.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L199">StubHelper.ts:199</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,6 +405,9 @@
 									<div class="tsd-comment tsd-typography">
 									</div>
 								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_getstateoptions_.getstateoptions.html" class="tsd-signature-type">GetStateOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>the state for the given key parsed as a String</p>
@@ -407,13 +418,13 @@
 					<a name="getstatebyrangeaslist" class="tsd-anchor"></a>
 					<h3>get<wbr>State<wbr>ByRange<wbr>AsList</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>ByRange<wbr>AsList<span class="tsd-signature-symbol">(</span>startKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, endKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<wbr>ByRange<wbr>AsList<span class="tsd-signature-symbol">(</span>startKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, endKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_getstatebyrangeaslistoptions_.getstatebyrangeaslistoptions.html" class="tsd-signature-type">GetStateByRangeAsListOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_index_.kv.html" class="tsd-signature-type">KV</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L99">StubHelper.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L106">StubHelper.ts:106</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -428,6 +439,9 @@
 								</li>
 								<li>
 									<h5>endKey: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_getstatebyrangeaslistoptions_.getstatebyrangeaslistoptions.html" class="tsd-signature-type">GetStateByRangeAsListOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 									<div class="tsd-comment tsd-typography">
 									</div>
 								</li>
@@ -446,7 +460,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L30">StubHelper.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L30">StubHelper.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -465,7 +479,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L195">StubHelper.ts:195</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L242">StubHelper.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,13 +493,13 @@
 					<a name="putstate" class="tsd-anchor"></a>
 					<h3>put<wbr>State</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">put<wbr>State<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<wbr>State<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_models_putstateoptions_.putstateoptions.html" class="tsd-signature-type">PutStateOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L140">StubHelper.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L161">StubHelper.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -500,6 +514,9 @@
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_models_putstateoptions_.putstateoptions.html" class="tsd-signature-type">PutStateOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
 									<div class="tsd-comment tsd-typography">
 									</div>
 								</li>
@@ -518,7 +535,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/c4dc11c/src/StubHelper.ts#L205">StubHelper.ts:205</a></li>
+									<li>Defined in <a href="https://github.com/wearetheledger/fabric-node-chaincode-utils/blob/722659f/src/StubHelper.ts#L252">StubHelper.ts:252</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -562,6 +579,24 @@
 						<a href="../modules/_index_.html">"index"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_deleteallbyqueryoptions_.html">"models/<wbr>Delete<wbr>All<wbr>ByQuery<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_gethistoryforkeyaslistoptions_.html">"models/<wbr>Get<wbr>History<wbr>For<wbr>Key<wbr>AsList<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_getqueryresultaslistoptions_.html">"models/<wbr>Get<wbr>Query<wbr>Result<wbr>AsList<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_getstatebyrangeaslistoptions_.html">"models/<wbr>Get<wbr>State<wbr>ByRange<wbr>AsList<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_getstateoptions_.html">"models/<wbr>Get<wbr>State<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_models_putstateoptions_.html">"models/<wbr>Put<wbr>State<wbr>Options"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
 						<a href="../modules/_utils_datatransform_.html">"utils/datatransform"</a>
 					</li>
 					<li class=" tsd-kind-external-module">
@@ -592,7 +627,7 @@
 								<a href="_stubhelper_.stubhelper.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_stubhelper_.stubhelper.html#deleteallreturnedbyquery" class="tsd-kind-icon">delete<wbr>All<wbr>Returned<wbr>ByQuery</a>
+								<a href="_stubhelper_.stubhelper.html#deleteallbyquery" class="tsd-kind-icon">delete<wbr>All<wbr>ByQuery</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_stubhelper_.stubhelper.html#generateuuid" class="tsd-kind-icon">generateUUID</a>

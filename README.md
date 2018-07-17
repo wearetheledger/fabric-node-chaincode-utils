@@ -6,12 +6,19 @@ A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. T
 - [example usage](https://github.com/wearetheledger/fabric-network-boilerplate/tree/master/chaincode/node)
 
 ## Table of contents
+- [Version matching](#version-matching)
 - [Installation](#installation)
 - [Writing chaincode](https://github.com/wearetheledger/fabric-node-chaincode-utils/wiki/Writing-chaincode)
 - [Changes](#changes)
 - [Contributing](#contributing)
 - [Credits](#credits)
 - [License](#license)
+
+## Version matching
+| Fabric node SDK        | Chaincode utils    |
+| ------------- |:-------------:|
+| v1.2.X     | v3.X.X |
+| V1.1.X     | v2.1.0    |
 
 ## Installation 
 ```sh

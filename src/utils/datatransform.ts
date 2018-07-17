@@ -69,14 +69,13 @@ export class Transform {
      */
     public static bufferToDate(buffer: Buffer): Date | undefined {
         if (buffer == null) {
-
-            return;
+            return null;
         }
 
         const bufferString = buffer.toString();
         if (bufferString.length <= 0) {
 
-            return;
+            return null;
         }
 
         if (/\d+/g.test(bufferString)) {
@@ -84,7 +83,7 @@ export class Transform {
             return new Date(parseInt(bufferString, 10));
         }
 
-        return;
+        return null;
     }
 
     public static bufferToString(buffer: Buffer): string | undefined {
@@ -159,7 +158,7 @@ export class Transform {
     /**
      * Transform iterator to array of objects
      *
-     * @param {'fabric-shim'.Iterators.HistoryQueryIterator} iterator
+     * @param {Iterators.HistoryQueryIterator} iterator
      * @returns {Promise<Array>}
      */
     public static async iteratorToHistoryList(iterator: Iterators.HistoryQueryIterator): Promise<KeyModificationItem[]> {

@@ -58,6 +58,17 @@ describe('Test StubHelper', () => {
         expect(res).to.eq(value)
     });
 
+    it('getStateAsString non-existing key', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const res: string = await stubHelper.getStateAsString('test');
+
+        expect(res).to.eq(null)
+    });
+
     it('getStateAsObject', async () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
@@ -74,6 +85,17 @@ describe('Test StubHelper', () => {
         expect(res).to.deep.eq(value)
     });
 
+    it('getStateAsObject non-existing key', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const res: object = await stubHelper.getStateAsObject('test');
+
+        expect(res).to.eq(null)
+    });
+
     it('getStateAsDate', async () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
@@ -88,6 +110,17 @@ describe('Test StubHelper', () => {
         expect(res).to.deep.eq(value)
     });
 
+    it('getStateAsDate non-existing key', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const res: object = await stubHelper.getStateAsDate('test');
+
+        expect(res).to.eq(null)
+    });
+
     it('getChaincodeCrypto', async () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
@@ -97,6 +130,17 @@ describe('Test StubHelper', () => {
         const res = await stubHelper.getChaincodeCrypto();
 
         expect(res.constructor.name).to.eq("ChaincodeCryptoLibrary")
+    });
+
+    it('getStub', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const res = await stubHelper.getStub();
+
+        expect(res.constructor.name).to.eq("ChaincodeMockStub")
     });
 
     it('getClientIdentity', async () => {
@@ -134,6 +178,33 @@ describe('Test StubHelper', () => {
                 testObject: 1
             }
         });
+
+        expect(res.length).to.eq(1)
+    });
+
+    it('getQueryResultAsList using string query', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const value = {
+            testObject: 1
+        };
+
+        await stubHelper.putState('test', value);
+
+        const value2 = {
+            otherprop: 4
+        };
+
+        await stubHelper.putState('test2', value2);
+
+        const res: object[] = await stubHelper.getQueryResultAsList(JSON.stringify({
+            selector: {
+                testObject: 1
+            }
+        }));
 
         expect(res.length).to.eq(1)
     });
@@ -343,6 +414,63 @@ describe('Test StubHelper', () => {
         const res: Date = await stubHelper.getStateAsDate('test', {privateCollection: "testCollection"});
 
         expect(res).to.deep.eq(value)
+    });
+
+    it('getQueryResultAsList private', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const value = {
+            testObject: 1
+        };
+
+        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        const value2 = {
+            otherprop: 4
+        };
+
+        await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+
+        const res: object[] = await stubHelper.getQueryResultAsList({
+            selector: {
+                testObject: 1
+            }
+        }, {privateCollection: "testCollection"});
+
+        expect(res.length).to.eq(1)
+    });
+
+    it('deleteAllByQuery all private', async () => {
+
+        const stub = new ChaincodeMockStub('mock', chaincode);
+
+        const stubHelper = new StubHelper(stub);
+
+        const value = {
+            testObject: 1
+        };
+
+        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        const value2 = {
+            otherprop: 4
+        };
+
+        await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+
+        await stubHelper.deleteAllByQuery({
+            selector: {
+                $or: [
+                    {testObject: 1},
+                    {otherprop: 4},
+                ]
+            }
+        }, {privateCollection: "testCollection"});
+
+        expect(Object.keys(stub.state).length).to.equal(0);
     });
 
 });
