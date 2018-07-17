@@ -7,7 +7,7 @@ install:
   - yarn install
 
 script:
-  - yarn run test
+  - yarn run test:ci
 
 deploy:
   provider: npm
