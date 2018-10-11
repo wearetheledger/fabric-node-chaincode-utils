@@ -1,4 +1,4 @@
-import { ClientIdentity, Stub } from 'fabric-shim';
+import { ClientIdentity, ChaincodeStub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
 import * as _ from 'lodash';
@@ -14,7 +14,7 @@ import ShimCrypto = require('fabric-shim-crypto');
 const aguid = require('aguid');
 
 /**
- *  The StubHelper is a wrapper around the `fabric-shim` Stub. Its a helper to automatically serialize and
+ *  The StubHelper is a wrapper around the `fabric-shim` ChaincodeStub. Its a helper to automatically serialize and
  *  deserialize data being saved/retreived.
  */
 export class StubHelper {
@@ -22,17 +22,17 @@ export class StubHelper {
     private logger: LoggerInstance;
 
     /**
-     * @param {Stub} stub
+     * @param {ChaincodeStub} stub
      */
-    constructor(private readonly stub: Stub) {
+    constructor(private readonly stub: ChaincodeStub) {
         this.stub = stub;
         this.logger = Helpers.getLoggerInstance('StubHelper');
     }
 
     /**
-     * @returns {Stub}
+     * @returns {ChaincodeStub}
      */
-    getStub(): Stub {
+    getStub(): ChaincodeStub {
         return this.stub;
     }
 
@@ -143,7 +143,7 @@ export class StubHelper {
      *   @param {Object} query the query
      * @param options
      */
-    async deleteAllByQuery(query: string | object, options: DeleteAllByQueryOptions = {}): Promise<KV[]> {
+    async deleteAllByQuery(query: string | object, options: DeleteAllByQueryOptions = {}): Promise<void[]> {
 
         const allResults = <KV[]>(await this.getQueryResultAsList(query, {keyValue: true, ...options}));
 

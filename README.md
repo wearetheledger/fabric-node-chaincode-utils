@@ -17,6 +17,7 @@ A Nodejs module that helps you build your Hyperledger Fabric nodejs chaincode. T
 ## Version matching
 | Fabric node SDK        | Chaincode utils    |
 | ------------- |:-------------:|
+| v1.3.X     | v4.X.X |
 | v1.2.X     | v3.X.X |
 | V1.1.X     | v2.1.0    |
 

@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
-import { Iterators, KV, NextKeyModificationResult, NextResult } from 'fabric-shim';
-import { KeyModificationItem } from '../index';
+import { Iterators } from 'fabric-shim';
+import { KeyModificationItem, KV } from '../index';
 import { Helpers } from './helpers';
 import { LoggerInstance } from 'winston';
 
@@ -97,13 +97,13 @@ export class Transform {
     /**
      * Transform iterator to array of objects
      *
-     * @param {'fabric-shim'.Iterators.Iterator} iterator
+     * @param {'fabric-shim'.Iterators.CommonIterator} iterator
      * @returns {Promise<Array>}
      */
-    public static async iteratorToList(iterator: Iterators.Iterator) {
+    public static async iteratorToList(iterator: Iterators.CommonIterator) {
         const allResults = [];
 
-        let res: NextResult;
+        let res: Iterators.NextResult;
         while (res == null || !res.done) {
             res = await iterator.next();
 
@@ -127,17 +127,17 @@ export class Transform {
     /**
      * Transform iterator to array of objects
      *
-     * @param {'fabric-shim'.Iterators.Iterator} iterator
+     * @param {'fabric-shim'.Iterators.CommonIterator} iterator
      * @returns {Promise<Array>}
      */
-    public static async iteratorToKVList(iterator: Iterators.Iterator): Promise<KV[]> {
+    public static async iteratorToKVList(iterator: Iterators.CommonIterator): Promise<KV[]> {
         const allResults = [];
 
-        let res: NextResult;
+        let res: Iterators.NextResult;
         while (res == null || !res.done) {
             res = await iterator.next();
             if (res.value && res.value.value.toString()) {
-                let parsedItem: KV = {key: '', value: {}};
+                let parsedItem: KV = { key: '', value: {} };
 
                 parsedItem.key = res.value.key;
 
@@ -164,7 +164,7 @@ export class Transform {
     public static async iteratorToHistoryList(iterator: Iterators.HistoryQueryIterator): Promise<KeyModificationItem[]> {
         const allResults = [];
 
-        let res: NextKeyModificationResult;
+        let res: Iterators.NextKeyModificationResult;
         while (res == null || !res.done) {
             res = await iterator.next();
             if (res.value && res.value.value.toString()) {

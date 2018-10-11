@@ -1,5 +1,5 @@
 import shim = require('fabric-shim');
-import { ChaincodeInterface, ChaincodeResponse, Stub } from 'fabric-shim';
+import { ChaincodeInterface, ChaincodeResponse, ChaincodeStub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { LoggerInstance } from 'winston';
 import { StubHelper } from './StubHelper';
@@ -37,11 +37,11 @@ export class Chaincode implements ChaincodeInterface {
      * The Init method is called when the Smart Contract is instantiated by the blockchain network
      * Best practice is to have any Ledger initialization in separate function -- see initLedger()
      *
-     * @param {Stub} stub
+     * @param {ChaincodeStub} stub
      * @returns {Promise<ChaincodeResponse>}
      * @memberof Chaincode
      */
-    async Init(stub: Stub): Promise<ChaincodeResponse> {
+    async Init(stub: ChaincodeStub): Promise<ChaincodeResponse> {
         this.logger.info(`=========== Instantiated ${this.name} chaincode ===========`);
 
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);
@@ -58,11 +58,11 @@ export class Chaincode implements ChaincodeInterface {
      * The calling application program has also specified the particular smart contract
      * function to be called, with arguments
      *
-     * @param {Stub} stub
+     * @param {ChaincodeStub} stub
      * @returns {Promise<ChaincodeResponse>}
      * @memberof Chaincode
      */
-    async Invoke(stub: Stub): Promise<ChaincodeResponse> {
+    async Invoke(stub: ChaincodeStub): Promise<ChaincodeResponse> {
 
         this.logger.info(`=========== Invoked Chaincode ${this.name} ===========`);
         this.logger.info(`Transaction ID: ${stub.getTxID()}`);
@@ -83,7 +83,7 @@ export class Chaincode implements ChaincodeInterface {
      * @param {boolean} silent
      * @returns {Promise<any>}
      */
-    private async executeMethod(fcn: string, params: string[], stub: Stub, silent = false) {
+    private async executeMethod(fcn: string, params: string[], stub: ChaincodeStub, silent = false) {
         let method = this[fcn];
 
         if (!method) {
@@ -120,7 +120,7 @@ export class Chaincode implements ChaincodeInterface {
 
             delete error.stack;
 
-            return shim.error(JSON.stringify(serialize(error)));
+            return shim.error(Buffer.from(JSON.stringify(serialize(error))));
         }
     }
 }
