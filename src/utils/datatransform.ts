@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { Iterators } from 'fabric-shim';
 import { KeyModificationItem, KV } from '../index';
 import { Helpers } from './helpers';
@@ -21,7 +20,7 @@ export class Transform {
     public static serialize(value: any) {
         if (value instanceof Buffer) {
             return value;
-        } else if (_.isDate(value) || _.isString(value)) {
+        } else if (this.isDate(value) || this.isString(value)) {
             return Buffer.from(this.normalizePayload(value).toString());
         }
 
@@ -204,20 +203,32 @@ export class Transform {
      */
     public static normalizePayload(value: any): any {
 
-        if (_.isDate(value)) {
+        if (this.isDate(value)) {
             return value.getTime();
-        } else if (_.isString(value)) {
+        } else if (this.isString(value)) {
             return value;
-        } else if (_.isArray(value)) {
-            return _.map(value, (v: object) => {
-                return this.normalizePayload(v);
-            });
-        } else if (_.isObject(value)) {
-            return _.mapValues(value, (v: any) => {
-                return this.normalizePayload(v);
-            });
+        } else if (Array.isArray(value)) {
+            return value.map(v => this.normalizePayload(v));
+        } else if (this.isObject(value)) {
+            return Object.entries(value)
+                .reduce((a, [key, v]) => {
+                    a[key] = this.normalizePayload(v);
+                    return a;
+                }, {});
         }
 
         return value;
+    }
+
+    static isDate(date: any) {
+        return date && Object.prototype.toString.call(date) === '[object Date]' && !isNaN(date);
+    }
+
+    static isString(data: any) {
+        return data && (typeof data === 'string' || data instanceof String);
+    }
+
+    static isObject(data: any) {
+        return typeof data === 'object';
     }
 }

@@ -1,6 +1,6 @@
 {
     "name": "@theledger/fabric-chaincode-utils",
-    "version": "4.0.0",
+    "version": "4.0.1",
     "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -28,7 +28,7 @@
     "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
     "devDependencies": {
         "@theledger/fabric-mock-stub": "^2.0.0",
-        "@theledger/fabric-shim-crypto-types": "^1.0.4",
+        "@theledger/fabric-shim-crypto-types": "^1.0.5",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^5.2.1",
         "@types/node": "^10.3.0",
@@ -37,7 +37,7 @@
         "chai": "^4.1.2",
         "codecov": "^3.0.4",
         "coveralls": "^3.0.0",
-        "husky": "^0.15.0-rc.8",
+        "husky": "^1.3.1",
         "istanbul": "^0.4.5",
         "mocha": "^5.0.3",
         "npm-scripts-watcher": "^1.0.2",
@@ -45,22 +45,18 @@
         "rimraf": "^2.6.2",
         "ts-node": "^5.0.1",
         "tslint": "5.9.1",
-        "typedoc": "^0.11.0",
-        "typescript": "^2.5.3"
+        "typedoc": "0.11.0",
+        "typescript": "^2.5.3",
+        "google-protobuf": "^3.7.0-rc.2"
     },
     "dependencies": {
         "@theledger/couchdb-query-engine": "^2.4.4",
-        "@types/grpc-error": "^1.0.0",
-        "@types/lodash": "^4.14.104",
         "aguid": "^2.0.0",
         "fabric-shim": "^1.3.0",
         "fabric-shim-crypto": "^1.3.0",
-        "google-protobuf": "^3.5.0",
-        "grpc-error": "^1.0.0",
-        "lodash": "^4.17.5",
-        "serialize-error": "^2.1.0",
+        "serialize-error": "^3.0.0",
         "winston": "^2.4.0",
-        "yup": "^0.24.1"
+        "yup": "^0.26.10"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org",

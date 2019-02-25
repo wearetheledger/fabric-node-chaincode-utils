@@ -1,7 +1,6 @@
 import { ClientIdentity, ChaincodeStub } from 'fabric-shim';
 import { Helpers } from './utils/helpers';
 import { Transform } from './utils/datatransform';
-import * as _ from 'lodash';
 import { LoggerInstance } from 'winston';
 import { KV } from './index';
 import { GetQueryResultAsListOptions } from './models/GetQueryResultAsListOptions';
@@ -77,7 +76,7 @@ export class StubHelper {
     async getQueryResultAsList(query: string | object, options: GetQueryResultAsListOptions = {}): Promise<object[] | KV[]> {
         let queryString: string;
 
-        if (_.isObject(query)) {
+        if (query && typeof query === 'object') {
             queryString = JSON.stringify(query);
         } else {
             queryString = <string>query;
