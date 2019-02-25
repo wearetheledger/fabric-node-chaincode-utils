@@ -27,7 +27,7 @@
     },
     "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
     "devDependencies": {
-        "@theledger/fabric-mock-stub": "^2.0.0",
+        "@theledger/fabric-mock-stub": "^4.0.0",
         "@theledger/fabric-shim-crypto-types": "^1.0.5",
         "@types/chai": "^4.0.4",
         "@types/mocha": "^5.2.1",

@@ -249,7 +249,11 @@ describe('Test Mockstub', () => {
 
         const stub = new ChaincodeMockStub('mock', chaincode);
 
-        await stub.putState('a', 0);
+        stub.mockTransactionStart("start");
+
+        await stub.putState('a', Buffer.from("0"));
+
+        stub.mockTransactionEnd("end");
 
         const result = await stub.mockInvoke("testReturn0", ["testReturn0"]);
 

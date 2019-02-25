@@ -17,7 +17,11 @@ describe('Test StubHelper', () => {
 
         const value = 'val';
 
+        stub.mockTransactionStart("start");
+
         await stubHelper.putState('test', value);
+
+        stub.mockTransactionEnd("end");
 
         expect(Object.keys(stub.state).length).to.equal(1);
         expect(Object.keys(stub.state)[0]).to.equal('test');
@@ -35,7 +39,11 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("start");
+
         await stubHelper.putState('test', value);
+
+        stub.mockTransactionEnd("end");
 
         expect(Object.keys(stub.state).length).to.equal(1);
         expect(Object.keys(stub.state)[0]).to.equal('test');
@@ -51,7 +59,11 @@ describe('Test StubHelper', () => {
 
         const value = 'val';
 
+        stub.mockTransactionStart("start");
+
         await stubHelper.putState('test', value);
+
+        stub.mockTransactionEnd("end");
 
         const res: string = await stubHelper.getStateAsString('test');
 
@@ -78,7 +90,12 @@ describe('Test StubHelper', () => {
         const value = {
             testObject: 1
         };
+
+        stub.mockTransactionStart("start")
+
         await stubHelper.putState('test', value);
+
+        stub.mockTransactionEnd("end")
 
         const res: object = await stubHelper.getStateAsObject('test');
 
@@ -103,7 +120,12 @@ describe('Test StubHelper', () => {
         const stubHelper = new StubHelper(stub);
 
         const value = new Date();
+
+        stub.mockTransactionStart("start")
+
         await stubHelper.putState('test', value);
+
+        stub.mockTransactionEnd("end")
 
         const res: Date = await stubHelper.getStateAsDate('test');
 
@@ -165,6 +187,8 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         const value2 = {
@@ -172,6 +196,9 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test2', value2);
+
+
+        stub.mockTransactionEnd("txId")
 
         const res: object[] = await stubHelper.getQueryResultAsList({
             selector: {
@@ -192,6 +219,9 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         const value2 = {
@@ -199,6 +229,8 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test2', value2);
+
+        stub.mockTransactionEnd("txId")
 
         const res: object[] = await stubHelper.getQueryResultAsList(JSON.stringify({
             selector: {
@@ -219,6 +251,8 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         const value2 = {
@@ -226,6 +260,8 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test2', value2);
+
+        stub.mockTransactionEnd("txId")
 
         await stubHelper.deleteAllByQuery({
             selector: {
@@ -249,6 +285,9 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         const value2 = {
@@ -256,6 +295,8 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test2', value2);
+
+        stub.mockTransactionEnd("txId")
 
         await stubHelper.deleteAllByQuery({
             selector: {
@@ -276,6 +317,8 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         const value2 = {
@@ -283,6 +326,8 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test', value2);
+
+        stub.mockTransactionEnd("txId")
 
         const res: object[] = await stubHelper.getHistoryForKeyAsList('test');
 
@@ -301,11 +346,15 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         await stubHelper.putState('test3', value);
 
         await stubHelper.putState('test5', value);
+
+        stub.mockTransactionEnd("txId")
 
         const res: object[] = await stubHelper.getStateByRangeAsList('test', 'test3');
 
@@ -322,11 +371,16 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value);
 
         await stubHelper.putState('test3', value);
 
         await stubHelper.putState('test5', value);
+
+        stub.mockTransactionEnd("txId")
+
 
         const res: object[] = await stubHelper.getStateByRangeAsList('', '');
 
@@ -339,11 +393,15 @@ describe('Test StubHelper', () => {
 
         const stubHelper = new StubHelper(stub);
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('CAR1', "val1");
 
         await stubHelper.putState('CAR3', "val3");
 
         await stubHelper.putState('CAR5', "val5");
+
+        stub.mockTransactionEnd("txId")
 
 
         const res: object[] = await stubHelper.getStateByRangeAsList('CAR1', 'CAR999');
@@ -361,7 +419,11 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        stub.mockTransactionEnd("txId")
 
         expect(Object.keys(stub.privateCollections["testCollection"]).length).to.equal(1);
         expect(Object.keys(stub.privateCollections["testCollection"])[0]).to.equal('test');
@@ -377,7 +439,11 @@ describe('Test StubHelper', () => {
 
         const value = 'val';
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        stub.mockTransactionEnd("txId")
 
         const res: string = await stubHelper.getStateAsString('test', {privateCollection: "testCollection"});
 
@@ -394,7 +460,11 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        stub.mockTransactionEnd("txId")
 
         const res: object = await stubHelper.getStateAsObject('test', {privateCollection: "testCollection"});
 
@@ -409,7 +479,12 @@ describe('Test StubHelper', () => {
 
         const value = new Date();
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+
+        stub.mockTransactionEnd("txId")
 
         const res: Date = await stubHelper.getStateAsDate('test', {privateCollection: "testCollection"});
 
@@ -426,13 +501,18 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
 
         const value2 = {
             otherprop: 4
         };
 
         await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+
+        stub.mockTransactionEnd("txId")
 
         const res: object[] = await stubHelper.getQueryResultAsList({
             selector: {
@@ -453,6 +533,8 @@ describe('Test StubHelper', () => {
             testObject: 1
         };
 
+        stub.mockTransactionStart("txId")
+        
         await stubHelper.putState('test', value, {privateCollection: "testCollection"});
 
         const value2 = {
@@ -460,6 +542,8 @@ describe('Test StubHelper', () => {
         };
 
         await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+
+        stub.mockTransactionEnd("txId")
 
         await stubHelper.deleteAllByQuery({
             selector: {
