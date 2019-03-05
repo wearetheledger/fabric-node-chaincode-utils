@@ -202,7 +202,9 @@ export class Transform {
      * @memberof Transform
      */
     public static normalizePayload(value: any): any {
-
+        if (value === null)
+            return value;
+        
         if (this.isDate(value)) {
             return value.getTime();
         } else if (this.isString(value)) {
