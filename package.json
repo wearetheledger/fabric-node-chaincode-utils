@@ -1,7 +1,7 @@
 {
-    "name": "@theledger/fabric-chaincode-utils",
-    "version": "4.0.1",
-    "description": "Utilities for working with and testing hyperledger Fabric nodejs chaincode",
+    "name": "@solarlabru/fabric-chaincode-utils",
+    "version": "5.0.0",
+    "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -17,15 +17,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wearetheledger/fabric-chaincode-utils.git"
+        "url": "git+https://github.com/SolarLabRU/fabric-chaincode-utils.git"
     },
     "keywords": [],
-    "author": "TheLedger <https://github.com/wearetheledger>",
+    "author": "SolarLabRU <https://github.com/SolarLabRU>",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wearetheledger/fabric-chaincode-utils/issues"
+        "url": "https://github.com/SolarLabRU/fabric-chaincode-utils/issues"
     },
-    "homepage": "https://github.com/wearetheledger/fabric-chaincode-utils#readme",
+    "homepage": "https://github.com/SolarLabRU/fabric-chaincode-utils#readme",
     "devDependencies": {
         "@theledger/fabric-mock-stub": "^4.0.0",
         "@theledger/fabric-shim-crypto-types": "^1.0.5",
@@ -61,34 +61,5 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org",
         "access": "public"
-    },
-    "husky": {
-        "hooks": {
-            "pre-push": "npm run lint && git add . && npm run test"
-        }
-    },
-    "watch": {
-        "{src,test}/**/*.ts": [
-            "test"
-        ]
-    },
-    "nyc": {
-        "include": [
-            "src/**/*.ts"
-        ],
-        "extension": [
-            ".ts"
-        ],
-        "require": [
-            "ts-node/register"
-        ],
-        "reporter": [
-            "text"
-        ],
-        "exclude": [
-            "src/utils/errors/*.ts"
-        ],
-        "sourceMap": true,
-        "instrument": true
     }
 }
