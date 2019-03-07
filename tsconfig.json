@@ -25,6 +25,7 @@
     "exclude": [
         "coverage",
         "node_modules",
+        "!node_modules/@types",
         "./test/*.ts"
     ]
 }
