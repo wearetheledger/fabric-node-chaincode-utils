@@ -244,7 +244,7 @@ export class StubHelper {
      * @return the Transaction date as a Javascript Date Object.
      */
     getTxDate(): Date {
-        return this.stub.getTxTimestamp().toDate();
+        return new Date(this.stub.getTxTimestamp().getSeconds() * 1000);
     }
 
     /**
