@@ -229,6 +229,6 @@ export class Transform {
     }
 
     static isObject(data: any) {
-        return typeof data === 'object';
+        return data !== null && typeof data === 'object';
     }
 }
