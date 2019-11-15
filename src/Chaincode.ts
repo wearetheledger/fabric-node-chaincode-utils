@@ -7,7 +7,7 @@ import { Transform } from './utils/datatransform';
 import { ChaincodeError } from './utils/errors/ChaincodeError';
 import { InternalServerError } from './utils/errors/InternalServerError';
 
-const serialize = require('serialize-error');
+import {serializeError} from 'serialize-error';
 
 /**
  * The Chaincode class is a base class containing handlers for the `Invoke()` and `Init()` function which are required
@@ -90,7 +90,7 @@ export class Chaincode implements ChaincodeInterface {
             if (!silent) {
                 this.logger.error(`no function of name: ${fcn} found`);
 
-                return shim.error(serialize(new ChaincodeError(`no function of name: ${fcn} found`, 400)));
+                return shim.error(Buffer.from(JSON.stringify(serializeError(new ChaincodeError(`no function of name: ${fcn} found`, 400)))));
             } else {
                 return shim.success();
             }
@@ -120,7 +120,7 @@ export class Chaincode implements ChaincodeInterface {
 
             delete error.stack;
 
-            return shim.error(Buffer.from(JSON.stringify(serialize(error))));
+            return shim.error(Buffer.from(JSON.stringify(serializeError(error))));
         }
     }
 }
