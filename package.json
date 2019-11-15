@@ -1,6 +1,6 @@
 {
     "name": "@solarlabru/fabric-chaincode-utils",
-    "version": "5.0.2",
+    "version": "5.0.3",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -46,17 +46,17 @@
         "rimraf": "^2.6.2",
         "ts-node": "^5.0.1",
         "tslint": "5.9.1",
-        "typedoc": "0.11.0",
+        "typedoc": "^0.15.2",
         "typescript": "^2.5.3"
     },
     "dependencies": {
         "@theledger/couchdb-query-engine": "^2.4.4",
         "aguid": "^2.0.0",
-        "fabric-shim": "^1.4.0",
-        "fabric-shim-crypto": "^1.4.0",
-        "serialize-error": "^3.0.0",
+        "fabric-shim": "^1.4.2",
+        "fabric-shim-crypto": "^1.4.2",
+        "serialize-error": "^5.0.0",
         "winston": "^2.4.4",
-        "yup": "^0.26.10"
+        "yup": "^0.27.0"
     },
     "publishConfig": {
         "registry": "https://registry.npmjs.org",
