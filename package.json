@@ -1,6 +1,6 @@
 {
     "name": "@solarlabru/fabric-chaincode-utils",
-    "version": "5.0.4",
+    "version": "5.0.6",
     "description": "",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -54,7 +54,7 @@
         "aguid": "^2.0.0",
         "fabric-shim": "^1.4.2",
         "fabric-shim-crypto": "^1.4.2",
-        "serialize-error": "^5.0.0",
+        "serialize-error": "^3.0.0",
         "winston": "^2.4.4",
         "yup": "^0.27.0"
     },
