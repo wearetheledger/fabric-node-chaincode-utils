@@ -19,6 +19,6 @@
         "coverage",
         "node_modules",
         "!node_modules/@types",
-        "./tests/*.ts"
+        "./src/tests/*.ts"
     ]
 }
