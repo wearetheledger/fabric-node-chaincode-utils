@@ -1,4 +1,4 @@
-import { Chaincode, Helpers, NotFoundError, StubHelper } from '../src';
+import { Chaincode, Helpers, NotFoundError, StubHelper } from '..';
 import * as Yup from 'yup';
 
 interface Car {

@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { ChaincodeMockStub } from '@theledger/fabric-mock-stub';
 import { TestChaincode } from './TestChaincode';
-import { StubHelper } from '../src';
+import { StubHelper } from '..';
 
 import { expect } from 'chai';
 
@@ -266,8 +266,8 @@ describe('Test StubHelper', () => {
         await stubHelper.deleteAllByQuery({
             selector: {
                 $or: [
-                    {testObject: 1},
-                    {otherprop: 4},
+                    { testObject: 1 },
+                    { otherprop: 4 },
                 ]
             }
         });
@@ -332,8 +332,8 @@ describe('Test StubHelper', () => {
         const res: object[] = await stubHelper.getHistoryForKeyAsList('test');
 
         expect(res.length).to.equal(2);
-        expect(res[0].value).to.deep.equal(value);
-        expect(res[1].value).to.deep.equal(value2);
+        expect((res[0] as any).value).to.deep.equal(value);
+        expect((res[1] as any).value).to.deep.equal(value2);
     });
 
     it('getStateByRangeAsList should return 2', async () => {
@@ -421,7 +421,7 @@ describe('Test StubHelper', () => {
 
         stub.mockTransactionStart("txId")
 
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
         stub.mockTransactionEnd("txId")
 
@@ -441,11 +441,11 @@ describe('Test StubHelper', () => {
 
         stub.mockTransactionStart("txId")
 
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
         stub.mockTransactionEnd("txId")
 
-        const res: string = await stubHelper.getStateAsString('test', {privateCollection: "testCollection"});
+        const res: string = await stubHelper.getStateAsString('test', { privateCollection: "testCollection" });
 
         expect(res).to.eq(value)
     });
@@ -462,11 +462,11 @@ describe('Test StubHelper', () => {
 
         stub.mockTransactionStart("txId")
 
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
         stub.mockTransactionEnd("txId")
 
-        const res: object = await stubHelper.getStateAsObject('test', {privateCollection: "testCollection"});
+        const res: object = await stubHelper.getStateAsObject('test', { privateCollection: "testCollection" });
 
         expect(res).to.deep.eq(value)
     });
@@ -481,12 +481,12 @@ describe('Test StubHelper', () => {
 
         stub.mockTransactionStart("txId")
 
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
 
         stub.mockTransactionEnd("txId")
 
-        const res: Date = await stubHelper.getStateAsDate('test', {privateCollection: "testCollection"});
+        const res: Date = await stubHelper.getStateAsDate('test', { privateCollection: "testCollection" });
 
         expect(res).to.deep.eq(value)
     });
@@ -503,14 +503,14 @@ describe('Test StubHelper', () => {
 
         stub.mockTransactionStart("txId")
 
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
 
         const value2 = {
             otherprop: 4
         };
 
-        await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+        await stubHelper.putState('test2', value2, { privateCollection: "testCollection" });
 
         stub.mockTransactionEnd("txId")
 
@@ -518,7 +518,7 @@ describe('Test StubHelper', () => {
             selector: {
                 testObject: 1
             }
-        }, {privateCollection: "testCollection"});
+        }, { privateCollection: "testCollection" });
 
         expect(res.length).to.eq(1)
     });
@@ -534,25 +534,25 @@ describe('Test StubHelper', () => {
         };
 
         stub.mockTransactionStart("txId")
-        
-        await stubHelper.putState('test', value, {privateCollection: "testCollection"});
+
+        await stubHelper.putState('test', value, { privateCollection: "testCollection" });
 
         const value2 = {
             otherprop: 4
         };
 
-        await stubHelper.putState('test2', value2, {privateCollection: "testCollection"});
+        await stubHelper.putState('test2', value2, { privateCollection: "testCollection" });
 
         stub.mockTransactionEnd("txId")
 
         await stubHelper.deleteAllByQuery({
             selector: {
                 $or: [
-                    {testObject: 1},
-                    {otherprop: 4},
+                    { testObject: 1 },
+                    { otherprop: 4 },
                 ]
             }
-        }, {privateCollection: "testCollection"});
+        }, { privateCollection: "testCollection" });
 
         expect(Object.keys(stub.state).length).to.equal(0);
     });

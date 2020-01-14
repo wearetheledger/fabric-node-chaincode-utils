@@ -8,7 +8,7 @@ import { DeleteAllByQueryOptions } from './models/DeleteAllByQueryOptions';
 import { GetStateByRangeAsListOptions } from './models/GetStateByRangeAsListOptions';
 import { PutStateOptions } from './models/PutStateOptions';
 import { GetStateOptions } from './models/GetStateOptions';
-import ShimCrypto = require('fabric-shim-crypto');
+import { ShimCryptoClass } from 'fabric-shim-crypto-custom';
 
 const aguid = require('aguid');
 
@@ -38,10 +38,10 @@ export class StubHelper {
     /**
      * Return Fabric crypto library for signing and encryption
      *
-     * @returns {ShimCrypto}
+     * @returns {ShimCryptoClass}
      */
-    getChaincodeCrypto(): ShimCrypto {
-        return new ShimCrypto(this.stub);
+    getChaincodeCrypto(): ShimCryptoClass {
+        return new ShimCryptoClass(this.stub);
     }
 
     /**
@@ -144,7 +144,7 @@ export class StubHelper {
      */
     async deleteAllByQuery(query: string | object, options: DeleteAllByQueryOptions = {}): Promise<void[]> {
 
-        const allResults = <KV[]>(await this.getQueryResultAsList(query, {keyValue: true, ...options}));
+        const allResults = <KV[]>(await this.getQueryResultAsList(query, { keyValue: true, ...options }));
 
         return Promise.all(allResults.map((record: KV) => {
             if (options.privateCollection) {
