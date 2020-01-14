@@ -8,7 +8,7 @@ import { DeleteAllByQueryOptions } from './models/DeleteAllByQueryOptions';
 import { GetStateByRangeAsListOptions } from './models/GetStateByRangeAsListOptions';
 import { PutStateOptions } from './models/PutStateOptions';
 import { GetStateOptions } from './models/GetStateOptions';
-import { ShimCryptoClass } from 'fabric-shim-crypto-custom';
+import { ShimCryptoClass } from 'fabric-shim-crypto';
 
 const aguid = require('aguid');
 

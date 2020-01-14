@@ -1,4 +1,4 @@
-declare module 'fabric-shim-crypto-custom' {
+declare module 'fabric-shim-crypto' {
 
     namespace ShimCrypto {
         /*~ Write your module's methods and properties in this class */
